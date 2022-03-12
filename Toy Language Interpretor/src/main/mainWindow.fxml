@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="main.mainWindowController"
+            prefHeight="617.0" prefWidth="929.0">
+    <children>
+        <Button fx:id="execButton" layoutX="770.0" layoutY="450.0" mnemonicParsing="false" onAction="#oneStepHandler" text="Run" />
+        <Label fx:id="prgStatesCount" layoutX="55.0" layoutY="38.0" text="Number of program states is 0" />
+        <TableView fx:id="heapTableView" layoutX="14.0" layoutY="107.0" prefHeight="200.0" prefWidth="200.0">
+            <columns>
+                <TableColumn fx:id="heapTableAddr" prefWidth="75.0" text="Address"/>
+                <TableColumn fx:id="heapTableValues" prefWidth="75.0" text="Value"/>
+            </columns>
+        </TableView>
+        <ListView fx:id="outputView" layoutX="250.0" layoutY="107.0" prefHeight="200.0" prefWidth="200.0" />
+        <ListView fx:id="fileTableView" layoutX="486.0" layoutY="107.0" prefWidth="200.0" prefHeight="200.0"/>
+        <ListView fx:id="prgIDView" layoutX="722.0" layoutY="107.0" prefHeight="200.0" prefWidth="200.0"/>
+        <Label layoutX="95.0" layoutY="77.0" text="Heap"/>
+        <Label layoutX="335.0" layoutY="77.0" text="Out"/>
+        <Label layoutX="560.0" layoutY="77.0" text="FileTable"/>
+        <Label layoutX="810.0" layoutY="77.0" text="IDs"/>
+        <ListView fx:id="exeStackView" layoutX="443.0" layoutY="371.0" prefWidth="200.0" prefHeight="200.0"/>
+        <TableView fx:id="symTableView" layoutX="207.0" layoutY="371.0" prefHeight="200.0" prefWidth="200.0">
+            <columns>
+                <TableColumn fx:id="symTableNames" prefWidth="75.0" text="Name"/>
+                <TableColumn fx:id="symTableValues" prefWidth="75.0" text="Value"/>
+            </columns>
+        </TableView>
+        <Label layoutX="280.0" layoutY="340.0" text="SymTable"/>
+        <Label layoutX="520.0" layoutY="340.0" text="ExeStack"/>
+    </children>
+
+</AnchorPane>

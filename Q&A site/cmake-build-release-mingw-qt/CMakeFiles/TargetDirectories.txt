@@ -1,0 +1,4 @@
+D:/facultate/oop/question and answer site/cmake-build-release-mingw-qt/CMakeFiles/question_and_answer_site.dir
+D:/facultate/oop/question and answer site/cmake-build-release-mingw-qt/CMakeFiles/edit_cache.dir
+D:/facultate/oop/question and answer site/cmake-build-release-mingw-qt/CMakeFiles/rebuild_cache.dir
+D:/facultate/oop/question and answer site/cmake-build-release-mingw-qt/CMakeFiles/question_and_answer_site_autogen.dir

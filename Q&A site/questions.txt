@@ -1,0 +1,4 @@
+1;q2;Ana
+2;q3;Andrei
+0;q1;Ana
+3;265565465;Andrei

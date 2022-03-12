@@ -1,0 +1,5 @@
+0 1;answ;Mihai;5
+1 1;aa;Andrei;9
+2 0;fjdjhfd;Andrei;0
+3 2;Ana;mmmmmm;0
+4 2;Andrei;4564654;0

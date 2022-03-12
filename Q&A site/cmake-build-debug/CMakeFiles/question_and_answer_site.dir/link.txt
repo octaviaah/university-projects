@@ -1,0 +1,3 @@
+"C:\Program Files\JetBrains\CLion 2020.3.2\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\question_and_answer_site.dir/objects.a
+C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\ar.exe cr CMakeFiles\question_and_answer_site.dir/objects.a @CMakeFiles\question_and_answer_site.dir\objects1.rsp
+C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\G__~1.EXE -g   -Wl,--whole-archive CMakeFiles\question_and_answer_site.dir/objects.a -Wl,--no-whole-archive  -o question_and_answer_site.exe -Wl,--out-implib,libquestion_and_answer_site.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\question_and_answer_site.dir\linklibs.rsp

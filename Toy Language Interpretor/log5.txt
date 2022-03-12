@@ -1,0 +1,685 @@
+ID: 
+1
+Execution stack: 
+((int v; (v = 4; while(v > 0) do(print(v); v = v - 1) end)); print(v)) 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) (int v; (v = 4; while(v > 0) do(print(v); v = v - 1) end)) 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) (int v; (v = 4; while(v > 0) do(print(v); v = v - 1) end)) 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) (v = 4; while(v > 0) do(print(v); v = v - 1) end) int v 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) (v = 4; while(v > 0) do(print(v); v = v - 1) end) int v 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) (v = 4; while(v > 0) do(print(v); v = v - 1) end) 
+Symbol table: 
+v -> 0
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) (v = 4; while(v > 0) do(print(v); v = v - 1) end) 
+Symbol table: 
+v -> 0
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end v = 4 
+Symbol table: 
+v -> 0
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end v = 4 
+Symbol table: 
+v -> 0
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end 
+Symbol table: 
+v -> 4
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end 
+Symbol table: 
+v -> 4
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end (print(v); v = v - 1) 
+Symbol table: 
+v -> 4
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end (print(v); v = v - 1) 
+Symbol table: 
+v -> 4
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end v = v - 1 print(v) 
+Symbol table: 
+v -> 4
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end v = v - 1 print(v) 
+Symbol table: 
+v -> 4
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end v = v - 1 
+Symbol table: 
+v -> 4
+
+Output: 
+4 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end v = v - 1 
+Symbol table: 
+v -> 4
+
+Output: 
+4 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end 
+Symbol table: 
+v -> 3
+
+Output: 
+4 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end 
+Symbol table: 
+v -> 3
+
+Output: 
+4 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end (print(v); v = v - 1) 
+Symbol table: 
+v -> 3
+
+Output: 
+4 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end (print(v); v = v - 1) 
+Symbol table: 
+v -> 3
+
+Output: 
+4 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end v = v - 1 print(v) 
+Symbol table: 
+v -> 3
+
+Output: 
+4 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end v = v - 1 print(v) 
+Symbol table: 
+v -> 3
+
+Output: 
+4 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end v = v - 1 
+Symbol table: 
+v -> 3
+
+Output: 
+4 3 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end v = v - 1 
+Symbol table: 
+v -> 3
+
+Output: 
+4 3 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end 
+Symbol table: 
+v -> 2
+
+Output: 
+4 3 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end 
+Symbol table: 
+v -> 2
+
+Output: 
+4 3 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end (print(v); v = v - 1) 
+Symbol table: 
+v -> 2
+
+Output: 
+4 3 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end (print(v); v = v - 1) 
+Symbol table: 
+v -> 2
+
+Output: 
+4 3 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end v = v - 1 print(v) 
+Symbol table: 
+v -> 2
+
+Output: 
+4 3 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end v = v - 1 print(v) 
+Symbol table: 
+v -> 2
+
+Output: 
+4 3 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end v = v - 1 
+Symbol table: 
+v -> 2
+
+Output: 
+4 3 2 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end v = v - 1 
+Symbol table: 
+v -> 2
+
+Output: 
+4 3 2 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end 
+Symbol table: 
+v -> 1
+
+Output: 
+4 3 2 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end 
+Symbol table: 
+v -> 1
+
+Output: 
+4 3 2 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end (print(v); v = v - 1) 
+Symbol table: 
+v -> 1
+
+Output: 
+4 3 2 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end (print(v); v = v - 1) 
+Symbol table: 
+v -> 1
+
+Output: 
+4 3 2 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end v = v - 1 print(v) 
+Symbol table: 
+v -> 1
+
+Output: 
+4 3 2 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end v = v - 1 print(v) 
+Symbol table: 
+v -> 1
+
+Output: 
+4 3 2 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end v = v - 1 
+Symbol table: 
+v -> 1
+
+Output: 
+4 3 2 1 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end v = v - 1 
+Symbol table: 
+v -> 1
+
+Output: 
+4 3 2 1 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end 
+Symbol table: 
+v -> 0
+
+Output: 
+4 3 2 1 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) while(v > 0) do(print(v); v = v - 1) end 
+Symbol table: 
+v -> 0
+
+Output: 
+4 3 2 1 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) 
+Symbol table: 
+v -> 0
+
+Output: 
+4 3 2 1 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) 
+Symbol table: 
+v -> 0
+
+Output: 
+4 3 2 1 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+
+Symbol table: 
+v -> 0
+
+Output: 
+4 3 2 1 0 
+
+File table: 
+
+Heap: 
+
+ 

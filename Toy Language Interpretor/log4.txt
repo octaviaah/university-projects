@@ -1,0 +1,3951 @@
+ID: 
+1
+Execution stack: 
+(string varf; (varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))))) 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@19c6c65d
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@19c6c65d
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))) int varc 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@19c6c65d
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))) int varc 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@19c6c65d
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))) 
+Symbol table: 
+varf -> test.in
+varc -> 0
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@19c6c65d
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))) 
+Symbol table: 
+varf -> test.in
+varc -> 0
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@19c6c65d
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))) readFile(varf varc) 
+Symbol table: 
+varf -> test.in
+varc -> 0
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@19c6c65d
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))) readFile(varf varc) 
+Symbol table: 
+varf -> test.in
+varc -> 0
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@19c6c65d
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@19c6c65d
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@19c6c65d
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); closeRFile(varf))) print(varc) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@19c6c65d
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); closeRFile(varf))) print(varc) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@19c6c65d
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); closeRFile(varf))) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@19c6c65d
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); closeRFile(varf))) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@19c6c65d
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); closeRFile(varf)) readFile(varf varc) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@19c6c65d
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); closeRFile(varf)) readFile(varf varc) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@19c6c65d
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); closeRFile(varf)) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@19c6c65d
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); closeRFile(varf)) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@19c6c65d
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+closeRFile(varf) print(varc) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@19c6c65d
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(string varf; (varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))))) 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@7d210fc8
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@7d210fc8
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))) int varc 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@7d210fc8
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))) int varc 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@7d210fc8
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))) 
+Symbol table: 
+varf -> test.in
+varc -> 0
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@7d210fc8
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))) 
+Symbol table: 
+varf -> test.in
+varc -> 0
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@7d210fc8
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))) readFile(varf varc) 
+Symbol table: 
+varf -> test.in
+varc -> 0
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@7d210fc8
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))) readFile(varf varc) 
+Symbol table: 
+varf -> test.in
+varc -> 0
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@7d210fc8
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@7d210fc8
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@7d210fc8
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); closeRFile(varf))) print(varc) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@7d210fc8
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); closeRFile(varf))) print(varc) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@7d210fc8
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); closeRFile(varf))) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@7d210fc8
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); closeRFile(varf))) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@7d210fc8
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); closeRFile(varf)) readFile(varf varc) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@7d210fc8
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); closeRFile(varf)) readFile(varf varc) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@7d210fc8
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); closeRFile(varf)) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@7d210fc8
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); closeRFile(varf)) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@7d210fc8
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+closeRFile(varf) print(varc) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@7d210fc8
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+closeRFile(varf) print(varc) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@7d210fc8
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+closeRFile(varf) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 30 
+
+File table: 
+test.in -> java.io.BufferedReader@7d210fc8
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+closeRFile(varf) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 30 
+
+File table: 
+test.in -> java.io.BufferedReader@7d210fc8
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 30 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(string varf; (varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))))) 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))) int varc 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))) int varc 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))) 
+Symbol table: 
+varf -> test.in
+varc -> 0
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))) 
+Symbol table: 
+varf -> test.in
+varc -> 0
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))) readFile(varf varc) 
+Symbol table: 
+varf -> test.in
+varc -> 0
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))) readFile(varf varc) 
+Symbol table: 
+varf -> test.in
+varc -> 0
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); closeRFile(varf))) print(varc) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); closeRFile(varf))) print(varc) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); closeRFile(varf))) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); closeRFile(varf))) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); closeRFile(varf)) readFile(varf varc) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); closeRFile(varf)) readFile(varf varc) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); closeRFile(varf)) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); closeRFile(varf)) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+closeRFile(varf) print(varc) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+closeRFile(varf) print(varc) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+closeRFile(varf) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 30 
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+closeRFile(varf) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 30 
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 30 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(string varf; (varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))))) 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@11a6a2db
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(string varf; (varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))))) 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(string varf; (varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))))) 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@6686290
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(string varf; (varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))))) 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@67b770f6
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@67b770f6
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))) int varc 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@67b770f6
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(string varf; (varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))))) 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@4e7c5a23
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(string varf; (varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))))) 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@19c6c65d
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(string varf; (varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))))) 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@60162090
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(string varf; (varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))))) 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))) int varc 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))) int varc 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))) 
+Symbol table: 
+varf -> test.in
+varc -> 0
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))) 
+Symbol table: 
+varf -> test.in
+varc -> 0
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))) readFile(varf varc) 
+Symbol table: 
+varf -> test.in
+varc -> 0
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))) readFile(varf varc) 
+Symbol table: 
+varf -> test.in
+varc -> 0
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); closeRFile(varf))) print(varc) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); closeRFile(varf))) print(varc) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); closeRFile(varf))) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); closeRFile(varf))) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); closeRFile(varf)) readFile(varf varc) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); closeRFile(varf)) readFile(varf varc) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); closeRFile(varf)) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); closeRFile(varf)) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+closeRFile(varf) print(varc) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+closeRFile(varf) print(varc) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+closeRFile(varf) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 30 
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+closeRFile(varf) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 30 
+
+File table: 
+test.in -> java.io.BufferedReader@bebaffa
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 30 
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(string varf; (varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))))) 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) string varf 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(varf = test.in; (openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))))) 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) varf = test.in 
+Symbol table: 
+varf -> 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(openRFile(varf); (int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) openRFile(varf) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@2d09f6d3
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(int varc; (readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))))) 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@2d09f6d3
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))) int varc 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@2d09f6d3
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))) int varc 
+Symbol table: 
+varf -> test.in
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@2d09f6d3
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))) 
+Symbol table: 
+varf -> test.in
+varc -> 0
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@2d09f6d3
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); (readFile(varf varc); (print(varc); closeRFile(varf))))) 
+Symbol table: 
+varf -> test.in
+varc -> 0
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@2d09f6d3
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))) readFile(varf varc) 
+Symbol table: 
+varf -> test.in
+varc -> 0
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@2d09f6d3
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))) readFile(varf varc) 
+Symbol table: 
+varf -> test.in
+varc -> 0
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@2d09f6d3
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@2d09f6d3
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); (readFile(varf varc); (print(varc); closeRFile(varf)))) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@2d09f6d3
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); closeRFile(varf))) print(varc) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@2d09f6d3
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); closeRFile(varf))) print(varc) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+
+
+File table: 
+test.in -> java.io.BufferedReader@2d09f6d3
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); closeRFile(varf))) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@2d09f6d3
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(readFile(varf varc); (print(varc); closeRFile(varf))) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@2d09f6d3
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); closeRFile(varf)) readFile(varf varc) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@2d09f6d3
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); closeRFile(varf)) readFile(varf varc) 
+Symbol table: 
+varf -> test.in
+varc -> 15
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@2d09f6d3
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); closeRFile(varf)) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@2d09f6d3
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(print(varc); closeRFile(varf)) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@2d09f6d3
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+closeRFile(varf) print(varc) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@2d09f6d3
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+closeRFile(varf) print(varc) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 
+
+File table: 
+test.in -> java.io.BufferedReader@2d09f6d3
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+closeRFile(varf) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 30 
+
+File table: 
+test.in -> java.io.BufferedReader@2d09f6d3
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+closeRFile(varf) 
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 30 
+
+File table: 
+test.in -> java.io.BufferedReader@2d09f6d3
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+
+Symbol table: 
+varf -> test.in
+varc -> 30
+
+Output: 
+15 30 
+
+File table: 
+
+Heap: 
+
+ 

@@ -1,0 +1,345 @@
+ID: 
+1
+Execution stack: 
+(ref( int ) v; (newStmt(v, 20); (ref( ref( int ) ) a; (newStmt(a, v); (print(v); print(a)))))) 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(newStmt(v, 20); (ref( ref( int ) ) a; (newStmt(a, v); (print(v); print(a))))) ref( int ) v 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(newStmt(v, 20); (ref( ref( int ) ) a; (newStmt(a, v); (print(v); print(a))))) ref( int ) v 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(newStmt(v, 20); (ref( ref( int ) ) a; (newStmt(a, v); (print(v); print(a))))) 
+Symbol table: 
+v -> (0,int)
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(newStmt(v, 20); (ref( ref( int ) ) a; (newStmt(a, v); (print(v); print(a))))) 
+Symbol table: 
+v -> (0,int)
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(ref( ref( int ) ) a; (newStmt(a, v); (print(v); print(a)))) newStmt(v, 20) 
+Symbol table: 
+v -> (0,int)
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(ref( ref( int ) ) a; (newStmt(a, v); (print(v); print(a)))) newStmt(v, 20) 
+Symbol table: 
+v -> (0,int)
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(ref( ref( int ) ) a; (newStmt(a, v); (print(v); print(a)))) 
+Symbol table: 
+v -> (1,int)
+
+Output: 
+
+
+File table: 
+
+Heap: 
+1 -> 20
+ 
+ID: 
+1
+Execution stack: 
+(ref( ref( int ) ) a; (newStmt(a, v); (print(v); print(a)))) 
+Symbol table: 
+v -> (1,int)
+
+Output: 
+
+
+File table: 
+
+Heap: 
+1 -> 20
+ 
+ID: 
+1
+Execution stack: 
+(newStmt(a, v); (print(v); print(a))) ref( ref( int ) ) a 
+Symbol table: 
+v -> (1,int)
+
+Output: 
+
+
+File table: 
+
+Heap: 
+1 -> 20
+ 
+ID: 
+1
+Execution stack: 
+(newStmt(a, v); (print(v); print(a))) ref( ref( int ) ) a 
+Symbol table: 
+v -> (1,int)
+
+Output: 
+
+
+File table: 
+
+Heap: 
+1 -> 20
+ 
+ID: 
+1
+Execution stack: 
+(newStmt(a, v); (print(v); print(a))) 
+Symbol table: 
+a -> (0,ref( int ))
+v -> (1,int)
+
+Output: 
+
+
+File table: 
+
+Heap: 
+1 -> 20
+ 
+ID: 
+1
+Execution stack: 
+(newStmt(a, v); (print(v); print(a))) 
+Symbol table: 
+a -> (0,ref( int ))
+v -> (1,int)
+
+Output: 
+
+
+File table: 
+
+Heap: 
+1 -> 20
+ 
+ID: 
+1
+Execution stack: 
+(print(v); print(a)) newStmt(a, v) 
+Symbol table: 
+a -> (0,ref( int ))
+v -> (1,int)
+
+Output: 
+
+
+File table: 
+
+Heap: 
+1 -> 20
+ 
+ID: 
+1
+Execution stack: 
+(print(v); print(a)) newStmt(a, v) 
+Symbol table: 
+a -> (0,ref( int ))
+v -> (1,int)
+
+Output: 
+
+
+File table: 
+
+Heap: 
+1 -> 20
+ 
+ID: 
+1
+Execution stack: 
+(print(v); print(a)) 
+Symbol table: 
+a -> (2,ref( int ))
+v -> (1,int)
+
+Output: 
+
+
+File table: 
+
+Heap: 
+1 -> 20
+2 -> (1,int)
+ 
+ID: 
+1
+Execution stack: 
+(print(v); print(a)) 
+Symbol table: 
+a -> (2,ref( int ))
+v -> (1,int)
+
+Output: 
+
+
+File table: 
+
+Heap: 
+1 -> 20
+2 -> (1,int)
+ 
+ID: 
+1
+Execution stack: 
+print(a) print(v) 
+Symbol table: 
+a -> (2,ref( int ))
+v -> (1,int)
+
+Output: 
+
+
+File table: 
+
+Heap: 
+1 -> 20
+2 -> (1,int)
+ 
+ID: 
+1
+Execution stack: 
+print(a) print(v) 
+Symbol table: 
+a -> (2,ref( int ))
+v -> (1,int)
+
+Output: 
+
+
+File table: 
+
+Heap: 
+1 -> 20
+2 -> (1,int)
+ 
+ID: 
+1
+Execution stack: 
+print(a) 
+Symbol table: 
+a -> (2,ref( int ))
+v -> (1,int)
+
+Output: 
+(1,int) 
+
+File table: 
+
+Heap: 
+1 -> 20
+2 -> (1,int)
+ 
+ID: 
+1
+Execution stack: 
+print(a) 
+Symbol table: 
+a -> (2,ref( int ))
+v -> (1,int)
+
+Output: 
+(1,int) 
+
+File table: 
+
+Heap: 
+1 -> 20
+2 -> (1,int)
+ 
+ID: 
+1
+Execution stack: 
+
+Symbol table: 
+a -> (2,ref( int ))
+v -> (1,int)
+
+Output: 
+(1,int) (2,ref( int )) 
+
+File table: 
+
+Heap: 
+1 -> 20
+2 -> (1,int)
+ 

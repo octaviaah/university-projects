@@ -1,0 +1,4 @@
+D:/facultate/oop/issue tracker/cmake-build-release-mingw-qt/CMakeFiles/issue_tracker.dir
+D:/facultate/oop/issue tracker/cmake-build-release-mingw-qt/CMakeFiles/edit_cache.dir
+D:/facultate/oop/issue tracker/cmake-build-release-mingw-qt/CMakeFiles/rebuild_cache.dir
+D:/facultate/oop/issue tracker/cmake-build-release-mingw-qt/CMakeFiles/issue_tracker_autogen.dir

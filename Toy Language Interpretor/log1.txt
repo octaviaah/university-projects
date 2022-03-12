@@ -1,0 +1,147 @@
+ID: 
+1
+Execution stack: 
+(int v; (v = 2; print(v))) 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(v = 2; print(v)) int v 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(v = 2; print(v)) int v 
+Symbol table: 
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(v = 2; print(v)) 
+Symbol table: 
+v -> 0
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+(v = 2; print(v)) 
+Symbol table: 
+v -> 0
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) v = 2 
+Symbol table: 
+v -> 0
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) v = 2 
+Symbol table: 
+v -> 0
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) 
+Symbol table: 
+v -> 2
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+print(v) 
+Symbol table: 
+v -> 2
+
+Output: 
+
+
+File table: 
+
+Heap: 
+
+ 
+ID: 
+1
+Execution stack: 
+
+Symbol table: 
+v -> 2
+
+Output: 
+2 
+
+File table: 
+
+Heap: 
+
+ 
