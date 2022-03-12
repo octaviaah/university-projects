@@ -1,0 +1,10 @@
+1;The Divine Comedy;Dante Alighieri
+2;The Odyssey;Homer
+3;Don Quixote;Miguel de Cervantes
+4;The Great Gatsby;F. Scott Fitzgerald
+7;The Adventures of Huckleberry Finn;Mark Twain
+8;Hamlet;William Shakespeare
+9;Pride and Prejudice;Jane Austen
+10;The Catcher in the Rye;J. D. Salinger
+5;Anna Karenina;Leo Tolstoy
+6;War and Peace;Leo Tolstoy

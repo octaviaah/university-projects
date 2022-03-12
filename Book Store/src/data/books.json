@@ -1,0 +1,52 @@
+[
+    {
+        "_book_id": 1,
+        "_title": "The Divine Comedy",
+        "_author": "Dante Alighieri"
+    },
+    {
+        "_book_id": 2,
+        "_title": "The Adventures of Huckleberry Finn",
+        "_author": "Mark Twain"
+    },
+    {
+        "_book_id": 3,
+        "_title": "Don Quixote",
+        "_author": "Miguel de Cervantes"
+    },
+    {
+        "_book_id": 5,
+        "_title": "Pride and Prejudice",
+        "_author": "Jane Austen"
+    },
+    {
+        "_book_id": 7,
+        "_title": "The Great Gatsby",
+        "_author": "F. Scott Fitzgerald"
+    },
+    {
+        "_book_id": 8,
+        "_title": "Hamlet",
+        "_author": "William Shakespeare"
+    },
+    {
+        "_book_id": 9,
+        "_title": "The Odyssey",
+        "_author": "Homer"
+    },
+    {
+        "_book_id": 10,
+        "_title": "The Catcher in the Rye",
+        "_author": "J. D. Salinger"
+    },
+    {
+        "_book_id": 4,
+        "_title": "War and Peace",
+        "_author": "Leo Tolstoy"
+    },
+    {
+        "_book_id": 6,
+        "_title": "Anna Karenina",
+        "_author": "Leo Tolstoy"
+    }
+]

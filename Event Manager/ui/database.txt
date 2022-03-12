@@ -1,0 +1,13 @@
+Jane's dream,fundraiser,17-5-2021 16:0,199,https://www.janesdream.com
+Let's help,fundraiser,17-6-2021 17:15,250,https://www.fundraiser.com
+Individual cooking 101,cooking,1-4-2021 10:45,100,https://www.indvcourses.com
+Virtual music!,karaoke,12-4-2022 20:0,99,https://www.virtual.com
+Spring Sing-Open House,karaoke,30-3-2021 15:20,150,https://www.spring-sing.com
+Afterlife conversations,beliefs,14-4-2021 14:10,20,https://www.conversewithgod.com
+Spanish food 101,cooking,1-3-2021 15:0,300,https://www.spanish.com
+'The Philadelphia Story' Screening,film screening,11-7-2021 17:55,2000,https://www.cinema.com
+Espanol 101,language and culture,17-5-2021 12:30,100,https://www.espanol.com
+Critics' choice,film screening,15-5-2021 13:15,50,https://www.cchoice.com
+Chinese food,cooking,12-6-2021 20:0,54,https://www.chinese_food.com
+qqqqq,2,2-2-2021 2:2,2,2
+fdfgdfg,Descriptiorreren,5-5-2021 5:4,4,4

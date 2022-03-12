@@ -1,0 +1,4 @@
+D:/facultate/oop/a10-octaviaah-1/cmake-build-release-mingw-qt/CMakeFiles/edit_cache.dir
+D:/facultate/oop/a10-octaviaah-1/cmake-build-release-mingw-qt/CMakeFiles/a10_octaviaah_1.dir
+D:/facultate/oop/a10-octaviaah-1/cmake-build-release-mingw-qt/CMakeFiles/rebuild_cache.dir
+D:/facultate/oop/a10-octaviaah-1/cmake-build-release-mingw-qt/CMakeFiles/a10_octaviaah_1_autogen.dir
