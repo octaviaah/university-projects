@@ -1,0 +1,37 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, scanf, printf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import scanf msvcrt.dll
+    10                                  import printf msvcrt.dll
+    11                                  
+    12                                  ; our data is declared here (the variables needed by our program)
+    13                                  segment data use32 class=data
+    14 00000000 00000000                    a dd 0
+    15 00000004 256400                      dformat db "%d", 0
+    16 00000007 613D00                      message_a db "a=", 0
+    17 0000000A 257800                      xformat db "%x", 0
+    18                                  ; our code starts here
+    19                                  segment code use32 class=code
+    20                                      start:
+    21                                          ;Read a number in base 10 from the keyboard and display the value of that number in base 16
+    22 00000000 68[07000000]                    push dword message_a
+    23 00000005 FF15[00000000]                  call [printf]
+    24 0000000B 83C404                          add esp, 4
+    25                                          
+    26 0000000E 68[00000000]                    push dword a
+    27 00000013 68[04000000]                    push dword dformat
+    28 00000018 FF15[00000000]                  call [scanf]
+    29 0000001E 83C408                          add esp, 4*2
+    30                                          
+    31 00000021 FF35[00000000]                  push dword [a]
+    32 00000027 68[0A000000]                    push dword xformat
+    33 0000002C FF15[00000000]                  call [printf]
+    34 00000032 83C408                          add esp, 8
+    35                                          ; exit(0)
+    36 00000035 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    37 00000037 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

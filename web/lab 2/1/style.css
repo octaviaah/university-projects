@@ -1,0 +1,27 @@
+body {
+    background-color: #1CD3F8;
+}
+
+#button {
+    border: 1px solid #2d6898;
+    text-transform: uppercase;
+    font-family: arial;
+    font-size: 24px;
+    letter-spacing: 1px;
+    text-decoration: none;
+
+    position: relative;
+    display: inline-block;
+    margin-left:45%;
+    margin-top:20%;
+    color:black;
+    background-color: #FFE800;
+    padding: 15px 40px;
+    box-shadow: -5px 5px #404040; /* Shadow to the left and to the right of given color of the button */
+}
+
+#button:hover {
+    top: 3px; /* Go to the left */
+    left: -3px; /* Go to the right */
+    box-shadow: -2px 2px 0 #404040; /* Reduce the shadow of the button */
+}

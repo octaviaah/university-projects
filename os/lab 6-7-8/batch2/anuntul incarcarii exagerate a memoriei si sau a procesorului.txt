@@ -1,0 +1,19 @@
+#!/bin/bash
+# check-server-load.sh addr procMax memMax
+# addr adresa unde se trimite avertismentul
+# procMax incarcarea maxima (procente) a serverului dupa 5 minute
+# memMax incarcarea maxima (procente) a memoriei
+procMax=$2
+memMax=$3
+while true ; do
+	#sleep 300
+	proc=`uptime | awk '{s=$(NF-1); s = substr(s,1,index(s,".")-1); print s}'`
+	mem=`free | awk '$1=="Mem:" {print $2*100/$3}'`
+	echo $proc
+	echo $mem
+	if [ $proc > $procMax -o $mem > $memMax ] ; then
+		mail -s "Avertisment" $1 <<MESAJ
+		Server / memorie prea incarcat(a)
+		MESAJ
+	fi
+done

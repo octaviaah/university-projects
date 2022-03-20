@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ $# -eq 0 ];then
+        echo provide at least 1 arg
+        exit 1
+fi
+
+while true; do
+        for process in $@; do
+                PIDs=""
+                PIDs=$(cat ps.fake | awk '{print $8" "$2}' | grep -E "\<$process" | awk '{print $2}')
+                if [ -n "$PIDs" ]; then
+                        echo "Should kill $PIDs"
+                fi
+        done
+        sleep 3
+done

@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <unistd.h>
+
+int stubborn_read(int fd, void* buf, int count, int trials) {
+        int k, total = 0, n = 0;
+        while(total < count && n < trials && (k=read(fd, buf+total, count-total)) > 0) {
+                total += k;
+                n++;
+        }
+        return k < 0 ? k : total;
+}
+
+int stubborn_write(int fd, void* buf, int count, int trials) {
+        int k, total = 0, n = 0;
+        while(total < count && n < trials && (k=write(fd, buf+total, count-total)) > 0) {
+                total += k;
+                n++;
+        }
+        return k < 0 ? k : total;
+}
+
+int main()
+{
+        int fd;
+        fd=open("w2r", O_RDONLY);
+        int n=20;

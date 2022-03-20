@@ -1,0 +1,89 @@
+#include <pthread.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
+
+#define C 7//readers
+#define S 2//writers
+
+#define CSLEEP 2
+#define SSLEEP 3
+
+pthread_t tid[C+S]; //some writer threads, some reading threads
+int c[C], s[S], nt[C+S];
+pthread_rwlock_t rwlock;
+pthread_mutex_t exclusafis;
+
+//print states of readers and writers
+void afiseaza()
+{
+        int i;
+        pthread_mutex_lock(&exclusafis);
+        for (i=0; i<C; i++) printf("C:%d_%d\t", i, c[i]);
+        for (i=0; i<S; i++) printf("S:%d_%d\t", i, s[i]);
+        printf("\n");
+        fflush(stdout);
+        pthread_mutex_unlock(&exclusafis);
+}
+
+//reader thread function
+void* cititor(void *nrc)
+{
+        int indc = *(int*)nrc;
+        for( ; ; )
+        {
+                c[indc] = -1; //waits to read if locked by a writer
+                pthread_rwlock_rdlock(&rwlock);
+                c[indc] = 0; //reads
+                afiseaza();
+                sleep(1+rand()%CSLEEP); //simulate reading operation time
+                c[indc] = -2; //reading finished and sleeps
+                pthread_rwlock_unlock(&rwlock);
+                sleep(1+rand()%CSLEEP);
+        }
+        return NULL;
+}
+
+//writer thread function
+void * scriitor(void *nrs)
+{
+        int inds = *(int*)nrs;
+        for( ; ; )
+        {
+                s[inds] = -1; //waiting to write
+-               pthread_rwlock_wrlock(&rwlock);
+                s[inds] = 0; //writes
+                afiseaza();
+                sleep(1+rand()%SSLEEP); //simulate writing operation time
+                s[inds] = -2; //write operation finished and sleeps
+                pthread_rwlock_unlock(&rwlock);
+                sleep(1+rand()%SSLEEP);
+        }
+        return NULL;
+}
+
+int main()
+{
+        pthread_rwlock_init(&rwlock, NULL);
+        pthread_mutex_init(&exclusafis, NULL);
+        int i;
+        for (i=0; i<C; i++) //-3: state of not started
+        {
+                c[i] = -3; nt[i] = i;
+        }
+        for (i=0; i<S; i++)
+        {
+                s[i] = -3;
+                nt[i+C] = i;
+        }
+        //launch threads
+        for (i=0; i<C; i++)
+                pthread_create(&tid[i], NULL, cititor, &nt[i]);
+        for (i=C; i<C+S; i++)
+                pthread_create(&tid[i], NULL, scriitor, &nt[i]);
+        for(i=0; i<C+S; i++)
+                pthread_join(tid[i], NULL);
+        pthread_rwlock_destroy(&rwlock);
+        pthread_mutex_destroy(&exclusafis);
+        return 0;
+}

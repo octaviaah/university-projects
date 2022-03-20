@@ -1,0 +1,138 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, printf, fopen, fread, fclose               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import printf msvcrt.dll
+    10                                  import fopen msvcrt.dll
+    11                                  import fclose msvcrt.dll
+    12                                  import fread msvcrt.dll
+    13                                  
+    14                                  ; our data is declared here (the variables needed by our program)
+    15                                  segment data use32 class=data
+    16 00000000 00000000                    nmb_spec dd 0
+    17 00000004 00000000                    we_read_chr dd 0
+    18 00000008 FFFFFFFF                    file_descriptor dd -1
+    19 0000000C 74686566696C652E74-         file_name db "thefile.txt", 0
+    19 00000015 787400             
+    20 00000018 7200                        access_mode db "r", 0
+    21 0000001A 746865206E6D62206F-         message_spec db "the nmb of special characters: %d", 0
+    21 00000023 66207370656369616C-
+    21 0000002C 206368617261637465-
+    21 00000035 72733A20256400     
+    22                                      len equ 100
+    23 0000003C <res 00000064>              buffer resb len
+    24                                  
+    25                                  ; our code starts here
+    26                                  segment code use32 class=code
+    27                                      start:
+    28                                          ;A text file is given. Read the content of the file, count the number of special characters and display the result on the screen. The name of text file is defined in the data segment.
+    29 00000000 68[18000000]                    push dword access_mode
+    30 00000005 68[0C000000]                    push dword file_name
+    31 0000000A FF15[00000000]                  call [fopen]
+    32 00000010 83C408                          add esp, 4*2
+    33                                          
+    34 00000013 83F800                          cmp eax, 0
+    35 00000016 0F84D4000000                    je fin
+    36                                          
+    37 0000001C A3[08000000]                    mov [file_descriptor], eax
+    38                                          
+    39                                          read_full_file:
+    40 00000021 FF35[08000000]                      push dword [file_descriptor]
+    41 00000027 6A64                                push dword len
+    42 00000029 6A01                                push dword 1
+    43 0000002B 68[3C000000]                        push dword buffer
+    44 00000030 FF15[00000000]                      call [fread]
+    45 00000036 83C410                              add esp, 4*4
+    46                                              
+    47 00000039 83F800                              cmp eax, 0
+    48 0000003C 0F84A0000000                        je cleanup
+    49                                              
+    50 00000042 A3[04000000]                        mov [we_read_chr], eax
+    51 00000047 BE00000000                          mov esi, 0
+    52                                              
+    53                                              find_special:
+    54 0000004C 8A86[3C000000]                          mov al, [buffer+esi]
+    55 00000052 3C21                                    cmp al, '!'
+    56 00000054 7473                                    je add_special
+    57 00000056 3C22                                    cmp al, '"'
+    58 00000058 746F                                    je add_special
+    59 0000005A 3C23                                    cmp al, '#'
+    60 0000005C 746B                                    je add_special
+    61 0000005E 3C24                                    cmp al, '$'
+    62 00000060 7467                                    je add_special
+    63 00000062 3C25                                    cmp al, '%'
+    64 00000064 7463                                    je add_special
+    65 00000066 3C26                                    cmp al, '&'
+    66 00000068 745F                                    je add_special
+    67 0000006A 3C28                                    cmp al, '('
+    68 0000006C 745B                                    je add_special
+    69 0000006E 3C29                                    cmp al, ')'
+    70 00000070 7457                                    je add_special
+    71 00000072 3C2A                                    cmp al, '*'
+    72 00000074 7453                                    je add_special
+    73 00000076 3C2B                                    cmp al, '+'
+    74 00000078 744F                                    je add_special
+    75 0000007A 3C2C                                    cmp al, ','
+    76 0000007C 744B                                    je add_special
+    77 0000007E 3C2E                                    cmp al, '.'
+    78 00000080 7447                                    je add_special
+    79 00000082 3C2D                                    cmp al, '-'
+    80 00000084 7443                                    je add_special
+    81 00000086 3C3A                                    cmp al, ':'
+    82 00000088 743F                                    je add_special
+    83 0000008A 3C3B                                    cmp al, ';'
+    84 0000008C 743B                                    je add_special
+    85 0000008E 3C3C                                    cmp al, '<'
+    86 00000090 7437                                    je add_special
+    87 00000092 3C3D                                    cmp al, '='
+    88 00000094 7433                                    je add_special
+    89 00000096 3C3E                                    cmp al, '>'
+    90 00000098 742F                                    je add_special
+    91 0000009A 3C3F                                    cmp al, '?'
+    92 0000009C 742B                                    je add_special
+    93 0000009E 3C40                                    cmp al, '@'
+    94 000000A0 7427                                    je add_special
+    95 000000A2 3C5B                                    cmp al, '['
+    96 000000A4 7423                                    je add_special
+    97 000000A6 3C2F                                    cmp al, '/'
+    98 000000A8 741F                                    je add_special
+    99 000000AA 3C5D                                    cmp al, ']'
+   100 000000AC 741B                                    je add_special
+   101 000000AE 3C5E                                    cmp al, '^'
+   102 000000B0 7417                                    je add_special
+   103 000000B2 3C5F                                    cmp al, '_'
+   104 000000B4 7413                                    je add_special
+   105 000000B6 3C60                                    cmp al, '`'
+   106 000000B8 740F                                    je add_special
+   107 000000BA 3C7E                                    cmp al, '~'
+   108 000000BC 740B                                    je add_special
+   109 000000BE 46                                      inc esi
+   110 000000BF 3B35[04000000]                          cmp esi, dword [we_read_chr]
+   111 000000C5 7585                                    jne find_special
+   112 000000C7 7414                                    je cont
+   113                                                  add_special:
+   114 000000C9 8305[00000000]01                            add dword[nmb_spec], 1
+   115 000000D0 46                                          inc esi
+   116 000000D1 3B35[04000000]                              cmp esi, dword [we_read_chr]
+   117 000000D7 0F856FFFFFFF                                jne find_special
+   118                                                      
+   119                                              cont:
+   120 000000DD E93FFFFFFF                              jmp read_full_file
+   121                                              
+   122                                              cleanup:
+   123 000000E2 68[08000000]                            push dword file_descriptor
+   124 000000E7 FF15[00000000]                          call [fclose]
+   125 000000ED 83C404                                  add esp, 4
+   126                                          
+   127                                          fin:
+   128 000000F0 FF35[00000000]                      push dword [nmb_spec]
+   129 000000F6 68[1A000000]                        push dword message_spec
+   130 000000FB FF15[00000000]                      call [printf]
+   131 00000101 83C408                              add esp, 4*2
+   132                                          ; exit(0)
+   133 00000104 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+   134 00000106 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

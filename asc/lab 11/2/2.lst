@@ -1,0 +1,33 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, scanf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import scanf msvcrt.dll                          ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13 00000000 256900                      dformat db "%i", 0
+    14 00000003 00000000<rept>              string times 20 dd 0
+    15 00000053 00000000                    entr dd 0
+    16                                  ; our code starts here
+    17                                  segment code use32 class=code
+    18                                      start:
+    19                                          ;Read from the keyboard a string of numbers, given in the base 10 as signed numbers (a string of characters is read from the keyboard and a string of numbers must be stored in the memory).
+    20 00000000 B914000000                      mov ecx, 20
+    21                                          the_loop:
+    22 00000005 68[03000000]                        push dword string
+    23 0000000A 68[00000000]                        push dword dformat
+    24 0000000F FF15[00000000]                      call [scanf]
+    25 00000015 83C408                              add esp, 4*2
+    26 00000018 A1[53000000]                        mov eax, [entr]
+    27 0000001D 3905[03000000]                      cmp dword [string], eax
+    28 00000023 7402                                jz fin
+    29 00000025 EBDE                                jmp the_loop
+    30                                          fin:
+    31                                          ; exit(0)
+    32 00000027 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    33 00000029 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

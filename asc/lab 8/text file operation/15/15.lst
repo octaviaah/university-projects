@@ -1,0 +1,110 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, fclose, fopen, fprintf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import fclose msvcrt.dll
+    10                                  import fopen msvcrt.dll
+    11                                  import fprintf msvcrt.dll
+    12                                  
+    13                                  ; our data is declared here (the variables needed by our program)
+    14                                  segment data use32 class=data
+    15 00000000 31352E74787400              file_name db "15.txt", 0
+    16 00000007 617564686B61353335-         text db "audhka535:?Ajda::/fjsijdlsdsdj^%%^*hh&656", 0
+    16 00000010 3A3F416A64613A3A2F-
+    16 00000019 666A73696A646C7364-
+    16 00000022 73646A5E25255E2A68-
+    16 0000002B 682636353600       
+    17 00000031 FFFFFFFF                    file_descriptor dd -1
+    18 00000035 7700                        access_mode db "w", 0
+    19                                  
+    20                                  ; our code starts here
+    21                                  segment code use32 class=code
+    22                                      start:
+    23                                          ;A file name and a text (defined in the data segment) are given. The text contains lowercase letters, uppercase letters, digits and special characters. Replace all the special characters from the given text 
+    24 00000000 68[35000000]                    push dword access_mode
+    25 00000005 68[00000000]                    push dword file_name
+    26 0000000A FF15[00000000]                  call [fopen]
+    27 00000010 83C408                          add esp, 8
+    28                                          
+    29 00000013 83F800                          cmp eax, 0
+    30 00000016 0F84BB000000                    je fin
+    31                                          
+    32 0000001C A3[31000000]                    mov [file_descriptor], eax
+    33                                          
+    34 00000021 BE00000000                      mov esi, 0
+    35 00000026 BF00000000                      mov edi, 0
+    36                                          find_spec:
+    37 0000002B 8A86[07000000]                      mov al, [text+esi]
+    38 00000031 3C21                                cmp al, '!'
+    39 00000033 7270                                jb not_found
+    40 00000035 3C2F                                cmp al, '/'
+    41 00000037 7715                                ja cont
+    42 00000039 B058                                mov al, 'X'
+    43 0000003B 8887[07000000]                      mov [text+edi], al
+    44 00000041 46                                  inc esi
+    45 00000042 47                                  inc edi
+    46 00000043 80BE[07000000]00                    cmp byte [text+esi], 0
+    47 0000004A 7468                                je print_text
+    48 0000004C 75DD                                jne find_spec
+    49                                              cont:
+    50 0000004E 3C3A                                    cmp al, ':'
+    51 00000050 7253                                    jb not_found
+    52 00000052 3C40                                    cmp al, '@'
+    53 00000054 7715                                    ja cont2
+    54 00000056 B058                                    mov al, 'X'
+    55 00000058 8887[07000000]                          mov [text+edi], al
+    56 0000005E 46                                      inc esi
+    57 0000005F 47                                      inc edi
+    58 00000060 80BE[07000000]00                        cmp byte [text+esi], 0
+    59 00000067 744B                                    je print_text
+    60 00000069 75C0                                    jne find_spec
+    61                                                  cont2:
+    62 0000006B 3C5B                                        cmp al, '['
+    63 0000006D 7236                                        jb not_found
+    64 0000006F 3C60                                        cmp al, '`'
+    65 00000071 7715                                        ja cont3
+    66 00000073 B058                                        mov al, 'X'
+    67 00000075 8887[07000000]                              mov [text+edi], al
+    68 0000007B 46                                          inc esi
+    69 0000007C 47                                          inc edi
+    70 0000007D 80BE[07000000]00                            cmp byte [text+esi], 0
+    71 00000084 742E                                        je print_text
+    72 00000086 75A3                                        jne find_spec
+    73                                                      cont3:
+    74 00000088 3C7B                                            cmp al, '{'
+    75 0000008A 7219                                            jb not_found
+    76 0000008C 3C7E                                            cmp al, '~'
+    77 0000008E 7715                                            ja not_found
+    78 00000090 B058                                            mov al, 'X'
+    79 00000092 8887[07000000]                                  mov [text+edi], al
+    80 00000098 46                                              inc esi
+    81 00000099 47                                              inc edi
+    82 0000009A 80BE[07000000]00                                cmp byte [text+esi], 0
+    83 000000A1 7411                                            je print_text
+    84 000000A3 7586                                            jne find_spec
+    85                                                          not_found:
+    86 000000A5 46                                                  inc esi
+    87 000000A6 47                                                  inc edi
+    88 000000A7 80BE[07000000]00                                    cmp byte [text+esi], 0
+    89 000000AE 0F8577FFFFFF                                        jne find_spec
+    90                                                  
+    91                                          print_text:
+    92 000000B4 68[07000000]                        push dword text
+    93 000000B9 FF35[31000000]                      push dword [file_descriptor]
+    94 000000BF FF15[00000000]                      call [fprintf]
+    95 000000C5 83C408                              add esp, 8
+    96                                              
+    97 000000C8 FF35[31000000]                      push dword [file_descriptor]
+    98 000000CE FF15[00000000]                      call [fclose]
+    99 000000D4 83C404                              add esp, 4
+   100                                              
+   101                                          
+   102                                          fin:
+   103                                      
+   104                                          ; exit(0)
+   105 000000D7 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+   106 000000D9 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

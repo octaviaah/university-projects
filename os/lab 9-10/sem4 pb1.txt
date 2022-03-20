@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+
+int main()
+{
+        int a[] = {1, 2, 3, 4}, f[2];
+        pipe(f);
+        if (fork()==0)
+        {
+                close(f[0]);
+                a[0]+=a[1];
+                write(f[1], &a[0], sizeof(int));
+                close(f[1]);
+                exit(0);
+        }
+        close(f[1]);
+        a[2]+=a[3];
+        read(f[0], &a[0], sizeof(int));
+        close(f[0]);
+        wait(NULL);
+        a[0]+=a[2];
+        printf("Suma este %d\n", a[0]);
+        return 0;
+}

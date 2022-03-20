@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+
+int main()
+{
+        mkfifo("fifoa2b", 0666);
+        mkfifo("fifob2a", 0666);
+        int n, fa2b, fb2a, pa, pb;
+        n=30;
+        pa = fork();
+        if (pa==0)
+        {
+                fa2b=open("fifoa2b", O_WRONLY);
+                fb2a=open("fifob2a", O_RDONLY);
+                write(fa2b, &n, sizeof(int));
+                while (n>9)
+                {
+                        if (read(fb2a, &n, sizeof(int)) <=0) break;
+                        if (n<10) break;
+                        printf("A: %d -> %d\n", n, n-1);
+                        n--;
+                        write(fa2b, &n, sizeof(int));
+                }
+                close(fa2b); close(fb2a); exit(0);
+        }
+        pb=fork();
+        if (pb==0)
+        {
+                fa2b=open("fifoa2b", O_RDONLY);
+                fb2a=open("fifob2a", O_WRONLY);
+                while(n > 9)
+                {
+                        if (read(fa2b, &n, sizeof(int)) <=0) break;
+                        if (n<10) break;
+                        printf("B: %d -> %d\n", n, n-4);
+                        n-=4;
+                        write(fb2a, &n, sizeof(int));
+                }
+                close(fa2b); close(fb2a); exit(0);
+        }
+        if (pa==-1)
+        {
+                printf("error");
+                exit(1);
+        }
+        if (pb==-1)
+        {
+                printf("error");
+                exit(1);
+        }
+        wait(0); wait(0);
+        unlink("fifoa2b");
+        unlink("fifob2a");
+        return 0;
+}

@@ -1,0 +1,16 @@
+html, body{
+    height:100%;
+    margin: 0;
+}
+
+div.image{
+    background-image: url("images/great.jpg");
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+div.image:hover{
+    background-image: url("images/horrifying.jpg");
+}

@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/wait.h>
+
+int main(int argc, char* argv[])
+{
+        int i, pid;
+        for (i=1; i<argc; i++)
+        {
+                pid=fork();
+                if(pid==0)
+                {
+                        execl("./capit.sh", "./capit.sh", argv[i], NULL);
+                        printf("Error\n");
+                        exit(1);
+                }
+                else printf("Parent launched child: %d ...> %s \n", pid, argv[i]);
+        }
+        for(i=1; i<argc; i++)
+                wait(0);
+        printf("Launched simultaneously %d processes for capitalization\n", argc-1);
+        return 0;
+}
+
+
+
+
+//capit.sh
+#!/bin/bash
+
+sed "s/\<\([a-z]\)/\u\1/g" $1 > ${1}_temp

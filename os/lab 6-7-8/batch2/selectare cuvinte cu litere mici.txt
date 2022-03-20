@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if [ $# -ne 2 ]; then
+        echo no params
+        exit 1
+fi
+
+if [ -e $2 ];then
+        rm $2
+fi
+
+while read line; do
+        for word in $line; do
+                if echo $word | egrep -q '\<[a-z]+\>'; then
+                        echo $word >> $2
+                fi
+        done
+done < $1
+
+if [ -e $2 ];then
+        cat $2 | sort | uniq > aux.txt
+        mv aux.txt $2
+
+        cat $2
+else
+        touch $2
+fi

@@ -1,0 +1,71 @@
+#include <pthread.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
+
+#define C 20//competitors
+#define S 3//sponsors
+
+#define CSLEEP 2
+#define SSLEEP 3
+
+pthread_t tid[C+S]; //some writer threads, some reader threads
+//int nt[C+S]; //if we want to pass ids instead of i
+
+int nrp = 0;
+int p[S];
+
+pthread_rwlock_t rwlock = PTHREAD_RWLOCK_INITIALIZER;
+
+//writer thread funciton
+void* sponsor(void* i)
+{
+        int sponsor = (int)i;
+        sleep(3+rand()%SSLEEP); //deliberate
+        pthread_rwlock_wrlock(&rwlock);
+        p[nrp] = rand()%(C+1);
+        nrp++;
+        printf("Winner is: %d\n", p[nrp-1]);
+        pthread_rwlock_unlock(&rwlock);
+        return NULL;
+}
+
+//reader thread function
+void* competitor(void* nrc)
+{
+        int ct = (int)nrc;
+        int f=0, i=0;
+        while (f==0 && nrp<S)
+        {
+                pthread_rwlock_rdlock(&rwlock);
+                printf("%d is checking the winners\n", ct);
+                for (i=0; i<nrp; i++)
+                        if (p[i] == ct)
+                        {
+                                f = 1;
+                                printf("Winner me %d!!!\n", ct);
+                        }
+                pthread_rwlock_unlock(&rwlock);
+                sleep(1+rand()%CSLEEP);
+        }
+        //do a last check for the last winner announced
+        pthread_rwlock_rdlock(&rwlock);
+        for(i = 0; i<nrp; i++)
+                if (p[i] == ct)
+                {
+                        printf("Winner me %d!!!\n", ct);
+                }
+        pthread_rwlock_unlock(&rwlock);
+        return NULL;
+}
+
+int main()
+{
+        int i;
+        //launch threads - warning pointer cast
+        for (i=0; i<C; i++) pthread_create(&tid[i], NULL, competitor, i);
+        for(i=C; i<C+S; i++) pthread_create(&tid[i], NULL, sponsor, i);
+        for(i=0; i<C+S; i++) pthread_join(tid[i], NULL);
+        pthread_rwlock_destroy(&rwlock);
+        return 0;
+}

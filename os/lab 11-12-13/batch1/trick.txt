@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+
+#define T 10
+
+void* increment(void* arg)
+{
+        int id = (int) arg;
+        printf("%d\n", id);
+        return NULL;
+}
+
+int main()
+{
+        int i;
+        pthread_t thr[T];
+        for (i=0; i<T; i++)
+        {
+                //void*p = &i;
+                pthread_create(&thr[i], NULL, increment, i);
+        }
+        for (i=0; i<T; i++)
+                pthread_join(thr[i], NULL);
+        return 0;
+}

@@ -1,0 +1,186 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, fopen, fclose, fprintf, fread               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import fopen msvcrt.dll
+    10                                  import fprintf msvcrt.dll
+    11                                  import fclose msvcrt.dll
+    12                                  import fread msvcrt.dll
+    13                                  
+    14                                  ; our data is declared here (the variables needed by our program)
+    15                                  segment data use32 class=data
+    16 00000000 7200                        access_mode1 db "r", 0
+    17 00000002 7700                        access_mode2 db "w", 0
+    18 00000004 FFFFFFFF                    fd1 dd -1
+    19 00000008 FFFFFFFF                    fd2 dd -1
+    20 0000000C 666973696572312E74-         file_name1 db "fisier1.txt", 0
+    20 00000015 787400             
+    21 00000018 666973696572322E74-         file_name2 db "fisier2.txt", 0
+    21 00000021 787400             
+    22 00000024 00000000                    index dd 0
+    23 00000028 00000000                    we_read_chr dd 0
+    24 0000002C 00000000                    wrd dd 0
+    25 00000030 00000000                    lwrd dd 0
+    26 00000034 00000000                    chr dd 0
+    27 00000038 00000000                    index2 dd 0
+    28 0000003C 256300                      cformat db "%c", 0
+    29 0000003F 256400                      dformat db "%d", 0
+    30 00000042 <res 00000064>              save_sentence resb 100
+    31                                      len equ 1000
+    32 000000A6 <res 000003E8>              buffer resb len
+    33 0000048E 0D                          newline db 13
+    34                                  
+    35                                  ; our code starts here
+    36                                  segment code use32 class=code
+    37                                      start:
+    38                                          ; ...
+    39 00000000 68[00000000]                    push dword access_mode1
+    40 00000005 68[0C000000]                    push dword file_name1
+    41 0000000A FF15[00000000]                  call [fopen]
+    42 00000010 83C408                          add esp, 8
+    43                                          
+    44 00000013 83F800                          cmp eax, 0
+    45 00000016 0F84D8010000                    je fin
+    46                                          
+    47 0000001C A3[04000000]                    mov [fd1], eax
+    48                                          
+    49 00000021 68[02000000]                    push dword access_mode2
+    50 00000026 68[18000000]                    push dword file_name2
+    51 0000002B FF15[00000000]                  call [fopen]
+    52 00000031 83C408                          add esp, 8
+    53                                          
+    54 00000034 83F800                          cmp eax, 0
+    55 00000037 0F84B7010000                    je fin
+    56                                          
+    57 0000003D A3[08000000]                    mov [fd2], eax
+    58                                          
+    59                                          read_full_file:
+    60 00000042 FF35[04000000]                      push dword [fd1]
+    61 00000048 68E8030000                          push dword len
+    62 0000004D 6A01                                push dword 1
+    63 0000004F 68[A6000000]                        push dword buffer
+    64 00000054 FF15[00000000]                      call [fread]
+    65 0000005A 83C410                              add esp, 16
+    66                                              
+    67 0000005D 83F800                              cmp eax, 0
+    68 00000060 0F8470010000                        je cleanup
+    69                                              
+    70 00000066 A3[28000000]                        mov [we_read_chr], eax
+    71 0000006B BE00000000                          mov esi, 0
+    72 00000070 BF00000000                          mov edi, 0
+    73                                              
+    74                                              second_to_last_search:
+    75 00000075 31C0                                    xor eax, eax
+    76 00000077 8A86[A6000000]                          mov al, [buffer+esi]
+    77 0000007D 8887[42000000]                          mov [save_sentence+edi], al
+    78 00000083 3C20                                    cmp al, ' '
+    79 00000085 7414                                    je add_word
+    80 00000087 3C2D                                    cmp al, '-'
+    81 00000089 742D                                    je get_alm_last
+    82 0000008B 46                                      inc esi
+    83 0000008C 47                                      inc edi
+    84 0000008D 3B35[28000000]                          cmp esi, [we_read_chr]
+    85 00000093 0F8438010000                            je cont
+    86 00000099 75DA                                    jne second_to_last_search
+    87                                                  add_word:
+    88 0000009B 8305[2C000000]01                            add dword [wrd], 1
+    89 000000A2 8886[42000000]                              mov [save_sentence+esi], al
+    90 000000A8 47                                          inc edi
+    91 000000A9 46                                          inc esi
+    92 000000AA 3B35[28000000]                              cmp esi, [we_read_chr]
+    93 000000B0 0F841B010000                                je cont
+    94 000000B6 75BD                                        jne second_to_last_search
+    95                                                  get_alm_last:
+    96 000000B8 832D[2C000000]01                            sub dword [wrd],1
+    97 000000BF 8935[24000000]                              mov [index], esi
+    98 000000C5 8305[24000000]01                            add dword [index], 1
+    99 000000CC BE00000000                                  mov esi, 0
+   100                                                      find:
+   101 000000D1 31C0                                            xor eax, eax
+   102 000000D3 8A86[42000000]                                  mov al, [save_sentence+esi]
+   103 000000D9 46                                              inc esi
+   104 000000DA 3C20                                            cmp al, ' '
+   105 000000DC 740B                                            je see_if_found
+   106 000000DE 80BE[42000000]00                                cmp byte [save_sentence+esi], 0
+   107 000000E5 748E                                            je second_to_last_search
+   108 000000E7 75E8                                            jne find                            
+   109                                                           see_if_found:
+   110 000000E9 8305[30000000]01                                    add dword [lwrd], 1
+   111 000000F0 8B1D[2C000000]                                      mov ebx, dword [wrd]
+   112 000000F6 3B1D[30000000]                                      cmp ebx, dword [lwrd]
+   113 000000FC 75D3                                                jne find
+   114 000000FE 7400                                                je found
+   115                                                              found:
+   116 00000100 8A86[42000000]                                          mov al, [save_sentence+esi]
+   117 00000106 46                                                      inc esi
+   118 00000107 8935[38000000]                                          mov [index2], esi
+   119 0000010D A2[34000000]                                            mov [chr], al
+   120 00000112 FF35[34000000]                                          push dword [chr]
+   121 00000118 68[3C000000]                                            push dword cformat
+   122 0000011D FF35[08000000]                                          push dword [fd2]
+   123 00000123 FF15[00000000]                                          call [fprintf]
+   124 00000129 83C40C                                                  add esp, 12
+   125                                                                  
+   126 0000012C 31C0                                                    xor eax, eax
+   127 0000012E 8B35[38000000]                                          mov esi, [index2]
+   128 00000134 8A86[42000000]                                          mov al, [save_sentence+esi]
+   129 0000013A 3C20                                                    cmp al, ' '
+   130 0000013C 75C2                                                    jne found
+   131                                                                         
+   132 0000013E C705[34000000]2000-                              mov dword [chr], ' '
+   132 00000146 0000               
+   133 00000148 FF35[34000000]                                   push dword [chr]
+   134 0000014E 68[3C000000]                                     push dword cformat
+   135 00000153 FF35[08000000]                                   push dword [fd2]
+   136 00000159 FF15[00000000]                                   call [fprintf]
+   137 0000015F 83C40C                                           add esp, 12
+   138                                                                  
+   139 00000162 8305[2C000000]02                                 add dword [wrd], 2
+   140 00000169 FF35[2C000000]                                   push dword [wrd]
+   141 0000016F 68[3F000000]                                     push dword dformat
+   142 00000174 FF35[08000000]                                   push dword [fd2]
+   143 0000017A FF15[00000000]                                   call [fprintf]
+   144 00000180 83C40C                                           add esp, 12
+   145                                                                  
+   146 00000183 68[8E040000]                                     push dword newline
+   147 00000188 FF35[08000000]                                   push dword [fd2]
+   148 0000018E FF15[00000000]                                   call [fprintf]
+   149 00000194 83C408                                           add esp, 8
+   150                                                           
+   151 00000197 C705[2C000000]0000-                              mov dword [wrd], 0
+   151 0000019F 0000               
+   152 000001A1 C705[30000000]0000-                              mov dword [lwrd], 0
+   152 000001A9 0000               
+   153 000001AB BF00000000                                       mov edi, 0
+   154                                                           delete_sentence:
+   155 000001B0 C687[42000000]00                                    mov byte [save_sentence+edi], 0
+   156 000001B7 47                                                  inc edi
+   157 000001B8 80BF[42000000]00                                    cmp byte [save_sentence+edi], 0
+   158 000001BF 75EF                                                jne delete_sentence
+   159 000001C1 BF00000000                                       mov edi, 0
+   160 000001C6 8B35[24000000]                                   mov esi, [index]  
+   161 000001CC E9A4FEFFFF                                       jmp second_to_last_search
+   162                                                           
+   163                                                  
+   164                                                  
+   165                                              cont:
+   166 000001D1 E96CFEFFFF                              jmp read_full_file
+   167                                  
+   168                                         cleanup:
+   169 000001D6 FF35[04000000]                      push dword [fd1]
+   170 000001DC FF15[00000000]                      call [fclose]
+   171 000001E2 83C404                              add esp, 4
+   172                                              
+   173 000001E5 FF35[08000000]                      push dword [fd2]
+   174 000001EB FF15[00000000]                      call [fclose]
+   175 000001F1 83C404                              add esp, 4
+   176                                          
+   177                                          fin:
+   178                                          
+   179                                          ; exit(0)
+   180 000001F4 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+   181 000001F6 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

@@ -1,0 +1,40 @@
+html, body{
+    height:100%;
+    margin:0;
+}
+
+div.topline{
+    height:2px;
+    width:100px;
+    background: linear-gradient(to left, black, rgba(0, 0, 0, 0), black);
+    top:40%;
+    left:45%;
+    position:absolute;
+}
+
+div.leftline{
+    height:100px;
+    width:2px;
+    background: linear-gradient(black, rgba(0, 0, 0, 0), black);
+    top:40%;
+    left:45%;
+    position:absolute;
+}
+
+div.rightline{
+    height:100px;
+    width:2px;
+    background: linear-gradient(black, rgba(0, 0, 0, 0), black);
+    top:40%;
+    left:51.5%;
+    position:absolute;
+}
+
+div.bottomline{
+    height:2px;
+    width:100px;
+    background: linear-gradient(to left, black, rgba(0, 0, 0, 0), black);
+    top:53%;
+    left:45%;
+    position:absolute;
+}

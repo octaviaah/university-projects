@@ -1,0 +1,167 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, fopen, fread, fclose, printf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import fread msvcrt.dll
+    10                                  import fclose msvcrt.dll
+    11                                  import fopen msvcrt.dll
+    12                                  import printf msvcrt.dll
+    13                                  
+    14                                  ; our data is declared here (the variables needed by our program)
+    15                                  segment data use32 class=data
+    16 00000000 00000000                    nmb_cons dd 0
+    17 00000004 00000000                    we_read_chr dd 0
+    18 00000008 6E6F206F6620636F6E-         message_cons db "no of cons: %d", 0
+    18 00000011 733A20256400       
+    19 00000017 6D79746578742E7478-         file_name db "mytext.txt", 0
+    19 00000020 7400               
+    20 00000022 7200                        access_mode db "r", 0
+    21 00000024 FFFFFFFF                    file_descriptor dd -1
+    22                                      len equ 100
+    23 00000028 <res 00000064>              buffer resb len
+    24                                  
+    25                                  ; our code starts here
+    26                                  segment code use32 class=code
+    27                                      start:
+    28                                          ;A text file is given. Read the content of the file, count the number of consonants and display the result on the screen. The name of text file is defined in the data segment.
+    29 00000000 68[22000000]                    push dword access_mode
+    30 00000005 68[17000000]                    push dword file_name
+    31 0000000A FF15[00000000]                  call [fopen]
+    32 00000010 83C408                          add esp, 8
+    33                                          
+    34 00000013 83F800                          cmp eax, 0
+    35 00000016 0F8449010000                    je fin
+    36                                          
+    37 0000001C A3[24000000]                    mov [file_descriptor], eax
+    38                                          
+    39                                          read_in_file:
+    40 00000021 FF35[24000000]                      push dword [file_descriptor]
+    41 00000027 6A64                                push dword len
+    42 00000029 6A01                                push dword 1
+    43 0000002B 68[28000000]                        push dword buffer
+    44 00000030 FF15[00000000]                      call [fread]
+    45 00000036 83C410                              add esp, 16
+    46                                              
+    47 00000039 83F800                              cmp eax, 0
+    48 0000003C 0F8414010000                        je cleanup
+    49                                              
+    50 00000042 A3[04000000]                        mov [we_read_chr], eax
+    51                                              
+    52 00000047 BE00000000                          mov esi, 0
+    53                                              
+    54                                              find_cons:
+    55 0000004C 8A86[28000000]                          mov al, [buffer+esi]
+    56 00000052 3C42                                    cmp al, 'B'
+    57 00000054 0F84E3000000                            je add_cons
+    58 0000005A 3C43                                    cmp al, 'C'
+    59 0000005C 0F84DB000000                            je add_cons
+    60 00000062 3C44                                    cmp al, 'D'
+    61 00000064 0F84D3000000                            je add_cons
+    62 0000006A 3C46                                    cmp al, 'F'
+    63 0000006C 0F84CB000000                            je add_cons
+    64 00000072 3C47                                    cmp al, 'G'
+    65 00000074 0F84C3000000                            je add_cons
+    66 0000007A 3C48                                    cmp al, 'H'
+    67 0000007C 0F84BB000000                            je add_cons
+    68 00000082 3C4A                                    cmp al, 'J'
+    69 00000084 0F84B3000000                            je add_cons
+    70 0000008A 3C4B                                    cmp al, 'K'
+    71 0000008C 0F84AB000000                            je add_cons
+    72 00000092 3C4C                                    cmp al, 'L'
+    73 00000094 0F84A3000000                            je add_cons
+    74 0000009A 3C4D                                    cmp al, 'M'
+    75 0000009C 0F849B000000                            je add_cons
+    76 000000A2 3C4E                                    cmp al, 'N'
+    77 000000A4 0F8493000000                            je add_cons
+    78 000000AA 3C50                                    cmp al, 'P'
+    79 000000AC 0F848B000000                            je add_cons
+    80 000000B2 3C51                                    cmp al, 'Q'
+    81 000000B4 0F8483000000                            je add_cons
+    82 000000BA 3C52                                    cmp al, 'R'
+    83 000000BC 747F                                    je add_cons
+    84 000000BE 3C53                                    cmp al, 'S'
+    85 000000C0 747B                                    je add_cons
+    86 000000C2 3C54                                    cmp al, 'T'
+    87 000000C4 7477                                    je add_cons
+    88 000000C6 3C56                                    cmp al, 'V'
+    89 000000C8 7473                                    je add_cons
+    90 000000CA 3C57                                    cmp al, 'W'
+    91 000000CC 746F                                    je add_cons
+    92 000000CE 3C58                                    cmp al, 'X'
+    93 000000D0 746B                                    je add_cons
+    94 000000D2 3C59                                    cmp al, 'Y'
+    95 000000D4 7467                                    je add_cons
+    96 000000D6 3C5A                                    cmp al, 'Z'
+    97 000000D8 7463                                    je add_cons
+    98 000000DA 3C62                                    cmp al, 'b'
+    99 000000DC 745F                                    je add_cons
+   100 000000DE 3C63                                    cmp al, 'c'
+   101 000000E0 745B                                    je add_cons
+   102 000000E2 3C64                                    cmp al, 'd'
+   103 000000E4 7457                                    je add_cons
+   104 000000E6 3C66                                    cmp al, 'f'
+   105 000000E8 7453                                    je add_cons
+   106 000000EA 3C67                                    cmp al, 'g'
+   107 000000EC 744F                                    je add_cons
+   108 000000EE 3C68                                    cmp al, 'h'
+   109 000000F0 744B                                    je add_cons
+   110 000000F2 3C6A                                    cmp al, 'j'
+   111 000000F4 7447                                    je add_cons
+   112 000000F6 3C6B                                    cmp al, 'k'
+   113 000000F8 7443                                    je add_cons
+   114 000000FA 3C6C                                    cmp al, 'l'
+   115 000000FC 743F                                    je add_cons
+   116 000000FE 3C6D                                    cmp al, 'm'
+   117 00000100 743B                                    je add_cons
+   118 00000102 3C6E                                    cmp al, 'n'
+   119 00000104 7437                                    je add_cons
+   120 00000106 3C70                                    cmp al, 'p'
+   121 00000108 7433                                    je add_cons
+   122 0000010A 3C71                                    cmp al, 'q'
+   123 0000010C 742F                                    je add_cons
+   124 0000010E 3C72                                    cmp al, 'r'
+   125 00000110 742B                                    je add_cons
+   126 00000112 3C73                                    cmp al, 's'
+   127 00000114 7427                                    je add_cons
+   128 00000116 3C74                                    cmp al, 't'
+   129 00000118 7423                                    je add_cons
+   130 0000011A 3C76                                    cmp al, 'v'
+   131 0000011C 741F                                    je add_cons
+   132 0000011E 3C77                                    cmp al, 'w'
+   133 00000120 741B                                    je add_cons
+   134 00000122 3C78                                    cmp al, 'x'
+   135 00000124 7417                                    je add_cons
+   136 00000126 3C79                                    cmp al, 'y'
+   137 00000128 7413                                    je add_cons
+   138 0000012A 3C7A                                    cmp al, 'z'
+   139 0000012C 740F                                    je add_cons
+   140 0000012E 46                                      inc esi
+   141 0000012F 3B35[04000000]                          cmp esi, dword [we_read_chr]
+   142 00000135 0F8511FFFFFF                            jne find_cons
+   143 0000013B 7414                                    je cont
+   144                                                  add_cons:
+   145 0000013D 8305[00000000]01                            add DWORD [nmb_cons], 1
+   146 00000144 46                                          inc esi
+   147 00000145 3B35[04000000]                              cmp esi, dword [we_read_chr]
+   148 0000014B 0F85FBFEFFFF                                jne find_cons
+   149                                              
+   150                                              cont:
+   151 00000151 E9CBFEFFFF                          jmp read_in_file
+   152                                              
+   153                                          cleanup:
+   154 00000156 FF35[24000000]                      push dword [file_descriptor]
+   155 0000015C FF15[00000000]                      call [fclose]
+   156 00000162 83C404                              add esp, 4
+   157                                          
+   158                                          fin:
+   159 00000165 FF35[00000000]                      push dword [nmb_cons]
+   160 0000016B 68[08000000]                        push dword message_cons
+   161 00000170 FF15[00000000]                      call [printf]
+   162 00000176 83C408                              add esp, 8
+   163                                          ; exit(0)
+   164 00000179 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+   165 0000017B FF15[00000000]                  call    [exit]       ; call exit to terminate the program

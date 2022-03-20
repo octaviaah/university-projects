@@ -1,0 +1,25 @@
+#!/bin/bash
+
+#Sa se scrie un fisier de comenzi care va afisa toate fisierele dintr-un director si din subdirectoarele acestuia asupra carora au drepturi de scriere toate cele trei categorii de utilizatori. Aceste fisiere vor fi apoi redenumite, adaugandu-se sufixul .all (comenzi:  find -perm, mv).
+
+for F in `find * . -type f`; do
+	perm=`stat -c '%a' $F`
+	if [ $perm -eq 700 ]; then
+		echo $F
+		dest='./test'
+		cp $F -t $dest
+		mv './test/'$F './test/'$F'.all'
+	fi
+done
+
+  -perm mode
+              File's permission bits are exactly mode (octal or
+              symbolic).  Since an exact match is required, if you want
+              to use this form for symbolic modes, you may have to
+              specify a rather complex mode string.  For example `-perm
+              g=w' will only match files which have mode 0020 (that is,
+              ones for which group write permission is the only
+              permission set).  It is more likely that you will want to
+              use the `/' or `-' forms, for example `-perm -g=w', which
+              matches any file with group write permission.  See the
+              EXAMPLES section for some illustrative examples.

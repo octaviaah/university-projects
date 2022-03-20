@@ -1,0 +1,64 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, printf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import printf msvcrt.dll
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13 00000000 E8920500                    a dd 365288
+    14 00000004 <res 00000020>              nmb resb 32
+    15 00000024 256400                      dformat db "%d", 0
+    16 00000027 00000000                    ccx dd 0
+    17                                  ; our code starts here
+    18                                  segment code use32 class=code
+    19                                      start:
+    20                                          ; ...
+    21 00000000 8B1D[00000000]                  mov ebx, [a]
+    22 00000006 C605[27000000]20                mov byte [ccx], 32
+    23 0000000D B920000000                      mov ecx, 32
+    24 00000012 BF00000000                      mov edi, 0
+    25                                          all_bits:
+    26 00000017 8B0D[27000000]                      mov ecx, [ccx]
+    27 0000001D D1C3                                rol ebx, 1
+    28 0000001F 720D                                jc store_bit
+    29                                              cont:
+    30 00000021 7316                                    jnc store_no_bit
+    31                                                  cont2:
+    32 00000023 49                                          dec ecx
+    33 00000024 890D[27000000]                              mov dword [ccx], ecx
+    34 0000002A 75EB                                        jnz all_bits
+    35 0000002C 7416                                        jz fin
+    36                                          store_bit:
+    37 0000002E B001                                mov al, 1
+    38 00000030 8887[04000000]                      mov [nmb+edi], al
+    39 00000036 47                                  inc edi
+    40 00000037 EBE8                                jmp cont
+    41                                          store_no_bit:
+    42 00000039 B000                                mov al, 0
+    43 0000003B 8887[04000000]                      mov [nmb+edi], al
+    44 00000041 47                                  inc edi
+    45 00000042 EBDF                                jmp cont2
+    46                                          fin:
+    47 00000044 BE00000000                          mov esi, 0
+    48 00000049 B920000000                          mov ecx, 32
+    49 0000004E C605[27000000]20                    mov byte [ccx], 32
+    50                                              printing:
+    51 00000055 8B0D[27000000]                          mov ecx, [ccx]
+    52 0000005B B800000000                              mov eax, 0
+    53 00000060 8A86[04000000]                          mov al, [nmb+esi]
+    54 00000066 46                                      inc esi
+    55 00000067 50                                      push eax
+    56 00000068 68[24000000]                            push dword dformat
+    57 0000006D FF15[00000000]                          call [printf]
+    58 00000073 83C408                                  add esp, 4*2
+    59 00000076 832D[27000000]01                        sub dword [ccx], 1
+    60 0000007D 8B0D[27000000]                          mov ecx, [ccx]
+    61 00000083 75D0                                    jnz printing
+    62                                          ; exit(0)
+    63 00000085 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    64 00000087 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

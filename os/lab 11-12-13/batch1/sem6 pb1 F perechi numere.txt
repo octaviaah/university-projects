@@ -1,0 +1,34 @@
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct
+{
+        char*n1;
+        char*n2;
+}pereche;
+
+pthread_t tid[100];
+pereche pair[100];
+
+void* computepairs(void* pair)
+{
+        int n1 = atoi(((pereche*)pair)->n1);
+        int n2 = atoi(((pereche*)pair)->n2);
+        printf("n1=%d n2=%d \n", n1, n2);
+        return NULL;
+}
+
+int main(int argc, char* argv[])
+{
+        int i, n = (argc-1)/2;
+        for (i=0; i<n; i++)
+        {
+                pair[i].n1 = argv[2*i+1];
+                pair[i].n2 = argv[2*i+2];
+                pthread_create(&tid[i], NULL, computepairs, (void*)&pair[i]);
+        }
+        for(i=0; i<n; i++)
+                pthread_join(tid[i], NULL);
+        return 0;
+}

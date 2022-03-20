@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <pthread.h>
+
+int n=0;
+pthread_barrier_t b1, b2;
+pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
+
+void* f(void*a)
+{
+        //n++;
+        pthread_barrier_wait(&b1);
+        pthread_mutex_lock(&mtx);
+        n++;
+        pthread_mutex_unlock(&mtx);
+        return NULL;
+}
+
+int main()
+{
+        int i;
+        pthread_t t[7];
+        pthread_barrier_init(&b1, 0, 7);
+        for(i=0; i<7; i++)
+                pthread_create(&t[i], NULL, f, NULL);
+        for(i=0; i<7; i++)
+                pthread_join(t[i], NULL);
+        pthread_barrier_destroy(&b1);
+        pthread_mutex_destroy(&mtx);
+        printf("%d \n", n);
+        return 0;
+}

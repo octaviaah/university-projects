@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int main(int argc, char**argv)
+{
+        mkfifo("fifob2a", 0666);
+        mkfifo("fifoa2b", 0666);
+
+        int fa2b, fb2a;
+        int fa=fork();
+        if (fa<0)
+        {
+                printf("error");
+                exit(1);
+        }
+        if (fa==0)
+        {
+                int x1, x2;
+                scanf("%d", &x1); scanf("%d", &x2);
+                fa2b=open("fifoa2b", O_WRONLY);
+                write(fa2b, &x1, sizeof(int));
+                write(fa2b, &x2, sizeof(int));
+                close(fa2b);
+                fb2a=open("fifob2a", O_RDONLY);
+                int d;
+                read(fb2a, &d, sizeof(int));
+                printf("%d\n", d);
+                close(fb2a);
+                exit(0);
+        }
+        else
+        {
+                int fb=fork();
+                if (fb<0)
+                {
+                        printf("error");
+                        exit(1);
+                }
+                if (fb==0)
+                {
+                        fa2b=open("fifoa2b", O_RDONLY);
+                        int x1, x2;
+                        read(fa2b, &x1, sizeof(int));
+                        read(fa2b, &x2, sizeof(int));
+                        close(fa2b);
+                        fb2a=open("fifob2a", O_WRONLY);
+                        int r=(rand()%x2 +x1)%x2;
+                        if (x1 > x2)
+                        {
+                                int aux = x1; x1 = x2; x2 = aux;
+                        }
+                        while (!(r>x1 && r<x2))
+                                r=(rand()%x2 +x1)%x2;
+                        write(fb2a, &r, sizeof(int));
+                        close(fb2a);
+                        exit(0);
+                }
+        }
+        wait(0); wait(0);
+        unlink("fifoa2b");
+        unlink("fifob2a");
+        return 0;
+}

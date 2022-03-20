@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <string.h>
+
+int main(int argc, char** argv)
+{
+        int a2p[2], p2a[2], pa, wl=0;
+        char word[20];
+        pipe(a2p); pipe(p2a);
+        pa=fork();
+        if (pa==0)
+        {
+                char newword[20];
+                int l=10;
+                close(p2a[1]); close(a2p[0]);
+                while (l>3)
+                {
+                        read(p2a[0], &l, sizeof(int));
+                        read(p2a[0], newword, l);
+
+                        printf("A: %s of size %d\n", newword, l-1);
+
+                        char*s=newword;
+                        s++; l--;
+
+                        write(a2p[1], &l, sizeof(int));
+                        write(a2p[1], s, l);
+                }
+                close(p2a[0]); close(a2p[1]);
+                exit(0);
+        }
+        else
+        {
+                printf("Give a word:\n");
+                scanf("%s", word);
+                wl=strlen(word)+1;
+                close(p2a[0]); close(a2p[1]);
+
+                write(p2a[1], &wl, sizeof(int));
+                write(p2a[1], word, wl);
+
+                while(wl > 3)
+                {
+                        read(a2p[0], &wl, sizeof(int));
+                        read(a2p[0], word, wl);
+                        printf("Parent: %s of size %d\n", word, wl-1);
+                        word[wl-2]='\0', wl--;
+                        write(p2a[1], &wl, sizeof(int));
+                        write(p2a[1], word, wl);
+                }
+                close(p2a[1]); close(a2p[0]);
+                wait(0);
+                printf("Finished\n");
+        }
+        return 0;
+}

@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <string.h>
+
+int main(int argc, char** argv)
+{
+        int pid;
+        pid = fork();
+        argv[0]="./numcomp.sh";
+        if (pid==0)
+        {
+                execv("./numcomp.sh", argv);
+                printf("Error\n");
+                exit(0);
+        }
+        wait(0);
+        printf("Finished\n");
+        return 0;
+}
+
+
+//numcomp.sh
+#!/bin/bash
+
+n=$1
+shift
+for i in $@; do
+        if [ $i -ne $n ];then
+                echo "They are not equal"
+                exit 1
+        fi
+        n=$i
+done
+echo "They are equal"

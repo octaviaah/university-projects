@@ -1,0 +1,44 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13 00000000 1A24AB32BC0A                a dw 241Ah, 32ABh, 0ABCh
+    14                                      len equ ($-a)/2; length of the string in words
+    15 00000006 00<rept>                    b1 times len db 0
+    16 00000009 00<rept>                    b2 times len db 0
+    17                                  
+    18                                  ; our code starts here
+    19                                  segment code use32 class=code
+    20                                      start:
+    21                                      ;Given an array A of words, build two arrays of bytes:  
+    22                                      ;- array B1 contains as elements the higher part of the words from A
+    23                                      ;- array B2 contains as elements the lower part of the words from A
+    24                                          
+    25 00000000 BE[00000000]                    mov esi, a; move the far address of the string in esi
+    26 00000005 FC                              cld; parse the string from left to right
+    27 00000006 B903000000                      mov ecx, len; keep the length of the string in ecx
+    28 0000000B BF[06000000]                    mov edi, b1; we move the destination string, b1, in edi
+    29                                          repeta1:
+    30 00000010 A4                                  movsb; move low part of current word into b1
+    31 00000011 AC                                  lodsb; move high part into al
+    32 00000012 E2FC                            loop repeta1
+    33                                          
+    34 00000014 BE[00000000]                    mov esi, a; move the far address of the string in esi
+    35 00000019 FC                              cld; parse the string from left to right
+    36 0000001A BF[09000000]                    mov edi, b2; we move th destination string, b2, in edi
+    37 0000001F B903000000                      mov ecx, len
+    38                                          repeta2:
+    39 00000024 AC                                  lodsb; move low part into al
+    40 00000025 A4                                  movsb; move high part of current word into b2
+    41 00000026 E2FC                            loop repeta2
+    42                                          ; exit(0)
+    43 00000028 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    44 0000002A FF15[00000000]                  call    [exit]       ; call exit to terminate the program

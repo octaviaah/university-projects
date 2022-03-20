@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ -z $1 ];then
+        echo number should be nonxero
+        exit 1
+fi
+
+number=$1
+shift
+
+for i in $@; do
+        if [ ! -d $i ];then
+                echo directory where??
+        else
+                for file in `find $i -type f`; do
+                        size=`ls -l $file | awk '{print $5}'`
+                        if [ $size -gt $number ];then
+                                echo $file
+                        fi
+                done
+        fi
+done

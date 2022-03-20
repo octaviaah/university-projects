@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/d/facultate/sda/lab/lab 2/sorted multimap/SMMIterator.h
+SortedMultiMap.h
+/mnt/d/facultate/sda/lab/lab 2/sorted multimap/SortedMultiMap.h
+
+/mnt/d/facultate/sda/lab/lab 2/sorted multimap/SortedMultiMap.cpp
+SMMIterator.h
+/mnt/d/facultate/sda/lab/lab 2/sorted multimap/SMMIterator.h
+SortedMultiMap.h
+/mnt/d/facultate/sda/lab/lab 2/sorted multimap/SortedMultiMap.h
+iostream
+-
+vector
+-
+exception
+-
+
+/mnt/d/facultate/sda/lab/lab 2/sorted multimap/SortedMultiMap.h
+vector
+-
+utility
+-
+

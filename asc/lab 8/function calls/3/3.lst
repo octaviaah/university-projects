@@ -1,0 +1,48 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, printf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import printf msvcrt.dll
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13 00000000 C3F4FFFF                    a dd -2877
+    14 00000004 9EFFFFFF                    b dd -98
+    15 00000008 2564202B202564203D-         message db "%d + %d = %d", 0
+    15 00000011 20256400           
+    16 00000015 00000000                    result dd 0
+    17                                  ; our code starts here
+    18                                  segment code use32 class=code
+    19                                      start:
+    20                                          ;Two natural numbers a and b (a, b: dword, defined in the data segment) are given. Calculate their sum and display the result in the following format: "<a> + <b> = <result>". Example: "1 + 2 = 3"
+    21                                          ;The values will be displayed in decimal format (base 10) with sign.
+    22 00000000 31C0                            xor eax, eax
+    23 00000002 31DB                            xor ebx, ebx
+    24 00000004 31C9                            xor ecx, ecx
+    25 00000006 31D2                            xor edx, edx
+    26                                          
+    27 00000008 66A1[00000000]                  mov ax, word [a]
+    28 0000000E 668B15[02000000]                mov dx, word [a+2]
+    29 00000015 668B1D[04000000]                mov bx, word [b]
+    30 0000001C 668B0D[06000000]                mov cx, word [b+2]
+    31                                          
+    32 00000023 6601D8                          add ax, bx
+    33 00000026 6611CA                          adc dx, cx
+    34                                          
+    35 00000029 66A3[15000000]                  mov word [result], ax
+    36 0000002F 668915[17000000]                mov word [result+2], dx
+    37                                          
+    38 00000036 FF35[15000000]                  push dword [result]
+    39 0000003C FF35[04000000]                  push dword [b]
+    40 00000042 FF35[00000000]                  push dword [a]
+    41 00000048 68[08000000]                    push dword message
+    42 0000004D FF15[00000000]                  call [printf]
+    43 00000053 83C410                          add esp, 4*4
+    44                                          
+    45                                          ; exit(0)
+    46 00000056 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    47 00000058 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

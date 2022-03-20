@@ -1,0 +1,69 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, scanf, printf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import printf msvcrt.dll
+    10                                  import scanf msvcrt.dll
+    11                                  
+    12                                  ; our data is declared here (the variables needed by our program)
+    13                                  segment data use32 class=data
+    14 00000000 <res 00000004>              a resb 4
+    15 00000004 257800                      xformat db "%x", 0
+    16 00000007 613D00                      message_a db "a=", 0
+    17 0000000A 756E7369676E65643D-         message_uns db "unsigned=%d", 0
+    17 00000013 256400             
+    18 00000016 7369676E65643D2564-         message_sgn db "signed=%d", 0
+    18 0000001F 00                 
+    19 00000020 00000000                    signed_nmb dd 0
+    20 00000024 0D0A                        newline db 13, 10
+    21                                  
+    22                                  ; our code starts here
+    23                                  segment code use32 class=code
+    24                                      start:
+    25                                          ;Read a hexadecimal number with 2 digits from the keyboard. Display the number in base 10, in both interpretations: as an unsigned number and as an signed number (on 8 bits).
+    26 00000000 68[07000000]                    push dword message_a
+    27 00000005 FF15[00000000]                  call [printf]
+    28 0000000B 83C404                          add esp, 4
+    29                                          
+    30 0000000E 68[00000000]                    push dword a
+    31 00000013 68[04000000]                    push dword xformat
+    32 00000018 FF15[00000000]                  call [scanf]
+    33 0000001E 83C408                          add esp, 8
+    34                                          
+    35 00000021 A1[00000000]                    mov eax, [a]
+    36 00000026 A3[20000000]                    mov [signed_nmb], eax
+    37                                          
+    38 0000002B 833D[00000000]7F                cmp dword [a], 127
+    39 00000032 7E25                            jle next
+    40                                          
+    41 00000034 66A1[00000000]                  mov ax, [a]
+    42 0000003A 66BA0000                        mov dx, 0
+    43 0000003E 66BB0001                        mov bx, 256
+    44 00000042 66B90000                        mov cx, 0
+    45 00000046 6629D8                          sub ax, bx
+    46 00000049 6619CA                          sbb dx, cx
+    47 0000004C 66A3[20000000]                  mov word [signed_nmb], ax
+    48 00000052 668915[22000000]                mov word [signed_nmb+2], dx
+    49                                          
+    50                                          next:
+    51                                          
+    52 00000059 FF35[00000000]                  push dword [a]
+    53 0000005F 68[0A000000]                    push dword message_uns
+    54 00000064 FF15[00000000]                  call [printf]
+    55 0000006A 83C408                          add esp, 8
+    56                                          
+    57 0000006D 68[24000000]                    push dword newline
+    58 00000072 FF15[00000000]                  call [printf]
+    59 00000078 83C404                          add esp, 4
+    60                                          
+    61 0000007B FF35[20000000]                  push dword [signed_nmb]
+    62 00000081 68[16000000]                    push dword message_sgn
+    63 00000086 FF15[00000000]                  call [printf]
+    64 0000008C 83C408                          add esp, 8
+    65                                          ; exit(0)
+    66 0000008F 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    67 00000091 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

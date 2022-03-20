@@ -1,0 +1,27 @@
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int n=0;
+pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
+
+void* f(void* a)
+{
+        pthread_mutex_lock(&mtx);
+        n++;
+        pthread_mutex_unlock(&mtx);
+        return NULL;
+}
+
+int main()
+{
+        int i;
+        pthread_t t[10];
+        for(i=0; i<10; i++)
+                pthread_create(&t[i], 0, f, 0);
+        for (i=0; i<10; i++)
+                pthread_join(t[i], NULL);
+        pthread_mutex_destroy(&mtx);
+        printf("%d\n", n);
+        return 0;
+}

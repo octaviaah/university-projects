@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+#include <string.h>
+
+int main(int argc, char** argv)
+{
+        int pa, p2a[2], l;
+        pipe(p2a);
+        pa=fork();
+        char n[25];
+        if (pa==0)
+        {
+                close(p2a[1]);
+                int nl=0;
+                char newn[25];
+                while(1)
+                {
+                        if (read(p2a[0], &nl, sizeof(int)) <=0) break;
+                        if (read(p2a[0], newn, nl) <=0) break;
+                        int i, found = 0;
+                        for (i=0; newn[i]; i++)
+                                if (newn[i] < '0' || newn[i] > '9')
+                                {
+                                        found = 1;
+                                        break;
+                                }
+                        if (found == 1) printf("C says: %s has some intruders...\n", newn);
+                        else printf("C says: %s has only digits!\n", newn);
+                }
+                close(p2a[0]); exit(0);
+        }
+        close(p2a[0]);
+        printf("Write strings here:\n");
+        while(1)
+        {
+                scanf("%s", n);
+                if (strcmp(n, "stop") == 0) break;
+                l=strlen(n) + 1;
+                write(p2a[1], &l, sizeof(int));
+                write(p2a[1], n, l);
+        }
+        close(p2a[1]); wait(0);
+        return 0;
+}

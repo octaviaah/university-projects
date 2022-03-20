@@ -1,0 +1,154 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, fopen, fclose, fprintf, fread               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import fopen msvcrt.dll
+    10                                  import fclose msvcrt.dll
+    11                                  import fprintf msvcrt.dll
+    12                                  import fread msvcrt.dll
+    13                                  
+    14                                  ; our data is declared here (the variables needed by our program)
+    15                                  segment data use32 class=data
+    16 00000000 666973696572312E74-         file_name1 db "fisier1.txt", 0
+    16 00000009 787400             
+    17 0000000C 666973696572322E74-         file_name2 db "fisier2.txt", 0
+    17 00000015 787400             
+    18 00000018 7200                        access_mode1 db "r", 0
+    19 0000001A 7700                        access_mode2 db "w", 0
+    20 0000001C FFFFFFFF                    file_desc1 dd -1
+    21 00000020 FFFFFFFF                    file_desc2 dd -1
+    22 00000024 00000000                    we_read_chr dd 0
+    23                                      len equ 1000
+    24 00000028 <res 000003E8>              buffer resb len
+    25 00000410 00                          stop db 0
+    26 00000411 01000000                    index dd 1
+    27 00000415 00000000                    chr dd 0
+    28 00000419 256300                      cformat db "%c", 0
+    29 0000041C 0D                          newline db 13
+    30                                  
+    31                                  ; our code starts here
+    32                                  segment code use32 class=code
+    33                                      start:
+    34                                          ;Se citesc propozitii din fisier1. Sa se afisez in fisier 2 propozitiile care au indici pari.
+    35 00000000 68[18000000]                    push dword access_mode1
+    36 00000005 68[00000000]                    push dword file_name1
+    37 0000000A FF15[00000000]                  call [fopen]
+    38 00000010 83C408                          add esp, 8
+    39                                          
+    40 00000013 83F800                          cmp eax, 0
+    41 00000016 0F842E010000                    je fin
+    42                                          
+    43 0000001C A3[1C000000]                    mov [file_desc1], eax
+    44                                          
+    45 00000021 68[1A000000]                    push dword access_mode2
+    46 00000026 68[0C000000]                    push dword file_name2
+    47 0000002B FF15[00000000]                  call [fopen]
+    48 00000031 83C408                          add esp, 8
+    49                                          
+    50 00000034 83F800                          cmp eax, 0
+    51 00000037 0F840D010000                    je fin
+    52                                          
+    53 0000003D A3[20000000]                    mov [file_desc2], eax
+    54                                          
+    55                                          read_full_file:
+    56 00000042 FF35[1C000000]                      push dword [file_desc1]
+    57 00000048 68E8030000                          push dword len
+    58 0000004D 6A01                                push dword 1
+    59 0000004F 68[28000000]                        push dword buffer
+    60 00000054 FF15[00000000]                      call [fread]
+    61 0000005A 83C410                              add esp, 16
+    62                                              
+    63 0000005D 83F800                              cmp eax, 0
+    64 00000060 0F84C6000000                        je cleanup
+    65                                              
+    66 00000066 A3[24000000]                        mov [we_read_chr], eax
+    67 0000006B BE00000000                          mov esi, 0
+    68                                              
+    69                                              print_prop:
+    70 00000070 8A86[28000000]                          mov al, [buffer+esi]
+    71 00000076 3C2E                                    cmp al, '.'
+    72 00000078 740B                                    je in_file2
+    73 0000007A 46                                      inc esi
+    74 0000007B 3B35[24000000]                          cmp esi, dword [we_read_chr]
+    75 00000081 75ED                                    jne print_prop
+    76 00000083 7468                                    je cont2
+    77                                                  in_file2:
+    78 00000085 8305[11040000]01                            add dword [index], 1
+    79 0000008C A1[11040000]                                mov eax, [index]
+    80 00000091 BA00000000                                  mov edx, 0
+    81 00000096 BB02000000                                  mov ebx, 2
+    82 0000009B F7F3                                        div ebx
+    83                                                      
+    84 0000009D 83FA00                                      cmp edx, 0
+    85 000000A0 753C                                        jne cont
+    86                                                      add_to_file:
+    87 000000A2 46                                              inc esi
+    88 000000A3 31C0                                            xor eax, eax
+    89 000000A5 8A86[28000000]                                  mov al, [buffer+esi]
+    90                                                          
+    91 000000AB 3C2E                                            cmp al, '.'
+    92 000000AD 7443                                            je add_space
+    93 000000AF 7508                                            jne next_comp
+    94                                                          
+    95 000000B1 3B35[24000000]                                  cmp esi, [we_read_chr]
+    96 000000B7 7434                                            je cont2
+    97                                                          
+    98                                                          next_comp:
+    99 000000B9 3C00                                                cmp al, 0
+   100 000000BB 7430                                                je cont2
+   101                                                              
+   102 000000BD A2[15040000]                                        mov byte [chr], al
+   103                                                              
+   104 000000C2 FF35[15040000]                                      push dword [chr]
+   105 000000C8 68[19040000]                                        push dword cformat
+   106 000000CD FF35[20000000]                                      push dword [file_desc2]
+   107 000000D3 FF15[00000000]                                      call [fprintf]
+   108 000000D9 83C40C                                              add esp, 12
+   109                                                              
+   110 000000DC EBC4                                            jmp add_to_file
+   111                                                          
+   112                                                      cont:
+   113 000000DE 46                                              inc esi
+   114 000000DF 31C0                                            xor eax, eax
+   115 000000E1 8A86[28000000]                                  mov al, [buffer+esi]
+   116                                                          
+   117 000000E7 3C2E                                            cmp al, '.'
+   118 000000E9 7485                                            je print_prop
+   119 000000EB 75F1                                            jne cont
+   120                                               
+   121                                               cont2:
+   122 000000ED E950FFFFFF                           jmp read_full_file
+   123                                               
+   124                                               add_space:
+   125 000000F2 C605[15040000]2E                        mov byte [chr], '.'
+   126                                                  
+   127 000000F9 FF35[15040000]                          push dword [chr]
+   128 000000FF 68[19040000]                            push dword cformat
+   129 00000104 FF35[20000000]                          push dword [file_desc2]
+   130 0000010A FF15[00000000]                          call [fprintf]
+   131 00000110 83C40C                                  add esp, 12
+   132                                                  
+   133 00000113 68[1C040000]                            push dword newline
+   134 00000118 FF35[20000000]                          push dword [file_desc2]
+   135 0000011E FF15[00000000]                          call [fprintf]
+   136 00000124 83C408                                  add esp, 8
+   137                                                  
+   138 00000127 E944FFFFFF                              jmp print_prop
+   139                                              
+   140                                              cleanup:
+   141 0000012C FF35[1C000000]                          push dword [file_desc1]
+   142 00000132 FF15[00000000]                          call [fclose]
+   143 00000138 83C404                                  add esp, 4
+   144                                                  
+   145 0000013B FF35[20000000]                          push dword [file_desc2]
+   146 00000141 FF15[00000000]                          call [fclose]
+   147 00000147 83C404                                  add esp, 4
+   148                                          
+   149                                          fin:
+   150                                          ; exit(0)
+   151 0000014A 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+   152 0000014C FF15[00000000]                  call    [exit]       ; call exit to terminate the program

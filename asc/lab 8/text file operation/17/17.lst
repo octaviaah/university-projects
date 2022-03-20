@@ -1,0 +1,100 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, fopen, fclose, fprintf, scanf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import fopen msvcrt.dll
+    10                                  import fclose msvcrt.dll
+    11                                  import scanf msvcrt.dll
+    12                                  import fprintf msvcrt.dll
+    13                                  
+    14                                  ; our data is declared here (the variables needed by our program)
+    15                                  segment data use32 class=data
+    16 00000000 31372E74787400              file_name db "17.txt", 0
+    17 00000007 7700                        access_mode db "w", 0
+    18 00000009 <res 00000008>              nmb resb 8
+    19 00000011 FFFFFFFF                    file_desciptor dd -1
+    20 00000015 256400                      dformat db "%d", 0
+    21 00000018 0D                          newline db 13
+    22                                  
+    23                                  ; our code starts here
+    24                                  segment code use32 class=code
+    25                                      start:
+    26                                          ;A file name is given (defined in the data segment). Create a file with the given name, then read numbers from the keyboard and write only the numbers divisible by 7 to file, until the value '0' is read from
+    27 00000000 68[07000000]                    push dword access_mode
+    28 00000005 68[00000000]                    push dword file_name
+    29 0000000A FF15[00000000]                  call [fopen]
+    30 00000010 83C408                          add esp, 8
+    31                                          
+    32 00000013 83F800                          cmp eax, 0
+    33 00000016 0F84C7000000                    je fin
+    34                                          
+    35 0000001C A3[11000000]                    mov [file_desciptor], eax
+    36                                          
+    37                                          read_nmb:
+    38 00000021 68[09000000]                        push dword nmb
+    39 00000026 68[15000000]                        push dword dformat
+    40 0000002B FF15[00000000]                      call [scanf]
+    41 00000031 83C408                              add esp, 8
+    42                                              
+    43 00000034 A1[09000000]                        mov eax, dword [nmb]
+    44 00000039 8B15[0D000000]                      mov edx, dword [nmb+4]
+    45 0000003F 83F800                              cmp eax, 0
+    46 00000042 7422                                je cont_ver
+    47                                              
+    48 00000044 BB07000000                          mov ebx, 7
+    49 00000049 F7FB                                idiv ebx
+    50 0000004B 83FA00                              cmp edx, 0
+    51 0000004E 743D                                je write_to_file
+    52                                              
+    53 00000050 C705[09000000]0000-                 mov dword [nmb], 0
+    53 00000058 0000               
+    54 0000005A C705[0D000000]0000-                 mov dword [nmb+4], 0
+    54 00000062 0000               
+    55 00000064 EBBB                                jmp read_nmb
+    56                                              
+    57                                              cont_ver:
+    58 00000066 83FA00                                  cmp edx, 0
+    59 00000069 7469                                    je cleanup
+    60                                                  
+    61 0000006B BB07000000                              mov ebx, 7
+    62 00000070 F7FB                                    idiv ebx
+    63 00000072 83FA00                                  cmp edx, 0
+    64 00000075 7416                                    je write_to_file
+    65                                                  
+    66 00000077 C705[09000000]0000-                     mov dword [nmb], 0
+    66 0000007F 0000               
+    67 00000081 C705[0D000000]0000-                     mov dword [nmb+4], 0
+    67 00000089 0000               
+    68 0000008B EB94                                    jmp read_nmb
+    69                                              
+    70                                              write_to_file:
+    71 0000008D FF35[09000000]                          push dword [nmb]
+    72 00000093 68[15000000]                            push dword dformat
+    73 00000098 FF35[11000000]                          push dword [file_desciptor]
+    74 0000009E FF15[00000000]                          call [fprintf]
+    75 000000A4 83C40C                                  add esp, 12
+    76                                                  
+    77 000000A7 68[18000000]                            push dword newline
+    78 000000AC FF35[11000000]                          push dword [file_desciptor]
+    79 000000B2 FF15[00000000]                          call [fprintf]
+    80 000000B8 83C408                                  add esp, 8
+    81                                                  
+    82 000000BB C705[09000000]0000-                     mov dword [nmb], 0
+    82 000000C3 0000               
+    83 000000C5 C705[0D000000]0000-                     mov dword [nmb+4], 0
+    83 000000CD 0000               
+    84 000000CF E94DFFFFFF                              jmp read_nmb
+    85                                                  
+    86                                          cleanup:
+    87 000000D4 FF35[11000000]                      push dword [file_desciptor]
+    88 000000DA FF15[00000000]                      call [fclose]
+    89 000000E0 83C404                              add esp, 4
+    90                                          
+    91                                          fin:
+    92                                          ; exit(0)
+    93 000000E3 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    94 000000E5 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

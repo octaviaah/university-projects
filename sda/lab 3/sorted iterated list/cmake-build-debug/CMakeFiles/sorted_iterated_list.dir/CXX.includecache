@@ -1,0 +1,52 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+D:/facultate/sda/lab/lab 3/sorted iterated list/App.cpp
+iostream
+-
+ShortTest.h
+D:/facultate/sda/lab/lab 3/sorted iterated list/ShortTest.h
+ExtendedTest.h
+D:/facultate/sda/lab/lab 3/sorted iterated list/ExtendedTest.h
+SortedIteratedList.h
+D:/facultate/sda/lab/lab 3/sorted iterated list/SortedIteratedList.h
+ListIterator.h
+D:/facultate/sda/lab/lab 3/sorted iterated list/ListIterator.h
+cassert
+-
+
+D:/facultate/sda/lab/lab 3/sorted iterated list/ExtendedTest.h
+
+D:/facultate/sda/lab/lab 3/sorted iterated list/ListIterator.cpp
+ListIterator.h
+D:/facultate/sda/lab/lab 3/sorted iterated list/ListIterator.h
+SortedIteratedList.h
+D:/facultate/sda/lab/lab 3/sorted iterated list/SortedIteratedList.h
+exception
+-
+iostream
+-
+
+D:/facultate/sda/lab/lab 3/sorted iterated list/ListIterator.h
+SortedIteratedList.h
+D:/facultate/sda/lab/lab 3/sorted iterated list/SortedIteratedList.h
+
+D:/facultate/sda/lab/lab 3/sorted iterated list/ShortTest.h
+
+D:/facultate/sda/lab/lab 3/sorted iterated list/SortedIteratedList.cpp
+ListIterator.h
+D:/facultate/sda/lab/lab 3/sorted iterated list/ListIterator.h
+SortedIteratedList.h
+D:/facultate/sda/lab/lab 3/sorted iterated list/SortedIteratedList.h
+iostream
+-
+exception
+-
+
+D:/facultate/sda/lab/lab 3/sorted iterated list/SortedIteratedList.h
+

@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <string.h>
+
+int main(int argc, char** argv)
+{
+        int pid, i;
+        char n[5];
+        strcpy(n, argv[1]);
+        FILE* fp;
+        fp=fopen("a.txt", "r+");
+        for(i=1; i<argc; i++){
+                //fscanf(fp, "%s", n);
+                printf("%d %s %s\n", i, n, argv[i]);
+                pid=fork();
+                //fscanf(fp, "%s", n);
+                if(pid==0)
+                {
+                        execl("./lcn.sh", "./lcn.sh", n, argv[i], "a.txt", NULL);
+                        printf("Error2\n");
+                        exit(1);
+                }
+                fscanf(fp, "%s", n);
+        }
+        //fprintf(fp, "%s", argv[1]);
+        for(i=1; i<argc; i++)
+                wait(0);
+        return 0;
+}
+
+
+
+//lcn.sh
+#!/bin/bash
+
+n1=$1
+n2=$2
+file=$3
+p=$((n1*n2))
+while [ $n1 -ne $n2 ]; do
+        if [ $n1 -gt $n2 ]; then
+                n1=$((n1-n2))
+        else
+                n2=$((n2-n1))
+        fi
+done
+m=$((p/n1))
+echo $m > $file

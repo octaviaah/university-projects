@@ -1,0 +1,3 @@
+"C:\Program Files\JetBrains\CLion 2020.3.2\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\fixed_cap_bimap.dir/objects.a
+C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\ar.exe cr CMakeFiles\fixed_cap_bimap.dir/objects.a @CMakeFiles\fixed_cap_bimap.dir\objects1.rsp
+C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\G__~1.EXE -g   -Wl,--whole-archive CMakeFiles\fixed_cap_bimap.dir/objects.a -Wl,--no-whole-archive  -o fixed_cap_bimap.exe -Wl,--out-implib,libfixed_cap_bimap.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\fixed_cap_bimap.dir\linklibs.rsp

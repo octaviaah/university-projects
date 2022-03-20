@@ -1,0 +1,116 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, fopen, fclose, fprintf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import fopen msvcrt.dll
+    10                                  import fclose msvcrt.dll
+    11                                  import fprintf msvcrt.dll
+    12                                  
+    13                                  ; our data is declared here (the variables needed by our program)
+    14                                  segment data use32 class=data
+    15 00000000 66696C652E74787400          file_name db "file.txt", 0
+    16 00000009 7700                        access_mode db "w", 0
+    17 0000000B FFFFFFFF                    file_descriptor dd -1
+    18 0000000F AA2A0100                    nmb dd 12aaah
+    19 00000013 256300                      cformat db "%c", 0
+    20 00000016 <res 00000009>              nmb_chr resb 9
+    21 0000001F 0D                          newline db 13
+    22                                  
+    23                                  ; our code starts here
+    24                                  segment code use32 class=code
+    25                                      start:
+    26                                          ;A file name and a hexadecimal number (on 16 bits) are given. Create a file with the given name and write each nibble composing the hexadecimal number on a different line to file.
+    27 00000000 68[09000000]                    push dword access_mode
+    28 00000005 68[00000000]                    push dword file_name
+    29 0000000A FF15[00000000]                  call [fopen]
+    30 00000010 83C408                          add esp, 8
+    31                                          
+    32 00000013 83F800                          cmp eax, 0
+    33 00000016 0F84BE000000                    je fin
+    34                                          
+    35 0000001C A3[0B000000]                    mov [file_descriptor], eax
+    36 00000021 A1[0F000000]                    mov eax, [nmb]
+    37 00000026 BF07000000                      mov edi, 7
+    38                                          
+    39                                          convert_nmb_to_chr:
+    40 0000002B BA00000000                          mov edx, 0
+    41 00000030 BB10000000                          mov ebx, 16
+    42 00000035 F7F3                                div ebx
+    43 00000037 80FA0A                              cmp dl, 0ah
+    44 0000003A 7430                                je add_more
+    45 0000003C 80FA0B                              cmp dl, 0bh
+    46 0000003F 742B                                je add_more
+    47 00000041 80FA0C                              cmp dl, 0ch
+    48 00000044 7426                                je add_more
+    49 00000046 80FA0D                              cmp dl, 0dh
+    50 00000049 7421                                je add_more
+    51 0000004B 80FA0E                              cmp dl, 0eh
+    52 0000004E 741C                                je add_more
+    53 00000050 80FA0F                              cmp dl, 0fh
+    54 00000053 7417                                je add_more
+    55                                              
+    56 00000055 83C230                              add edx, 30h
+    57                                              
+    58 00000058 89C1                                mov ecx, eax
+    59 0000005A 89D0                                mov eax, edx
+    60                                              
+    61 0000005C 8887[16000000]                      mov [nmb_chr+edi], al
+    62 00000062 4F                                  dec edi
+    63                                              
+    64 00000063 89C8                                mov eax, ecx
+    65 00000065 83F800                              cmp eax, 0
+    66 00000068 75C1                                jne convert_nmb_to_chr
+    67 0000006A 7415                                je cont
+    68                                              
+    69                                              add_more:
+    70 0000006C 83C257                                  add edx, 57h
+    71 0000006F 89C1                                    mov ecx, eax
+    72 00000071 89D0                                    mov eax, edx
+    73                                              
+    74 00000073 8887[16000000]                          mov [nmb_chr+edi], al
+    75 00000079 4F                                      dec edi
+    76                                              
+    77 0000007A 89C8                                    mov eax, ecx
+    78 0000007C 83F800                                  cmp eax, 0
+    79 0000007F 75AA                                    jne convert_nmb_to_chr
+    80                                                  
+    81                                          cont:    
+    82 00000081 BE00000000                      mov esi, 0
+    83                                          start_to_add:
+    84 00000086 80BE[16000000]00                    cmp byte [nmb_chr+esi], 0
+    85 0000008D 7503                                jne print_digit
+    86 0000008F 46                                  inc esi
+    87 00000090 EBF4                                jmp start_to_add
+    88                                              
+    89                                          print_digit:
+    90 00000092 31C0                                xor eax, eax
+    91 00000094 8A86[16000000]                      mov al, [nmb_chr+esi]
+    92 0000009A 50                                  push eax
+    93 0000009B 68[13000000]                        push dword cformat
+    94 000000A0 FF35[0B000000]                      push dword [file_descriptor]
+    95 000000A6 FF15[00000000]                      call [fprintf]
+    96 000000AC 83C40C                              add esp, 12
+    97                                              
+    98 000000AF 68[1F000000]                        push dword newline
+    99 000000B4 FF35[0B000000]                      push dword [file_descriptor]
+   100 000000BA FF15[00000000]                      call [fprintf]
+   101 000000C0 83C408                              add esp, 8
+   102                                              
+   103 000000C3 46                                  inc esi
+   104 000000C4 83FE08                              cmp esi, 8
+   105 000000C7 7402                                je cleanup
+   106 000000C9 75C7                                jne print_digit
+   107                                              
+   108                                          cleanup:
+   109 000000CB FF35[0B000000]                      push dword [file_descriptor]
+   110 000000D1 FF15[00000000]                      call [fclose]
+   111 000000D7 83C404                              add esp, 4
+   112                                          
+   113                                          fin:
+   114                                          ; exit(0)
+   115 000000DA 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+   116 000000DC FF15[00000000]                  call    [exit]       ; call exit to terminate the program

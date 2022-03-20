@@ -1,0 +1,71 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, fopen, fclose, fprintf, printf, gets                ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  import fopen msvcrt.dll
+    11                                  import fclose msvcrt.dll
+    12                                  import fprintf msvcrt.dll
+    13                                  import printf msvcrt.dll
+    14                                  import gets msvcrt.dll
+    15                                  
+    16                                  ; our data is declared here (the variables needed by our program)
+    17                                  segment data use32 class=data
+    18 00000000 416C6D6F7374206265-         text db "Almost before we knew it, we had left the gr0und", 0
+    18 00000009 666F7265207765206B-
+    18 00000012 6E65772069742C2077-
+    18 0000001B 6520686164206C6566-
+    18 00000024 742074686520677230-
+    18 0000002D 756E6400           
+    19                                      len equ $-text
+    20 00000031 68656C6C6F2E747874-         file_name db "hello.txt", 0
+    20 0000003A 00                 
+    21 0000003B FFFFFFFF                    file_descriptor dd -1
+    22 0000003F 6100                        access_mode db "a", 0
+    23 00000041 00<rept>                    new_text times len db 0
+    24                                  
+    25                                  ; our code starts here
+    26                                  segment code use32 class=code
+    27                                      start:
+    28                                      ;A file name and a text (defined in data segment) are given. The text contains lowercase letters, uppercase letters, digits and special characters. Replace all spaces from the text with character 'S'. Create a f
+    29 00000000 B320                            mov bl, ' '
+    30 00000002 B931000000                      mov ecx, len
+    31 00000007 BE[00000000]                    mov esi, text
+    32 0000000C BF[41000000]                    mov edi, new_text
+    33 00000011 FC                              cld
+    34                                          change_to_S: ;changes spaces to 'S'
+    35 00000012 AC                                  lodsb
+    36 00000013 38D8                                cmp al, bl
+    37 00000015 7502                                jne got_space
+    38 00000017 B053                                    mov al, 'S'
+    39                                              got_space:
+    40 00000019 AA                                  stosb
+    41 0000001A E2F6                            loop change_to_S
+    42                                          
+    43 0000001C 68[3F000000]                    push dword access_mode ;create file
+    44 00000021 68[31000000]                    push dword file_name
+    45 00000026 FF15[00000000]                  call [fopen]
+    46 0000002C 83C408                          add esp, 4*2
+    47                                          
+    48 0000002F A3[3B000000]                    mov [file_descriptor], eax ;move the descriptor of the created file
+    49                                          
+    50 00000034 83F800                          cmp eax, 0 ;verify if the file was creted
+    51 00000037 7423                            je final
+    52                                          
+    53 00000039 68[41000000]                    push dword new_text ;write new text to file
+    54 0000003E FF35[3B000000]                  push dword [file_descriptor]
+    55 00000044 FF15[00000000]                  call [fprintf]
+    56 0000004A 83C408                          add esp, 4*2
+    57                                          
+    58 0000004D FF35[3B000000]                  push dword [file_descriptor] ;close the file
+    59 00000053 FF15[00000000]                  call [fclose]
+    60 00000059 83C404                          add esp, 4
+    61                                          
+    62                                          final:
+    63                                          ; exit(0)
+    64 0000005C 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    65 0000005E FF15[00000000]                  call    [exit]       ; call exit to terminate the program

@@ -1,0 +1,53 @@
+     1                                  bits 32
+     2                                  global _is_subsequence
+     3                                  extern _printf
+     4                                  segment data public data use32
+     5                                  segment code public code use32
+     6                                  _is_subsequence:
+     7 00000000 55                      	push ebp
+     8 00000001 89E5                    	mov ebp,esp  
+     9                                      
+    10 00000003 8B5D0C                      mov ebx,[ebp+12] ; address of current seq
+    11 00000006 8B7D08                      mov edi,[ebp+8] ; address of first seq
+    12                                      
+    13 00000009 31C9                        xor ecx,ecx
+    14 0000000B 31D2                        xor edx,edx
+    15                                      current_loop:
+    16                                      
+    17                                      ;mov esi,[ebx+ecx] ;!!! THIS IS NOT AN ADDRESS
+    18 0000000D 8D340B                      lea esi,[ebx+ecx]
+    19                                  
+    20 00000010 8B7D08                      mov edi,[ebp+8]
+    21 00000013 803E00                      cmp byte [esi],0
+    22 00000016 741C                        je done_parsing
+    23                                      
+    24                                          first_seq:
+    25 00000018 803F00                              cmp byte [edi],0
+    26 0000001B 7412                                je found
+    27                                              
+    28 0000001D 803E00                              cmp byte [esi],0
+    29 00000020 7412                                je done_parsing
+    30                                              
+    31 00000022 8A06                                mov al,[esi]
+    32 00000024 3A07                                cmp al,[edi]
+    33 00000026 7504                                jne cont_search
+    34                                              
+    35 00000028 46                                  inc esi
+    36 00000029 47                                  inc edi
+    37 0000002A EBEC                            jmp first_seq
+    38                                          
+    39                                      cont_search:
+    40 0000002C 41                          inc ecx
+    41 0000002D EBDE                        jmp current_loop
+    42                                      
+    43                                      found:
+    44 0000002F BA01000000                      mov edx,1
+    45                                          
+    46                                          
+    47                                      done_parsing:
+    48 00000034 89D0                        mov eax,edx
+    49                                      
+    50 00000036 89EC                        mov esp, ebp
+    51 00000038 5D                          pop ebp
+    52 00000039 C3                          ret
+    53                                      

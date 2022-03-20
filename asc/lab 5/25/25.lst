@@ -1,0 +1,56 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13 00000000 2B34326138345835            s1 db  '+', '4', '2', 'a', '8', '4', 'X', '5'
+    14                                      l1 equ $-s1
+    15 00000008 613435                      s2 db 'a', '4', '5'
+    16                                      l2 equ $-s2
+    17 0000000B 00<rept>                    d times l1+l2 db 0
+    18 00000016 00                          c db 0
+    19                                  ; our code starts here
+    20                                  segment code use32 class=code
+    21                                      start:
+    22                                      ;Two character strings S1 and S2 are given. Obtain the string D which contains all the elements of S1 that do not appear in S2
+    23 00000000 BE00000000                      mov esi, 0;we start looping through s1 from index 0
+    24                                  
+    25                                          outerLoop: ;we compare a fixed element from s1 with every element in s2
+    26 00000005 83FE07                              cmp esi, l1-1
+    27 00000008 743D                                je done;when
+    28 0000000A BF00000000                              mov edi, 0
+    29 0000000F 8A86[00000000]                          mov al, [s1+esi]
+    30 00000015 B200                                    mov dl, 0; dl will be an ok variable
+    31                                  
+    32                                              innerLoop:
+    33 00000017 8A9F[08000000]                          mov bl, [s2+edi]
+    34 0000001D 38D8                                    cmp al, bl
+    35 0000001F 7502                                    jne alEQbl
+    36 00000021 B201                                        mov dl, 1; dl becomes 1 if al=bl
+    37                                                  alEQbl:    
+    38 00000023 83FF02                                  cmp edi, l2-1; we go through s2
+    39 00000026 7403                                    je innerLoopDone
+    40 00000028 47                                      inc edi
+    41 00000029 EBEC                                    jmp innerLoop
+    42                                  
+    43                                          innerLoopDone:
+    44 0000002B B600                                mov dh, 0; another ok, to see if we can add al in d
+    45 0000002D 38F2                                cmp dl, dh
+    46 0000002F 7513                                jne addTod
+    47 00000031 8B3D[16000000]                          mov edi, [c];c is index for d
+    48 00000037 8887[0B000000]                          mov [d+edi], al
+    49 0000003D 8005[16000000]01                        add byte [c], 1;increase c
+    50                                              addTod:
+    51 00000044 46                                  inc esi; the enxt character in s1 will be verified
+    52 00000045 EBBE                                jmp outerLoop ;restart loop
+    53                                          done:
+    54                                          ; exit(0)
+    55 00000047 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    56 00000049 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

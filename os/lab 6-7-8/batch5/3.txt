@@ -1,0 +1,14 @@
+Find recursively in a directory, all the files with the extension ".log" and sort their lines (replace the original file with the sorted content).
+
+#!/bin/bash
+
+read dir
+if [ ! -d $dir ];then
+        echo not a dir >&2
+        exit 1
+fi
+for file in `find $dir -type f -name "*.log"`;do
+        sort $file > file.txt
+        rm $file
+        mv file.txt $file
+done

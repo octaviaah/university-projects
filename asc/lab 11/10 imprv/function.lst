@@ -1,0 +1,48 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  ; our data is declared here (the variables needed by our program) 
+     3                                  
+     4                                  segment data use32
+     5                                      len equ 20
+     6 00000000 00<rept>                    first times len db 0
+     7 00000014 00000000                    length1 dd 0
+     8 00000018 00<rept>                    search_word times len db 0
+     9                                  
+    10                                  ; our code starts here
+    11                                  segment code use32 class=code public 
+    12                                  global search
+    13                                      
+    14                                      search:
+    15 00000000 8B742404                        mov esi, [esp + 4]        ;first word
+    16 00000004 8B7C2408                        mov edi, [esp+8]        ; ;the word to search into
+    17 00000008 BA00000000                      mov edx, 0
+    18 0000000D B900000000                      mov ecx, 0
+    19                                  
+    20                                          cauta_in_search_word:
+    21 00000012 803E00                              cmp byte [esi], 0
+    22 00000015 741C                                je done
+    23                                              
+    24 00000017 803F00                              cmp byte [edi], 0
+    25 0000001A 741D                                je back
+    26                                              
+    27 0000001C 8A06                                mov al, [esi]
+    28 0000001E 3A07                                cmp al, [edi]
+    29 00000020 7504                                jne cont
+    30                                              
+    31 00000022 46                                  inc esi
+    32 00000023 47                                  inc edi
+    33 00000024 EBEC                                jmp cauta_in_search_word
+    34                                          
+    35                                          cont:
+    36 00000026 8B742404                            mov esi, [esp+4]
+    37 0000002A 41                                  inc ecx
+    38 0000002B 8B7C2408                            mov edi, [esp+8]
+    39 0000002F 01CF                                add edi, ecx
+    40 00000031 EBDF                                jmp cauta_in_search_word
+    41                                                  
+    42                                          done:
+    43 00000033 BA01000000                          mov edx, 1
+    44 00000038 C3                                  ret
+    45                                              
+    46                                          back:
+    47 00000039 BA00000000                          mov edx, 0
+    48 0000003E C3                                  ret

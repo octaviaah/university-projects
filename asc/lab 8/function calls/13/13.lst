@@ -1,0 +1,89 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, scanf, printf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import scanf msvcrt.dll
+    10                                  import printf msvcrt.dll
+    11                                  
+    12                                  ; our data is declared here (the variables needed by our program)
+    13                                  segment data use32 class=data
+    14 00000000 00000000                    a dd 0
+    15 00000004 00000000                    b dd 0
+    16 00000008 <res 00000008>              result resd 2
+    17 00000010 256400                      dformat db "%d", 0
+    18 00000013 613D00                      message_a db "a=", 0
+    19 00000016 623D00                      message_b db "b=", 0
+    20 00000019 00000000                    adunare dd 0
+    21 0000001D 00000000                    scadere dd 0
+    22                                  ; our code starts here
+    23                                  segment code use32 class=code
+    24                                      start:
+    25                                          ;Read two numbers a and b (base 10) from the keyboard and calculate: (a+b)*(a-b). The result of multiplication will be stored in a variable called "result" (defined in the data segment).
+    26 00000000 68[13000000]                    push dword message_a
+    27 00000005 FF15[00000000]                  call [printf]
+    28 0000000B 83C404                          add esp, 4
+    29                                          
+    30 0000000E 68[00000000]                    push dword a
+    31 00000013 68[10000000]                    push dword dformat
+    32 00000018 FF15[00000000]                  call [scanf]
+    33 0000001E 83C408                          add esp, 4*2
+    34                                          
+    35 00000021 68[16000000]                    push dword message_b
+    36 00000026 FF15[00000000]                  call [printf]
+    37 0000002C 83C404                          add esp, 4
+    38                                          
+    39 0000002F 68[04000000]                    push dword b
+    40 00000034 68[10000000]                    push dword dformat
+    41 00000039 FF15[00000000]                  call [scanf]
+    42 0000003F 83C408                          add esp, 4*2
+    43                                          
+    44 00000042 31C0                            xor eax, eax
+    45 00000044 31DB                            xor ebx, ebx
+    46 00000046 31C9                            xor ecx, ecx
+    47 00000048 31D2                            xor edx, edx
+    48                                          
+    49 0000004A 66A1[00000000]                  mov ax, word [a]
+    50 00000050 668B15[02000000]                mov dx, word[a+2]
+    51 00000057 668B1D[04000000]                mov bx, word[b]
+    52 0000005E 668B0D[06000000]                mov cx, word[b+2]
+    53 00000065 6601D8                          add ax, bx
+    54 00000068 6611CA                          adc dx, cx
+    55                                          
+    56 0000006B 66A3[19000000]                  mov word[adunare], ax
+    57 00000071 668915[1B000000]                mov word[adunare+2], dx
+    58                                          
+    59 00000078 31C0                            xor eax, eax
+    60 0000007A 31DB                            xor ebx, ebx
+    61 0000007C 31C9                            xor ecx, ecx
+    62 0000007E 31D2                            xor edx, edx
+    63                                          
+    64 00000080 66A1[00000000]                  mov ax, word [a]
+    65 00000086 668B15[02000000]                mov dx, word[a+2]
+    66 0000008D 668B1D[04000000]                mov bx, word[b]
+    67 00000094 668B0D[06000000]                mov cx, word[b+2]
+    68 0000009B 6629D8                          sub ax, bx
+    69 0000009E 6619CA                          sbb dx, cx
+    70                                          
+    71 000000A1 66A3[1D000000]                  mov word[scadere], ax
+    72 000000A7 668915[1F000000]                mov word [scadere+2], dx
+    73                                          
+    74 000000AE 31C0                            xor eax, eax
+    75 000000B0 A1[19000000]                    mov eax, [adunare]
+    76 000000B5 31DB                            xor ebx, ebx
+    77 000000B7 8B1D[1D000000]                  mov ebx, [scadere]
+    78                                          
+    79 000000BD F7EB                            imul ebx
+    80 000000BF A3[08000000]                    mov dword [result], eax
+    81 000000C4 8915[0C000000]                  mov dword [result+4], edx
+    82                                          
+    83 000000CA FF35[08000000]                  push dword [result]
+    84 000000D0 68[10000000]                    push dword dformat
+    85 000000D5 FF15[00000000]                  call [printf]
+    86 000000DB 83C408                          add esp, 4*2
+    87                                          ; exit(0)
+    88 000000DE 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    89 000000E0 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

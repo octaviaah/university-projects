@@ -1,0 +1,65 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, printf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import printf msvcrt.dll
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13 00000000 1054FAFF7879B2F57F-         sir_cuv dw 21520, -6, "xy", 0f5b2h, -129
+    13 00000009 FF                 
+    14                                      len equ $-sir_cuv
+    15 0000000A 00000000                    max dd 0
+    16 0000000E 9F860100                    min dd 99999
+    17 00000012 00000000                    mult2 dd 0
+    18 00000016 636174756C203D2025-         message db "catul = %x; restul = %x", 0
+    18 0000001F 783B2072657374756C-
+    18 00000028 203D20257800       
+    19                                  
+    20                                  ; our code starts here
+    21                                  segment code use32 class=code
+    22                                      start:
+    23                                          ;Se da un sir de N cuvinte. Sa se tipareasca in baza 16 catul si restul impartirii fara semn A/B, unde A este maximul valorilor octetilor inferiori ai sirului de cuvinte date, iar B este minimul valorilor oc
+    24                                          ;sir_cuv dw 21520, -6, "xy", 0f5b2h, -129.
+    25                                          ;Exemplu: A=194 si B=10, la iesire se va afisa pe ecran catul = 13h si restul = 04h.
+    26 00000000 BE00000000                      mov esi, 0
+    27                                          read_string:
+    28 00000005 8305[12000000]02                    add dword [mult2], 2
+    29 0000000C 31C0                                xor eax, eax
+    30 0000000E 8A86[00000000]                      mov al, [sir_cuv+esi]
+    31 00000014 3B05[0E000000]                      cmp eax, [min]
+    32 0000001A 7D05                                jge cont
+    33 0000001C A3[0E000000]                        mov [min], eax
+    34                                              cont:
+    35 00000021 46                                      inc esi
+    36 00000022 31C0                                    xor eax, eax
+    37 00000024 8A86[00000000]                          mov al, [sir_cuv+esi]
+    38 0000002A 3B05[0A000000]                          cmp eax, [max]
+    39 00000030 7E05                                    jle cont2
+    40 00000032 A3[0A000000]                            mov [max], eax
+    41                                                  cont2:
+    42 00000037 46                                          inc esi
+    43 00000038 83FE0A                                      cmp esi, len
+    44 0000003B 7408                                        je print_value
+    45 0000003D 3B35[12000000]                              cmp esi, dword [mult2]
+    46 00000043 74C0                                        je read_string
+    47                                          
+    48                                          print_value:
+    49 00000045 A1[0A000000]                        mov eax, [max]
+    50 0000004A BA00000000                          mov edx, 0
+    51 0000004F 8B1D[0E000000]                      mov ebx, [min]
+    52 00000055 F7F3                                div ebx
+    53                                              
+    54 00000057 52                                  push edx
+    55 00000058 50                                  push eax
+    56 00000059 68[16000000]                        push dword message
+    57 0000005E FF15[00000000]                      call [printf]
+    58 00000064 83C40C                              add esp, 12
+    59                                           
+    60                                          ; exit(0)
+    61 00000067 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    62 00000069 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

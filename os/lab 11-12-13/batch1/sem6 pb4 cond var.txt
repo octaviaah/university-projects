@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <pthread.h>
+#include <unistd.h>
+
+#define CONDITION 9
+
+int n=0;
+pthread_mutex_t m = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t c = PTHREAD_COND_INITIALIZER;
+
+void* f(void* a)
+{
+        pthread_mutex_lock(&m);
+        n++;
+        if(n>CONDITION) pthread_cond_signal(&c);
+        pthread_mutex_unlock(&m);
+        return NULL;
+}
+
+int main()
+{
+        int i;
+        pthread_t t[10];
+        for(i=0; i<10; i++) pthread_create(&t[i], NULL, f, NULL);
+        pthread_mutex_lock(&m);
+        while(n<=CONDITION) pthread_cond_wait(&c, &m);
+        printf("%d \n", n);
+        pthread_mutex_unlock(&m);
+        for(i=0; i<10; i++) pthread_join(t[i], NULL);
+        return 0;
+}

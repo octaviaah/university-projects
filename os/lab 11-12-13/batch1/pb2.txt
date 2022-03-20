@@ -1,0 +1,59 @@
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int a[2000];
+pthread_mutex_t mtx;
+
+void* pairs(void *arg)
+{
+        int n1 = rand()%1000;
+        int n2 = rand()%1000;
+        pthread_mutex_lock(&mtx);
+        printf("thread is %d and the numbers are %d and %d\n", *(int*)arg, n1, n2);
+        if ((n1%2==0 && n2%2==1) || (n1%2==1 && n2%2==0))
+        {
+                int i;
+                for (i=0; i<2000; i++)
+                        if(a[i] == 0)
+                        {
+                                a[i] = n1;
+                                a[i+1] = n2;
+                                break;
+                        }
+        }
+        pthread_mutex_unlock(&mtx);
+        return NULL;
+}
+
+int main(int argc, char* argv[])
+{
+        if (argc == 1)
+        {
+                perror("not enough arguments");
+                exit(1);
+        }
+        int N = atoi(argv[1]);
+        int *tnr = malloc(sizeof(int)*N);
+        pthread_mutex_init(&mtx, NULL);
+        pthread_t* tid = (pthread_t*)malloc(sizeof(pthread_t)*N);
+        int i;
+        for (i=0; i<N; i++) tnr[i] = i;
+        for(i = 0; i<N; i++)
+                if (pthread_create(&tid[i], NULL, pairs, (void*)&tnr[i]) > 0)
+                {
+                        perror("failed to create threads");
+                        exit(1);
+                }
+        for (i=0; i<N; i++) pthread_join(tid[i], NULL);
+
+        printf("the array is:\n");
+        for(i=0; i<2000; i++)
+                if(a[i] != 0)
+                        printf("%d ", a[i]);
+        printf("\n");
+        free(tnr);
+        free(tid);
+        return 0;
+}

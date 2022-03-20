@@ -1,0 +1,111 @@
+#include <stdio.h>
+#include <sys/wait.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int main()
+{
+        int p2a[2], a2b[2], b2c[2], c2d[2], d2e[2], e2p[2];
+        pipe(p2a); pipe(a2b); pipe(b2c);
+        pipe(c2d); pipe(d2e); pipe(e2p);
+        char letter = 'A';
+        if (fork() == 0)//a
+        {
+                close(p2a[1]); close(a2b[0]); close(b2c[0]);
+                close(b2c[1]); close(c2d[0]); close(c2d[1]);
+                close(d2e[0]); close(d2e[1]); close(e2p[0]);
+                close(e2p[1]);
+                while (1)
+                {
+                        if(read(p2a[0], &letter, sizeof(char)) <=0) break;
+                        if (letter == 'Z') break;
+                        printf("Child %d received %c, the letter becomes %c\n", getpid(), letter, letter+1);
+                        letter++;
+                        write(a2b[1], &letter, sizeof(char));
+                }
+                close(p2a[0]); close(a2b[1]);
+                exit(0);
+        }
+        if (fork() == 0)//b
+        {
+                close(p2a[1]); close(a2b[1]); close(b2c[0]);
+                close(p2a[0]); close(c2d[0]); close(c2d[1]);
+                close(d2e[0]); close(d2e[1]); close(e2p[0]);
+                close(e2p[1]);
+                while (1)
+                {
+                        if(read(a2b[0], &letter, sizeof(char)) <=0) break;
+                        if (letter == 'Z') break;
+                        printf("Child %d received %c, the letter becomes %c\n", getpid(), letter, letter+1);
+                        letter++;
+                        write(b2c[1], &letter, sizeof(char));
+                }
+                close(a2b[0]); close(b2c[1]);
+                exit(0);
+        }
+        if (fork() == 0)//c
+        {
+                close(p2a[0]); close(p2a[1]); close(a2b[0]); close(a2b[1]);
+                close(b2c[1]); close(c2d[0]); close(d2e[0]); close(d2e[1]);
+                close(e2p[0]); close(e2p[1]);
+                while (1)
+                {
+                        if(read(b2c[0], &letter, sizeof(char)) <=0) break;
+                        if (letter == 'Z') break;
+                        printf("Child %d received %c, the letter becomes %c\n", getpid(), letter, letter+1);
+                        letter++;
+                        write(c2d[1], &letter, sizeof(char));
+                }
+                close(b2c[0]); close(c2d[1]);
+                exit(0);
+        }
+        if (fork() == 0)//d
+        {
+                close(p2a[1]); close(a2b[0]); close(b2c[0]);
+                close(b2c[1]); close(a2b[1]); close(c2d[1]);
+                close(d2e[0]); close(p2a[0]); close(e2p[0]);
+                close(e2p[1]);
+                while (1)
+                {
+                        if(read(c2d[0], &letter, sizeof(char)) <=0) break;
+                        if (letter == 'Z') break;
+                        printf("Child %d received %c, the letter becomes %c\n", getpid(), letter, letter+1);
+                        letter++;
+                        write(d2e[1], &letter, sizeof(char));
+                }
+                close(c2d[0]); close(d2e[1]);
+                exit(0);
+        }
+        if (fork() == 0)//e
+        {
+                close(p2a[1]); close(a2b[0]); close(b2c[0]);
+                close(b2c[1]); close(c2d[0]); close(c2d[1]);
+                close(a2b[1]); close(d2e[1]); close(e2p[0]);
+                close(p2a[0]);
+                while (1)
+                {
+                        if(read(d2e[0], &letter, sizeof(char)) <=0) break;
+                        if (letter == 'Z') break;
+                        printf("Child %d received %c, the letter becomes %c\n", getpid(), letter, letter+1);
+                        letter++;
+                        write(e2p[1], &letter, sizeof(char));
+                }
+                close(d2e[0]); close(e2p[1]);
+                exit(0);
+        }
+        close(p2a[0]);close(a2b[0]); close(a2b[1]); close(b2c[0]);
+        close(b2c[1]); close(c2d[0]); close(c2d[1]); close(d2e[0]);
+        close(d2e[1]); close(e2p[1]);
+        write(p2a[1], &letter, sizeof(char));
+        while (1)
+        {
+                if(read(e2p[0], &letter, sizeof(char)) <=0) break;
+                if (letter == 'Z') break;
+                printf("Child %d received %c, the letter becomes %c\n", getpid(), letter, letter+1);
+                letter++;
+                write(p2a[1], &letter, sizeof(char));
+        }
+        close(p2a[1]); close(e2p[0]);
+        wait(0); wait(0); wait(0); wait(0); wait(0);
+        return 0;
+}

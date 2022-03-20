@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+FILE* mypopen(char* cmd, char*type)
+{
+        int p[2], caller_idx, child_idx;
+        pipe(p);
+        caller_idx=0;
+        if (type[0] == 'w') caller_idx=1;
+        child_idx=(caller_idx+1)%2;
+        if(fork()==0)
+        {
+                close(p[caller_idx]);
+                dup2(p[child_idx], child_idx);
+                if (execlp("bash", "bash", "-c", cmd, NULL) < 0)
+                {
+                        close(p[child_idx]);
+                        exit(1);
+                }
+        }
+        close(p[child_idx]);
+        return fdopen(p[caller_idx], type);
+}
+
+void mypclose(FILE *fd)
+{
+        fclose(fd);
+        wait(0);
+}
+
+int main(int argc, char** argv)
+{
+        char buff[20];
+        FILE* f=mypopen("who", "r");
+        fread(buff, sizeof(char), 20, f);
+        printf("%s\n", buff);
+        mypclose(f);
+        FILE* d=mypopen("less", "w");
+        fprintf(d, "my name is");
+        mypclose(f);
+        return 0;
+}

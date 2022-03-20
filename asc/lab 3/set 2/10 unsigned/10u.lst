@@ -1,0 +1,62 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13 00000000 02                          a db 2;
+    14 00000001 0300                        b dw 3;
+    15 00000003 06                          c db 6;
+    16 00000004 19000000                    d dd 25;
+    17 00000008 C800000000000000            x dq 200;
+    18                                  
+    19                                  ; our code starts here
+    20                                  segment code use32 class=code
+    21                                      start:
+    22                                      ;d-(7-a*b+c)/a-6+x/2
+    23 00000000 A0[00000000]                    mov al, [a]; a in al
+    24 00000005 B400                            mov ah, 0;
+    25 00000007 66F725[01000000]                mul word [b]; ax*b=dx:ax -> a*b in dx:ax
+    26 0000000E 66BB0700                        mov bx, 7;
+    27 00000012 66B90000                        mov cx, 0;7 in cx:bx for subtraction
+    28 00000016 6629C3                          sub bx, ax; sub the lower parts
+    29 00000019 6619D1                          sbb cx, dx; sub the upper parts -> 7-a*b
+    30 0000001C 021D[03000000]                  add bl, [c]; 7-a*b+c
+    31 00000022 6689D8                          mov ax, bx;
+    32 00000025 6689CA                          mov dx, cx; 7-a*b+c in dx:ax
+    33 00000028 8A1D[00000000]                  mov bl, [a]; a in bl
+    34 0000002E B700                            mov bh, 0;
+    35 00000030 66F7F3                          div bx; dx:ax/bx = quotient in ax, remainder in dx -> (7-a*b+c)/a
+    36 00000033 66BA0000                        mov dx, 0;
+    37 00000037 668B1D[04000000]                mov bx, word [d]; lower part of d in bx
+    38 0000003E 668B0D[06000000]                mov cx, word [d+2]; upper part of d in cx
+    39 00000045 6629C3                          sub bx, ax; sub the lower parts
+    40 00000048 6619D1                          sbb cx, dx; sub the upper parts -> d-(7-a*b+c)/a
+    41 0000004B B206                            mov dl, 6;
+    42 0000004D 28D3                            sub bl, dl; d-(7-a*b+c)/a-6
+    43 0000004F 6651                            push cx;
+    44 00000051 6653                            push bx; move cx:bx to the stack
+    45 00000053 59                              pop ecx; d-(7-a*b+c)/a-6 is in ecx
+    46 00000054 A1[08000000]                    mov eax, dword [x]; lower part of x in eax
+    47 00000059 8B15[0C000000]                  mov edx, dword [x+4]; upper part of x in edx
+    48 0000005F 66BB0000                        mov bx, 0;
+    49 00000063 6653                            push bx;
+    50 00000065 B302                            mov bl, 2;
+    51 00000067 B700                            mov bh, 0;
+    52 00000069 6653                            push bx;
+    53 0000006B 5B                              pop ebx; 2 is in ebx
+    54 0000006C F7F3                            div ebx; edx:eax/ebx = quotient in eax, remainder in edx -> x/2
+    55 0000006E BB00000000                      mov ebx, 0;
+    56 00000073 BA00000000                      mov edx, 0;
+    57 00000078 01C8                            add eax, ecx; add the lower parts
+    58 0000007A 11DA                            adc edx, ebx; add the upper parts -> d-(7-a*b+c)/a-6+x/2
+    59                                          
+    60                                          ; exit(0)
+    61 0000007C 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    62 0000007E FF15[00000000]                  call    [exit]       ; call exit to terminate the program

@@ -1,0 +1,17 @@
+div.object{
+    top: 0;
+    left: 0;
+    position: absolute;
+    background: blue;
+    width: 100px;
+    height: 100px;
+    transition: background-color 10s, top 10s, left 10s;
+}
+
+div.object:hover{
+    transition: background-color 10s, top 10s, left 10s;
+    top: 86.5%;
+    left: 93.5%;
+    background: red;
+
+}

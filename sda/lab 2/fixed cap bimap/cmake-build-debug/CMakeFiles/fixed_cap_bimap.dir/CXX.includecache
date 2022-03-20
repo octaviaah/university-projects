@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+D:/facultate/sda/lab/lab 2/fixed cap bimap/App.cpp
+ExtendedTest.h
+D:/facultate/sda/lab/lab 2/fixed cap bimap/ExtendedTest.h
+ShortTest.h
+D:/facultate/sda/lab/lab 2/fixed cap bimap/ShortTest.h
+FixedCapBiMap.h
+D:/facultate/sda/lab/lab 2/fixed cap bimap/FixedCapBiMap.h
+iostream
+-
+
+D:/facultate/sda/lab/lab 2/fixed cap bimap/ExtendedTest.h
+
+D:/facultate/sda/lab/lab 2/fixed cap bimap/FixedCapBiMap.h
+utility
+-
+
+D:/facultate/sda/lab/lab 2/fixed cap bimap/ShortTest.h
+

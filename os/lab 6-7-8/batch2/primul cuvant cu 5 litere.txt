@@ -1,0 +1,20 @@
+#!/bin/bash
+
+found=0
+for file in *; do
+        data=`file $file`
+        if echo $data | egrep -q '\<text\>'; then
+                while read line; do
+                        first=`echo $line | awk '{print $1}'`
+                        if echo $first | egrep -q '(.){5,}'; then
+                                echo $file
+                                found=1
+                                break
+                        fi
+                        break
+                done < $file
+                if [ $found -eq 1 ];then
+                        break
+                fi
+        fi
+done

@@ -1,0 +1,95 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, scanf, printf           ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  import scanf msvcrt.dll
+    11                                  import printf msvcrt.dll
+    12                                  extern search
+    13                                  
+    14                                  ; our data is declared here (the variables needed by our program)
+    15                                  segment data use32 class=data public
+    16 00000000 00                          n db 0
+    17                                      len equ 10
+    18 00000001 00<rept>                    wrd times len db 0
+    19 0000000B 6E3D00                      message_n db "n=", 0
+    20 0000000E 656E74657220776F72-         message_words db "enter words:", 0
+    20 00000017 64733A00           
+    21 0000001B 256400                      dformat db "%d", 0
+    22 0000001E 257300                      sformat db "%s", 0
+    23 00000021 00<rept>                    first_wrd times len db 0
+    24 0000002B 01                          substring db 1
+    25 0000002C 6E6F20737562737472-         bad_message db "no substring", 0
+    25 00000035 696E6700           
+    26 00000039 796573207375627374-         good_message db "yes substring", 0
+    26 00000042 72696E6700         
+    27                                  ; our code starts here
+    28                                  segment code use32 class=code public
+    29                                      start:
+    30                                      ;Multiple strings of characters are being read. Determine whether the first appears as a subsequence in each of the others and give an appropriate message.
+    31 00000000 68[0B000000]                    push dword message_n; announce we will read n
+    32 00000005 FF15[00000000]                  call [printf]
+    33 0000000B 83C404                          add esp, 4*1
+    34                                          
+    35 0000000E 68[00000000]                    push dword n ;read the number of words we will read
+    36 00000013 68[1B000000]                    push dword dformat
+    37 00000018 FF15[00000000]                  call [scanf]
+    38 0000001E 83C408                          add esp, 4*2
+    39                                          
+    40 00000021 68[0E000000]                    push dword message_words; announce we will read the words
+    41 00000026 FF15[00000000]                  call [printf]
+    42 0000002C 83C404                          add esp, 4*1
+    43                                          
+    44 0000002F 68[21000000]                    push dword first_wrd; read first word
+    45 00000034 68[1E000000]                    push dword sformat
+    46 00000039 FF15[00000000]                  call [scanf]
+    47 0000003F 83C408                          add esp, 4*2
+    48 00000042 802D[00000000]01                sub byte [n], 1
+    49                                          
+    50                                          
+    51                                          repeta:
+    52 00000049 B900000000                          mov ecx, 0
+    53 0000004E 8A0D[00000000]                      mov cl, [n] ;bc ecx gets different values when we read new words, we will use n as our limit
+    54 00000054 83F900                              cmp ecx, 0
+    55 00000057 7440                                je done
+    56                                              
+    57 00000059 68[01000000]                        push dword wrd; read next word
+    58 0000005E 68[1E000000]                        push dword sformat
+    59 00000063 FF15[00000000]                      call [scanf]
+    60 00000069 83C408                              add esp, 4*2
+    61                                             
+    62 0000006C 68[01000000]                        push dword wrd
+    63 00000071 68[21000000]                        push dword first_wrd
+    64                                  
+    65 00000076 E8(00000000)                        call search
+    66 0000007B 83FA00                              cmp edx, 0
+    67 0000007E 7409                                je not_good
+    68                                              
+    69 00000080 802D[00000000]01                    sub byte [n], 1
+    70 00000087 EBC0                                jmp repeta
+    71                                              
+    72                                              not_good:
+    73 00000089 C605[2B000000]00                        mov byte [substring], 0
+    74 00000090 802D[00000000]01                        sub byte [n], 1
+    75 00000097 EBB0                                    jmp repeta
+    76                                          done:
+    77 00000099 BA00000000                          mov edx, 0
+    78 0000009E 8A15[2B000000]                      mov dl, byte [substring]
+    79 000000A4 83FA01                              cmp edx, 1
+    80 000000A7 7410                                je good_m
+    81 000000A9 68[2C000000]                        push dword bad_message
+    82 000000AE FF15[00000000]                      call [printf]
+    83 000000B4 83C404                              add esp, 4
+    84 000000B7 EB0E                                jmp fin
+    85                                              good_m:
+    86 000000B9 68[39000000]                            push dword good_message
+    87 000000BE FF15[00000000]                          call [printf]
+    88 000000C4 83C404                                  add esp, 4
+    89                                          ; exit(0)
+    90                                          fin:
+    91 000000C7 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    92 000000C9 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

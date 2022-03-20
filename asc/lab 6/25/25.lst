@@ -1,0 +1,41 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13 00000000 5C89E5                      a db 01011100b, 10001001b, 11100101b
+    14                                      len equ $-a
+    15 00000003 00<rept>                    d times len db 0
+    16                                  ; our code starts here
+    17                                  segment code use32 class=code
+    18                                      start:
+    19                                      ;A string of bytes is given. Obtain the mirror image of the binary representation of this string of bytes
+    20                                          
+    21 00000000 BE[02000000]                    mov esi, a+len-1; source string address moved into esi
+    22 00000005 BF[03000000]                    mov edi, d; destination string in edi
+    23 0000000A B903000000                      mov ecx, len
+    24                                          repeta:
+    25 0000000F 89CA                                mov edx, ecx
+    26 00000011 FD                                  std; parse rtl
+    27 00000012 AC                                  lodsb;move the current word in al
+    28 00000013 B300                                mov bl, 0; bl=0 we store the reverse number here
+    29 00000015 B908000000                          mov ecx, 8; byte
+    30                                              revloop:
+    31 0000001A D0D8                                    rcr al, 1
+    32 0000001C D0D3                                    rcl bl, 1
+    33 0000001E E2FA                                loop revloop
+    34 00000020 88D8                                mov al, bl; reverse number is stores in bl, then moved in al
+    35 00000022 FC                                  cld; parse ltr
+    36 00000023 AA                                  stosb; move the current word in edi
+    37 00000024 89D1                                mov ecx, edx
+    38 00000026 E2E7                            loop repeta
+    39                                          ; exit(0)
+    40 00000028 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    41 0000002A FF15[00000000]                  call    [exit]       ; call exit to terminate the program

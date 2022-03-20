@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+int main(){
+
+         FILE *output;
+         FILE *f2;
+         f1=popen("ls -l","r");
+         f2=popen("sort","w");
+
+ 
+
+
+       char line[50];
+
+       while (fgets(line,50,output)){
+
+                fprintf(f2,"%s",line);
+       }
+
+       pclose(f1);
+       pclose(f2);
+
+}
+
+ 

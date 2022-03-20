@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+        echo no params
+        exit 1
+fi
+
+if [ $(($# % 2)) -eq 1 ]; then
+        echo odd number
+        exit 1
+fi
+
+while [ $# -ne 0 ]; do
+        file=$1
+        size=$2
+        if [ ! -f $file ]; then
+                echo $file not a file
+        else
+                real_size=`ls -l $file | awk '{print $5}'`
+                if [ $real_size -eq $size ]; then
+                        echo $file has the size entered matching the real size
+                else
+                        echo $file has the sizes not matching
+                fi
+        fi
+        shift 2
+done

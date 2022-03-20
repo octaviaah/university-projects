@@ -1,0 +1,15 @@
+#!/bin/bash
+
+while read prog; do
+        if [ $prog == "stop" ]; then
+                break
+        fi
+        echo $prog >> dangerous.txt
+done
+
+cat ps.fake | awk '{print $6}' | \
+while read prog; do
+        if grep -E -q "\<$prog\>"; then
+                echo "Should kill $prog"
+        fi
+done < dangerous.txt

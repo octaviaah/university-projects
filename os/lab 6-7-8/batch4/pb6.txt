@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ -z $1 ]; then
+        echo There must be only one parameter! >&2
+else
+        for f in $*; do
+                if [ ! -f $f ]; then
+                        echo $f is not a file. >&2
+                else
+                        size=`ls -l $f | awk '{print $5}'`
+                        echo $f $size >>filename.txt
+                fi
+        done
+        cat filename.txt | awk '{print $1, $2}' | sort -k 2
+        rm filename.txt
+fi

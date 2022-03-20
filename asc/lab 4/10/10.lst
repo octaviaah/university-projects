@@ -1,0 +1,33 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13 00000000 A049                        a dw 0100_1001_1010_0000b
+    14 00000002 77                          b db 0111_0111b
+    15                                  
+    16                                  ; our code starts here
+    17                                  segment code use32 class=code
+    18                                      start:
+    19                                      ;Replace the bits 0-3 of the byte B by the bits 8-11 of the word A.
+    20 00000000 66A1[00000000]                  mov ax, [a]; we isolate A in ax
+    21 00000006 6625000F                        and ax, 0000_1111_0000_0000b; we isolate bits 8-11
+    22 0000000A B104                            mov cl, 4
+    23 0000000C 66D3C8                          ror ax, cl; we rotate 4 positions to the right -> 1001 are on positions 4-7
+    24 0000000F 8A1D[02000000]                  mov bl, [b]; we isolate B in bl
+    25 00000015 B104                            mov cl, 4
+    26 00000017 D2CB                            ror bl, cl; we rotate 4 positions to the right -> bits 4-7 are on positions 0-3
+    27 00000019 08DC                            or ah, bl; bits 0-3 from B are on positions 8-11 in A
+    28 0000001B B104                            mov cl, 4
+    29 0000001D 66D3C8                          ror ax, cl; we rotate 4 positions to the right -> we obtain new B
+    30 00000020 A2[02000000]                    mov [b], al;
+    31                                          ; exit(0)
+    32 00000025 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    33 00000027 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

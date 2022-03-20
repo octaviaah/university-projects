@@ -1,0 +1,2 @@
+exit - copilul vrea afara
+wait - copilul iese afara doar daca parintele il lasa

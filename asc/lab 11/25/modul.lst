@@ -1,0 +1,15 @@
+     1                                  bits 32
+     2                                  
+     3                                  segment code use32 public code
+     4                                  global factorial
+     5                                  
+     6                                  factorial:
+     7 00000000 8B442404                	mov eax, [esp+4]
+     8 00000004 8B5C2408                	mov ebx, [esp+8]
+     9 00000008 39D8                        cmp eax, ebx
+    10 0000000A 7E05                        jle less
+    11 0000000C 89DA                        mov edx, ebx
+    12 0000000E C20400                      ret 4
+    13                                      less:
+    14 00000011 89C2                            mov edx, eax
+    15 00000013 C20400                          ret 4 ; in this case, 4 represents the number of bytes that need to be cleared from the stack (the parameter of the function)

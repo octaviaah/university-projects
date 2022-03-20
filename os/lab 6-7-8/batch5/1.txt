@@ -1,0 +1,11 @@
+Display a report showing the full name of all the users currently connected, and the number of processes belonging to each of them.
+
+#!/bin/bash
+
+while read line
+do
+        name=`echo $line | awk '{print $1}'`
+        full_name=`finger -s | grep -E "^\<$name\> " | awk '{print $2, $3}'`
+        number=`cat ps.fake | grep -E "^\<$name\> " | wc -l`
+        echo $name $number $full_name
+done < who.fake

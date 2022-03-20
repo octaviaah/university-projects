@@ -1,0 +1,58 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13 00000000 450D                        a dw 0000_1101_0100_0101b
+    14 00000002 6F09                        b dw 0000_1001_0110_1111b
+    15 00000004 00000000                    c dd 0
+    16                                  
+    17                                  ; our code starts here
+    18                                  segment code use32 class=code
+    19                                      start:
+    20                                      ;Given the words A and B, compute the doubleword C as follows:
+    21                                      ;the bits 0-4 of C are the same as the bits 11-15 of A
+    22                                      ;the bits 5-11 of C have the value 1
+    23                                      ;the bits 12-15 of C are the same as the bits 8-11 of B
+    24                                      ;the bits 16-31 of C are the same as the bits of A
+    25                                          
+    26 00000000 B800000000                      mov eax, 0
+    27 00000005 66A1[00000000]                  mov ax, [a]; moves a to eax
+    28                                          
+    29 0000000B 2500F80000                      and eax, 1111_1000_0000_0000b ;isolate bits 11-15 from A
+    30 00000010 B10B                            mov cl, 11
+    31 00000012 D3C8                            ror eax, cl ;bits 11-15 are on positions 0-4
+    32                                          
+    33 00000014 BA00000000                      mov edx, 0
+    34 00000019 09C2                            or edx, eax ;we construct C using edx
+    35                                          
+    36 0000001B 81CAE00F0000                    or edx, 0000_1111_1110_0000b ; bits 5-11 are 1 each
+    37                                          
+    38 00000021 B800000000                      mov eax, 0
+    39 00000026 66A1[02000000]                  mov ax, [b] ; moves b to eax
+    40                                        
+    41 0000002C 25000F0000                      and eax, 0000_1111_0000_0000b ; isolate bits 8-11 of B
+    42 00000031 B104                            mov cl, 4
+    43 00000033 D3C0                            rol eax, cl ;bits 8-11 are on positions 12-15
+    44                                          
+    45 00000035 09C2                            or edx, eax; continue constructing C
+    46                                          
+    47 00000037 B800000000                      mov eax, 0
+    48 0000003C 66A1[00000000]                  mov ax, [a] ;moves a to eax
+    49 00000042 B110                            mov cl, 16
+    50 00000044 D3C0                            rol eax, cl ; bits of A are on 16-31
+    51                                          
+    52 00000046 09C2                            or edx, eax ;finished C
+    53 00000048 8915[04000000]                  mov [c], edx
+    54                                          
+    55                                          
+    56                                          ; exit(0)
+    57 0000004E 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    58 00000050 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

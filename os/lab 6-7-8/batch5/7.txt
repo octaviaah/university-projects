@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ -e emails.txt ];then
+        rm emails.txt
+fi
+li=""
+while read line
+do
+        email=$line"@scs.ubbcluj.ro"
+        if [ "$li" = "" ];then
+                li=$email
+        else
+                li=$li,$email
+        fi
+done < users.txt
+echo $li > emails.txt

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+for i in /mnt/floppy/*; do
+        if [ -f $i ]; then
+                filename=${i#/mnt/floppy/}
+                echo copying $i to /cop/$filename
+                cp -p $i /cop/$filename
+        fi
+done

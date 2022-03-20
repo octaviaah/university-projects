@@ -1,0 +1,25 @@
+cases:
+i - nr = 0, add first
+i - add element at pos 0
+i - add element at pos 1
+...
+i - add element at pos n-1(last)
+n+1 cases
+
+p = 1/(n+1)
+
+index = 0
+	1 step
+	n times 2nd
+index = 1
+	2 steps
+	n-1 times 2nd
+
+...
+index = n-1
+	n steps
+	1 times
+
+avg case = 1/(n+1) * n + 1/(n+1) * (n-1) + ... + 1/(n+1)
+avg case = 1/(n+1) * (n + n-1 + ... 1) = n(n+1)/2*(n+1) => theta(n)
+

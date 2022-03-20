@@ -1,0 +1,11 @@
+#include <stdio.h>
+
+int main()
+{
+        FILE* fp;
+        char n[5];
+        fp=fopen("a.txt", "r");
+        fscanf(fp, "%s", n);
+        printf("%s\n", n);
+        return 0;
+}

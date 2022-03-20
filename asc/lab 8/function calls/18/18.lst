@@ -1,0 +1,73 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, scanf, printf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import scanf msvcrt.dll
+    10                                  import printf msvcrt.dll
+    11                                  
+    12                                  ; our data is declared here (the variables needed by our program)
+    13                                  segment data use32 class=data
+    14 00000000 00000000                    a dd 0
+    15 00000004 00000000                    b dd 0
+    16 00000008 613D00                      message_a db "a=", 0
+    17 0000000B 623D00                      message_b db "b=", 0
+    18 0000000E 256400                      dformat db "%d", 0
+    19 00000011 257800                      xformat db "%x", 0
+    20 00000014 00000000                    no_1 dd 0
+    21                                  ; our code starts here
+    22                                  segment code use32 class=code
+    23                                      start:
+    24                                          ;Read a decimal number and a hexadecimal number from the keyboard. Display the number of 1's of the sum of the two numbers in decimal format. ;Example:
+    25                                          ;a = 32 = 0010 0000b
+    26                                          ;b = 1Ah = 0001 1010b
+    27                                          ;32 + 1Ah = 0011 1010b
+    28                                          ;The value printed on the screen will be 4
+    29                                          
+    30 00000000 68[08000000]                    push dword message_a
+    31 00000005 FF15[00000000]                  call [printf]
+    32 0000000B 83C404                          add esp, 4
+    33                                          
+    34 0000000E 68[00000000]                    push dword a
+    35 00000013 68[0E000000]                    push dword dformat
+    36 00000018 FF15[00000000]                  call [scanf]
+    37 0000001E 83C408                          add esp, 8
+    38                                          
+    39 00000021 68[0B000000]                    push dword message_b
+    40 00000026 FF15[00000000]                  call [printf]
+    41 0000002C 83C404                          add esp, 4
+    42                                          
+    43 0000002F 68[04000000]                    push dword b
+    44 00000034 68[11000000]                    push dword xformat
+    45 00000039 FF15[00000000]                  call [scanf]
+    46 0000003F 83C408                          add esp, 8
+    47                                          
+    48 00000042 31C0                            xor eax, eax
+    49 00000044 A1[00000000]                    mov eax, [a]
+    50 00000049 0305[04000000]                  add eax, [b]
+    51                                          
+    52 0000004F B920000000                      mov ecx, 32
+    53                                          find_bits:
+    54 00000054 D1C0                                rol eax, 1
+    55 00000056 7219                                jc add_1
+    56                                              cont:
+    57 00000058 49                                      dec ecx
+    58 00000059 75F9                                    jnz find_bits
+    59                                                  
+    60 0000005B FF35[14000000]                  push dword [no_1]
+    61 00000061 68[0E000000]                    push dword dformat
+    62 00000066 FF15[00000000]                  call [printf]
+    63 0000006C 83C408                          add esp, 4*2
+    64 0000006F EB09                            jmp fin
+    65                                          
+    66                                          add_1:
+    67 00000071 8305[14000000]01                    add dword [no_1], 1
+    68 00000078 EBDE                                jmp cont
+    69                                              
+    70                                          fin:   
+    71                                          ; exit(0)
+    72 0000007A 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    73 0000007C FF15[00000000]                  call    [exit]       ; call exit to terminate the program

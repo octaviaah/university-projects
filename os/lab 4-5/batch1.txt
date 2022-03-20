@@ -1,0 +1,8 @@
+1. Use file /etc/passwd and print out how many groups contain students named Dan with an even student ID number (numar matricol). 
+awk -F: 'BEGIN {n=0} $5 ~ / \<Dan\>/ && $3 % 2 == 0 {print $5, $3, n++} END {print n}' /etc/passwd
+
+2. Print the 3rd column for lines that do not start with a digit.
+awk -F: '$1 !~ /^[0-9]/ {print $3}' /etc/passwd
+
+3. Create a file with the content of manual for the command man. Use grep/sed/awk to select the lines that start with "MAN" or with spaces followed by "MAN" and replace all occurrences of "MAN" with "*star*". Print the first and second column of these lines,separated by dash "-", but only the lines that do not contain "WILL" or "Will" or "will" in the first two columns.
+cat man.txt | grep -E "^[ ]*MAN" | sed -E "s,MAN,*star*,i" | awk '{print $1, "-", $2}'| grep -v -i "will"

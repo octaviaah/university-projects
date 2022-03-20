@@ -1,0 +1,75 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, scanf, printf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import printf msvcrt.dll
+    10                                  import scanf msvcrt.dll
+    11                                  
+    12                                  ; our data is declared here (the variables needed by our program)
+    13                                  segment data use32 class=data
+    14 00000000 <res 00000004>              a resb 4
+    15 00000004 <res 00000004>              b resw 2
+    16 00000008 256400                      dformat db "%d", 0
+    17 0000000B 613D00                      message_a db "a=", 0
+    18 0000000E 623D00                      message_b db "b=", 0
+    19 00000011 4E4F00                      message_no db "NO", 0
+    20 00000014 59455300                    message_yes db "YES", 0
+    21                                  
+    22                                  ; our code starts here
+    23                                  segment code use32 class=code
+    24                                      start:
+    25                                          ;Read one byte and one word from the keyboard. Print on the screen "YES" if the bits of the byte read are found consecutively among the bits of the word and "NO" otherwise. Example: a = 10 = 0000 1010b
+    26                                          ;b = 256 = 0000 0001 0000 0000b
+    27                                          ;The value printed on the screen will be NO.
+    28                                          ;a = 0Ah = 0000 1010b
+    29                                          ;b = 6151h = 0110 0001 0101 0001b
+    30                                          ;The value printed on the screen will be YES (you can find the bits on positions 5-12).
+    31                                          
+    32 00000000 68[0B000000]                    push dword message_a
+    33 00000005 FF15[00000000]                  call [printf]
+    34 0000000B 83C404                          add esp, 4
+    35                                          
+    36 0000000E 68[00000000]                    push dword a
+    37 00000013 68[08000000]                    push dword dformat
+    38 00000018 FF15[00000000]                  call [scanf]
+    39 0000001E 83C408                          add esp, 8
+    40                                          
+    41 00000021 68[0E000000]                    push dword message_b
+    42 00000026 FF15[00000000]                  call [printf]
+    43 0000002C 83C404                          add esp, 4
+    44                                          
+    45 0000002F 68[04000000]                    push dword b
+    46 00000034 68[08000000]                    push dword dformat
+    47 00000039 FF15[00000000]                  call [scanf]
+    48 0000003F 83C408                          add esp, 8
+    49                                          
+    50 00000042 B90D000000                      mov ecx, 13
+    51 00000047 66A1[04000000]                  mov ax, [b]
+    52                                          
+    53                                          verify_bits:
+    54 0000004D 3A05[00000000]                      cmp al, [a]
+    55 00000053 7408                                jz print_yes
+    56 00000055 66D1C8                              ror ax, 1
+    57 00000058 49                                  dec ecx
+    58 00000059 75F2                                jnz verify_bits
+    59 0000005B 7410                                jz print_no
+    60                                              
+    61                                          print_yes:
+    62 0000005D 68[14000000]                        push dword message_yes
+    63 00000062 FF15[00000000]                      call [printf]
+    64 00000068 83C404                              add esp, 4
+    65 0000006B EB10                                jmp fin
+    66                                              
+    67                                          print_no:
+    68 0000006D 68[11000000]                        push dword message_no
+    69 00000072 FF15[00000000]                      call [printf]
+    70 00000078 83C404                              add esp, 4
+    71 0000007B EB00                                jmp fin
+    72                                          fin:
+    73                                          ; exit(0)
+    74 0000007D 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    75 0000007F FF15[00000000]                  call    [exit]       ; call exit to terminate the program

@@ -1,0 +1,32 @@
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAXLINIE 1000
+
+pthread_t tid[100];
+
+void* ucap(void* numei)
+{
+        printf("Thread start: %ld ...> %s\n", pthread_self(), (char*)numei);
+        char numeo[100];
+        strcpy(numeo, (char*)numei);
+        if (numeo[0] >= 'a' && numeo[0] <= 'z')
+                numeo[0] += 'A' - 'a';
+        printf("Thread finished: %ld > %s\n", pthread_self(), (char*)numeo);
+}
+
+int main(int argc, char* argv[])
+{
+        int i;
+        for (i=1; argv[i]; i++)
+        {
+                pthread_create(&tid[i], NULL, ucap, (void*)argv[i]);
+                printf("Thread created: %ld ...> %s\n", tid[i], argv[i]);
+        }
+        for (i=1; argv[i]; i++)
+                pthread_join(tid[i], NULL);
+        printf("All threads finished\n");
+}

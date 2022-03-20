@@ -1,0 +1,20 @@
+Find recursively in a directory all ".c" files having more than 500 lines. Stop after finding 2 such files.
+
+#!/bin/bash
+
+tms=0
+read dir
+if [ ! -d $dir ]; then
+        echo $dir is not a directory >&2
+        exit 1
+fi
+for file in `find $dir -type f -name "*.c"`; do
+        lines=`cat $file | wc -l`
+        if [ $lines -ge 500 ]; then
+                echo $file
+                tms=$((tms+1))
+                if [ $tms -eq 2 ]; then
+                        exit 0
+                fi
+        fi
+done

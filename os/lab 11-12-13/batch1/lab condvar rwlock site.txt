@@ -1,0 +1,125 @@
+Conditional variables
+
+ 
+
+1 int done = 0;
+2 pthread_mutex_t m = PTHREAD_MUTEX_INITIALIZER;
+3 pthread_cond_t c = PTHREAD_COND_INITIALIZER;
+4
+5 void thr_exit() {
+6      Pthread_mutex_lock(&m);
+7      done = 1;
+8      Pthread_cond_signal(&c);
+9      Pthread_mutex_unlock(&m);
+10 }
+11
+12 void *child(void *arg) {
+13     printf("child\n");
+14     thr_exit();
+15     return NULL;
+16 }
+17
+18 void thr_join() {
+19     Pthread_mutex_lock(&m);
+20     while (done == 0)
+21           Pthread_cond_wait(&c, &m);
+22     Pthread_mutex_unlock(&m);
+23 }
+24
+25 int main(int argc, char *argv[]) {
+26      printf("parent: begin\n");
+27      pthread_t p;
+28      Pthread_create(&p, NULL, child, NULL);
+29      thr_join();
+30      printf("parent: end\n");
+31      return 0;
+32 }
+
+Exercise:
+
+a) what is the effect of line 21 (release the lock and sleep until signal...).
+b) What if we remove the variable 'done'?
+c) What if we remove mutex and replace while with an if? (signal triggered in between the if checking done and before wait is called to put the thread to sleep)
+
+More info: https://docs.oracle.com/cd/E19455-01/806-5257/6je9h032r/index.html
+
+
+============================
+R/W lock
+
+/* a read-write lock */
+pthread_rwlock_t lock;
+
+/* thread function which writes/edits */
+void* writer(void* idp) {
+      while (1) {
+           pthread_rwlock_wrlock(&lock);
+           //write/edit operations
+           pthread_rwlock_unlock(&lock);
+     }
+     return NULL;
+}
+
+/* thread function which tests/reads elements */
+void* reader(void* idp) {
+       while (1) {
+               pthread_rwlock_rdlock(&lock);
+               //read/print operations
+               pthread_rwlock_unlock(&lock);
+       }
+       return NULL;
+}
+
+
+main(){
+      pthread_rwlock_init(&lock, NULL);
+//....
+
+}
+
+ 
+
+Semaphores
+
+ 
+
+The POSIX system in Linux presents its own built-in semaphore library. To use it, we have to:
+1. #include <semaphore.h>
+2. Compile the code by linking with -lpthread -lrt
+
+To lock a semaphore or wait we can use the sem_wait function:
+     int sem_wait(sem_t *sem);
+To release or signal a semaphore, we use the sem_post function:
+     int sem_post(sem_t *sem);
+A semaphore is initialised by using sem_init(for processes or threads) or sem_open (for IPC).
+     sem_init(sem_t *sem, int pshared, unsigned int value);
+Where,
+• sem: Specifies the semaphore to be initialized.
+• pshared: This argument specifies whether or not the newly initialized semaphore is shared between processes or between threads. A non-zero value means the semaphore is shared between processes and a value of zero means it is shared between threads.
+• value: Specifies the value to assign to the newly initialized semaphore.
+
+To destroy a semaphore, we can use sem_destroy.
+    sem_destoy(sem_t *mutex);
+
+ 
+
+Barrier
+
+#include <pthread.h>
+
+int pthread_barrier_destroy(pthread_barrier_t *barrier);
+
+int pthread_barrier_init(pthread_barrier_t *restrict barrier, const pthread_barrierattr_t *restrict attr, unsigned count);
+
+int pthread_barrier_wait(pthread_barrier_t *barrier);
+
+The calling thread shall block until the required number of threads have called pthread_barrier_wait() specifying the barrier.
+
+ 
+
+ 
+
+Problems
+
+Implement the seminary problems (5 and 6).
+

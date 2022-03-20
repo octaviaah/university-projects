@@ -1,0 +1,37 @@
+director cu size in bytes si numere negative schimbate in error
+#!/bin/bash
+
+if [ $# -eq 0 ];then
+        echo no params
+        exit 1
+fi
+
+for i in $@; do
+        if [ -f $i ];then
+                data=`ls -l $i | awk '{print $1}'`
+                if echo $data | egrep -q 'rw'; then
+                        echo $data
+                        sed -E "s,-\<[0-9]+\.?[0-9]+\>,ERROR,g" $i > aux.txt
+                        mv aux.txt $i
+                        echo $i was edited
+                fi
+        elif [ -d $i ];then
+                data=`du -shb $i | awk '{print $1}'`
+                echo $i has $data bytes
+        else
+                #data=`finger -l $i | awk '{print $4}' | head -1`
+                #echo $data
+                user=`cat passwd.fake | awk -F: '{print $1}' | grep -E "\<$i\>";`
+                if [ "$user" == "$i" ]; then
+                        online=`cat who.fake | awk '{print $1}' | grep -E "\<$i\>"`
+                        if [ "$online" == "$i" ]; then
+                                number=`cat ps.fake | grep -E "^\<$i\>" | wc -l`
+                                echo number of processes for $i is $number
+                        else
+                                cat last.fake | grep -E "^\<$i\>" | head -1 | awk '{print "start login time:", $7";", "IP:", $3";", "duration:", $10}'
+                        fi
+                else
+                        echo $i not a username
+                fi
+        fi
+done

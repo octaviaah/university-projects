@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <string.h>
+
+pthread_mutex_t mtx1 = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t mtx2 = PTHREAD_MUTEX_INITIALIZER;
+
+int v = 0;
+int n = 0;
+
+void* add(void* str)
+{
+        printf("Thread started: %ld ..> %s\n", pthread_self(), (char*)str);
+        char* newstr;
+        newstr = (char*)malloc(sizeof(char)*100);
+        strcpy(newstr, (char*)str);
+        int i;
+        for (i=0; newstr[i]; i++)
+        {
+                if (strchr("aeiouAEIOU", newstr[i]))
+                {
+                        pthread_mutex_lock(&mtx1);
+                        v++;
+                        pthread_mutex_unlock(&mtx1);
+                }
+                if (newstr[i] >= '0' && newstr[i] <= '9')
+                {
+                        pthread_mutex_lock(&mtx2);
+                        n++;
+                        pthread_mutex_unlock(&mtx2);
+                }
+        }
+        printf("Thread finished: %ld ...> %s\n", pthread_self(), (char*)str);
+        free(newstr);
+        return NULL;
+}
+
+int main(int argc, char* argv[])
+{
+        pthread_t thr[20];
+        int i;
+        char* s[20];
+        for (i=0; i<20; i++)
+        {
+                printf("read string %d\n", i);
+                s[i] = (char*)malloc(sizeof(char)*100);
+                scanf("%s", s[i]);
+        }
+        for (i=0; i<20; i++)
+                pthread_create(&thr[i], NULL, add, (void*)s[i]);
+        for(i=0; i<20; i++) pthread_join(thr[i], NULL);
+        pthread_mutex_destroy(&mtx1);
+        pthread_mutex_destroy(&mtx2);
+        printf("v = %d and n = %d\n", v, n);
+        for(i=0; i<20; i++)
+                free(s[i]);
+        return 0;
+}

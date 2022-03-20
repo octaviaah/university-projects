@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main(int argc, char** argv)
+{
+        int pid, i;
+        for(i=2; i<argc; i++)
+        {
+                pid=fork();
+                if(pid==0)
+                {
+                        execl("./reverse.sh", "./reverse.sh", argv[1], argv[i], NULL);
+                        printf("Error\n");
+                        exit(0);
+                }
+        }
+        for(i=2; i<argc; i++)
+                wait(0);
+        return 0;
+}
+
+
+
+//reverse.sh
+#!/bin/bash
+
+file=$1
+string=$2
+echo $string | rev >> $file

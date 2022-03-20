@@ -1,0 +1,41 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, printf, scanf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import printf msvcrt.dll
+    10                                  import scanf msvcrt.dll
+    11                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    12                                  
+    13                                  ; our data is declared here (the variables needed by our program)
+    14                                  segment data use32 class=data
+    15 00000000 00000000                    n dd 0
+    16 00000004 6E3D00                      message db "n=", 0
+    17 00000007 256400                      dformat db "%d", 0
+    18 0000000A 257800                      hformat db "%x", 0
+    19                                  
+    20                                  ; our code starts here
+    21                                  segment code use32 class=code
+    22                                      start:
+    23                                      ;Read a number in base 10 from the keyboard and display the value of that number in base 16 Example: Read: 28; display: 1C
+    24 00000000 68[04000000]                    push dword message ; place the address of the string on the stack
+    25 00000005 FF15[00000000]                  call [printf] ;call function to print message
+    26 0000000B 83C404                          add esp, 4*1 ; clear the stack
+    27                                          
+    28 0000000E 68[00000000]                    push dword n ;place address of n on the stack
+    29 00000013 68[07000000]                    push dword dformat
+    30 00000018 FF15[00000000]                  call [scanf] ; call function for reading
+    31 0000001E 83C408                          add esp, 4*2 ; clear stack
+    32                                          
+    33 00000021 B800000000                      mov eax, 0
+    34 00000026 A0[00000000]                    mov al, [n]
+    35 0000002B 50                              push dword eax
+    36 0000002C 68[0A000000]                    push dword hformat
+    37 00000031 FF15[00000000]                  call [printf]
+    38 00000037 83C408                          add esp, 4*2
+    39                                          ; exit(0)
+    40 0000003A 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    41 0000003C FF15[00000000]                  call    [exit]       ; call exit to terminate the program

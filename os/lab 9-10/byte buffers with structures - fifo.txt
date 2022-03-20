@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <string.h>
+//WRITER
+typedef struct{
+        int a;
+        char b[10];
+        float c;
+}abc;
+
+int main()
+{
+        int f;
+        abc x;
+        x.a=5;
+        strcpy(x.b, "qwerty");
+        x.c=1.0f;
+        f=open("w2r", O_WRONLY);
+        write(f, &x, sizeof(abc));
+        close(f);
+        return 0;
+}
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <fcntl.h>
+//READER
+typedef struct{
+        int a;
+        char b[10];
+        float c;
+}abc;
+
+int main()
+{
+        int f;
+        abc x;
+        f=open("w2r", O_RDONLY);
+        read(f, &x, sizeof(abc));
+        printf("a= %d, b= %s, c= %f", x.a, x.b, x.c);
+        close(f);
+        return 0;
+}

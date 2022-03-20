@@ -1,0 +1,84 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, fopen, fclose, fread, printf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import fread msvcrt.dll
+    10                                  import fopen msvcrt.dll
+    11                                  import fclose msvcrt.dll
+    12                                  import printf msvcrt.dll
+    13                                  
+    14                                  ; our data is declared here (the variables needed by our program)
+    15                                  segment data use32 class=data
+    16 00000000 6C655F66696C653230-         file_name db "le_file20.txt", 0
+    16 00000009 2E74787400         
+    17 0000000E 7200                        access_mode db "r", 0
+    18 00000010 FFFFFFFF                    file_descriptor dd -1
+    19 00000014 00000000                    nmb_wrds dd 0
+    20 00000018 00000000                    we_read_chr dd 0
+    21                                      len equ 100
+    22 0000001C <res 00000064>              buffer resb len
+    23 00000080 6E6F206F6620776F72-         message_words db "no of words: %d", 0
+    23 00000089 64733A20256400     
+    24                                  
+    25                                  ; our code starts here
+    26                                  segment code use32 class=code
+    27                                      start:
+    28                                          ;A text file is given. The text contains letters, spaces and points. Read the content of the file, determine the number of words and display the result on the screen. (A word is a sequence of characters sepa
+    29 00000000 68[0E000000]                    push dword access_mode
+    30 00000005 68[00000000]                    push dword file_name
+    31 0000000A FF15[00000000]                  call [fopen]
+    32 00000010 83C408                          add esp, 8
+    33                                          
+    34 00000013 83F800                          cmp eax, 0
+    35 00000016 7466                            je fin 
+    36                                          
+    37 00000018 A3[10000000]                    mov [file_descriptor], eax
+    38                                          
+    39                                          read_full_file:
+    40 0000001D FF35[10000000]                      push dword [file_descriptor]
+    41 00000023 6A64                                push dword len
+    42 00000025 6A01                                push dword 1
+    43 00000027 68[1C000000]                        push dword buffer
+    44 0000002C FF15[00000000]                      call [fread]
+    45 00000032 83C410                              add esp, 16
+    46                                              
+    47 00000035 83F800                              cmp eax, 0
+    48 00000038 7435                                je cleanup
+    49                                              
+    50 0000003A A3[18000000]                        mov [we_read_chr], eax
+    51 0000003F BE00000000                          mov esi, 0
+    52                                              find_words:
+    53 00000044 8A86[1C000000]                          mov al, [buffer+esi]
+    54 0000004A 3C20                                    cmp al, ' '
+    55 0000004C 740F                                    je add_word
+    56 0000004E 3C2E                                    cmp al, '.'
+    57 00000050 740B                                    je add_word
+    58 00000052 46                                      inc esi
+    59 00000053 3B35[18000000]                          cmp esi, [we_read_chr]
+    60 00000059 7414                                    je cleanup
+    61 0000005B 75E7                                    jne find_words
+    62                                                  add_word:
+    63 0000005D 8305[14000000]01                            add dword [nmb_wrds], 1
+    64 00000064 46                                          inc esi
+    65 00000065 3B35[18000000]                              cmp esi, [we_read_chr]
+    66 0000006B 75D7                                        jne find_words
+    67                                                      
+    68 0000006D EBAE                                jmp read_full_file
+    69                                              
+    70                                          cleanup:
+    71 0000006F FF35[10000000]                      push dword [file_descriptor]
+    72 00000075 FF15[00000000]                      call [fclose]
+    73 0000007B 83C404                              add esp, 4
+    74                                          
+    75                                          fin:
+    76 0000007E FF35[14000000]                      push dword [nmb_wrds]
+    77 00000084 68[80000000]                        push dword message_words
+    78 00000089 FF15[00000000]                      call [printf]
+    79 0000008F 83C408                              add esp, 8
+    80                                          ; exit(0)
+    81 00000092 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    82 00000094 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

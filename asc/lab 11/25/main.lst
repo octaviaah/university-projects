@@ -1,0 +1,101 @@
+     1                                  bits 32
+     2                                  global start
+     3                                  
+     4                                  import printf msvcrt.dll
+     5                                  import exit msvcrt.dll
+     6                                  import scanf msvcrt.dll
+     7                                  import fopen msvcrt.dll
+     8                                  import fprintf msvcrt.dll
+     9                                  import fclose msvcrt.dll
+    10                                  extern printf, exit, scanf, fopen, fclose, fprintf
+    11                                  
+    12                                  extern factorial
+    13                                  
+    14                                  segment data use32
+    15 00000000 FFFFFFFF                	file_descriptor dd -1
+    16 00000004 7700                        access_mode db "w", 0
+    17 00000006 6D696E2E74787400            file_name db "min.txt", 0
+    18 0000000E 6E3D00                      message_n db "n=", 0
+    19 00000011 656E746572206E756D-         message_no db "enter numbers:", 0
+    19 0000001A 626572733A00       
+    20 00000020 256400                      dformat db "%d", 0
+    21 00000023 00000000                    n dd 0
+    22 00000027 00000000                    number dd 0
+    23 0000002B 00000000                    minimum dd 0
+    24 0000002F 746865206D696E696D-         message_min db "the minimum is: %x", 0
+    24 00000038 756D2069733A202578-
+    24 00000041 00                 
+    25                                  
+    26                                  segment code use32 public code
+    27                                  start:
+    28                                      ;Read a string of signed numbers in base 10 from keyboard. Determine the minimum value of the string and write it in the file min.txt (it will be created) in 16 base.
+    29 00000000 68[0E000000]                push dword message_n ;announce we will read n
+    30 00000005 FF15[00000000]              call [printf]
+    31 0000000B 83C404                      add esp, 4
+    32                                      
+    33 0000000E 68[23000000]                push dword n
+    34 00000013 68[20000000]                push dword dformat
+    35 00000018 FF15[00000000]              call [scanf]
+    36 0000001E 83C408                      add esp, 4*2
+    37                                      
+    38 00000021 68[11000000]                push dword message_no ;announce we will read numbers
+    39 00000026 FF15[00000000]              call [printf]
+    40 0000002C 83C404                      add esp, 4
+    41                                      
+    42 0000002F 68[27000000]                push dword number ;read first number
+    43 00000034 68[20000000]                push dword dformat
+    44 00000039 FF15[00000000]              call [scanf]
+    45 0000003F 83C408                      add esp, 4*2
+    46                                      
+    47 00000042 832D[23000000]01            sub dword [n], 1
+    48                                      
+    49 00000049 8B15[27000000]              mov edx, dword [number]
+    50 0000004F 8915[2B000000]              mov dword [minimum], edx
+    51                                      
+    52                                      repeta:
+    53 00000055 B900000000                      mov ecx, 0
+    54 0000005A 8A0D[23000000]                  mov cl, [n] ;bc ecx gets different values when we read new numbers, we will use n-1 as our limit
+    55 00000060 83F900                          cmp ecx, 0
+    56 00000063 7434                            je done
+    57                                              
+    58 00000065 68[27000000]                    push dword number; read next number
+    59 0000006A 68[20000000]                    push dword dformat
+    60 0000006F FF15[00000000]                  call [scanf]
+    61 00000075 83C408                          add esp, 4*2
+    62                                              
+    63 00000078 A1[2B000000]                    mov eax, dword [minimum]
+    64 0000007D 8B1D[27000000]                  mov ebx, dword [number]
+    65 00000083 53                              push ebx
+    66 00000084 50                              push eax
+    67                                              
+    68 00000085 E8(00000000)                    call factorial
+    69 0000008A 8915[2B000000]                  mov dword [minimum], edx
+    70                                          
+    71 00000090 832D[23000000]01                sub dword [n], 1
+    72 00000097 EBBC                            jmp repeta
+    73                                      
+    74                                      done:
+    75 00000099 68[04000000]                    push dword access_mode ;create file
+    76 0000009E 68[06000000]                    push dword file_name
+    77 000000A3 FF15[00000000]                  call [fopen]
+    78 000000A9 83C408                          add esp, 4*2
+    79                                          
+    80 000000AC A3[00000000]                    mov [file_descriptor], eax ;move the descriptor of the created file
+    81                                          
+    82 000000B1 83F800                          cmp eax, 0 ;verify if the file was creted
+    83 000000B4 7429                            je final
+    84                                          
+    85 000000B6 FF35[2B000000]                  push dword [minimum] ;write minimum to file
+    86 000000BC 68[2F000000]                    push dword message_min
+    87 000000C1 FF35[00000000]                  push dword [file_descriptor]
+    88 000000C7 FF15[00000000]                  call [fprintf]
+    89 000000CD 83C40C                          add esp, 4*3
+    90                                          
+    91                                          cont:
+    92 000000D0 FF35[00000000]                  push dword [file_descriptor] ;close the file
+    93 000000D6 FF15[00000000]                  call [fclose]
+    94 000000DC 83C404                          add esp, 4
+    95                                          
+    96                                          final:
+    97 000000DF 6A00                    	push 0
+    98 000000E1 FF15[00000000]          	call [exit]

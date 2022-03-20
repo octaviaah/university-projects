@@ -1,0 +1,68 @@
+#include <stdlib.h>
+#include <pthread.h>
+#include <stdio.h>
+#include <unistd.h>
+
+pthread_rwlock_t rw;
+int g;
+
+void* producer(void* a)
+{
+        int id = *(int*)a;
+        printf("Producer %d started\n", id);
+        while(1)
+        {
+                sleep(2);
+                int var = rand() %101;
+                printf("Producer %d generated %d value\n", id, var);
+                pthread_rwlock_wrlock(&rw);
+                g = var;
+                pthread_rwlock_unlock(&rw);
+        }
+        free(a);
+        return NULL;
+}
+
+void* consumer(void* a)
+{
+        int id=*(int*)a;
+        printf("Consumer %d started\n", id);
+        while(1)
+        {
+                sleep(1);
+                pthread_rwlock_rdlock(&rw);
+                printf("Consumer %d received %d value\n", id, g);
+                pthread_rwlock_unlock(&rw);
+        }
+        free(a);
+        return NULL;
+}
+
+int main(int argc, char** argv)
+{
+        pthread_rwlock_init(&rw, NULL);
+        pthread_t t[5];
+        int i;
+        for (i=0; i<2; i++){
+                int *p = (int*)malloc(sizeof(int));
+                *p = i;
+                if (pthread_create(&t[i], NULL, producer, p) != 0)
+                        {
+                                perror("Failed to create producers");
+                                exit(1);
+                        }
+        }
+        for (i=2; i<5; i++){
+                int *p = (int*)malloc(sizeof(int));
+                *p = i;
+                if (pthread_create(&t[i], NULL, consumer, p) != 0)
+                        {
+                                perror("Failed to create consumers");
+                                exit(1);
+                        }
+        }
+        for (i=0; i<5; i++)
+                pthread_join(t[i], NULL);
+        pthread_rwlock_destroy(&rw);
+        return 0;
+}

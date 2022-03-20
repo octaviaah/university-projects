@@ -1,0 +1,40 @@
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAXLINIE 1000
+pthread_t tid[100];
+int countE = 0;
+pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
+
+void *ucap(void* numei)
+{
+        printf("Thread start: %ld...>%s\n", pthread_self(), (char*)numei);
+        char numeo[100];
+        strcpy(numeo, (char*)numei);
+        pthread_mutex_lock(&mtx);
+        if (numeo[0] >='a' && numeo[0] <='z')
+                numeo[0] += 'A'-'a';
+        if (numeo[0] == 'E') countE++;
+        pthread_mutex_unlock(&mtx);
+        printf("Thread finished: %ld > %s\n", pthread_self(), (char*)numeo);
+        return NULL;
+}
+
+int main(int argc, char* argv[])
+{
+        int i;
+        for (i=1; argv[i]; i++)
+        {
+                pthread_create(&tid[i], NULL, ucap, (void*)argv[i]);
+                printf("Thread created: %ld ...> %s\n", tid[i], argv[i]);
+        }
+        for (i=1; argv[i]; i++)
+                pthread_join(tid[i], NULL);
+        printf("All threads finished\n");
+        printf("countE is %d\n", countE);
+        pthread_mutex_destroy(&mtx);
+        return 0;
+}

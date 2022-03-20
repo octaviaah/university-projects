@@ -1,0 +1,84 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  ; our data is declared here (the variables needed by our program) 
+     3                                  global search_word, first, length1, length2
+     4                                  segment data use32
+     5                                      len equ 20
+     6 00000000 00<rept>                    first times len db 0
+     7 00000014 00000000                    length1 dd 0
+     8 00000018 00<rept>                    search_word times len db 0
+     9 0000002C 00000000                    length2 dd 0
+    10 00000030 00000000                    keep_track dd 0
+    11                                  
+    12                                  ; our code starts here
+    13                                  segment code use32 class=code public 
+    14                                  global factorial
+    15                                      
+    16                                      factorial:
+    17 00000000 8B5C2404                        mov ebx, [esp+4];first word
+    18 00000004 8B442408                        mov eax, [esp+8] ;the word to search into
+    19 00000008 891D[00000000]                  mov dword [first], ebx
+    20 0000000E A3[18000000]                    mov dword [search_word], eax
+    21                                          
+    22 00000013 BE00000000                      mov esi, 0
+    23                                          real_length1:
+    24 00000018 8A86[00000000]                      mov al, [first+esi]
+    25 0000001E 3C00                                cmp al, 0h
+    26 00000020 7403                                je delete1
+    27 00000022 46                                  inc esi
+    28 00000023 EBF3                                jmp real_length1
+    29                                              delete1:
+    30 00000025 8935[14000000]                          mov dword [length1], esi
+    31                                                  
+    32 0000002B BF00000000                      mov edi, 0
+    33                                          real_length2:
+    34 00000030 8A87[18000000]                      mov al, [search_word+edi]
+    35 00000036 3C00                                cmp al, 0h
+    36 00000038 7403                                je delete2
+    37 0000003A 47                                  inc edi
+    38 0000003B EBF3                                jmp real_length2
+    39                                              delete2:
+    40 0000003D 893D[2C000000]                          mov dword [length2], edi
+    41                                          
+    42 00000043 A1[14000000]                    mov eax, [length1]
+    43 00000048 8B1D[2C000000]                  mov ebx, [length2]
+    44 0000004E 39D8                            cmp eax, ebx ;if the length of the first word is bigger than the length of the next one, then it can't be a substring
+    45 00000050 7F63                            jg back
+    46                                          
+    47 00000052 BF00000000                      mov edi, 0 ;loop in search_word ltr
+    48                                          
+    49                                          cauta_in_search_word:
+    50 00000057 8B0D[2C000000]                      mov ecx, dword [length2]
+    51 0000005D 2B0D[14000000]                      sub ecx, dword [length1];no of indexes possible for comparing
+    52 00000063 39CF                                cmp edi, ecx
+    53 00000065 744E                                je back ;program jumps to done when this loop finishes
+    54 00000067 BE00000000                          mov esi, 0 ;loop in first_word ltr
+    55 0000006C B200                                mov dl, 0 ;dl acts as an ok
+    56                                              cauta_in_first_word:
+    57 0000006E 3B35[14000000]                          cmp esi, dword [length1]
+    58 00000074 741F                                    jz redo
+    59 00000076 3B3D[2C000000]                          cmp edi, dword [length2]
+    60 0000007C 7417                                    jz redo
+    61 0000007E 8A86[00000000]                          mov al, [first+esi]
+    62 00000084 8A9F[18000000]                          mov bl, [search_word+edi]
+    63 0000008A 38D8                                    cmp al, bl
+    64 0000008C 751E                                    jne not_eq
+    65 0000008E 80C201                                      add dl, 1
+    66 00000091 46                                          inc esi
+    67 00000092 47                                          inc edi
+    68 00000093 EBD9                                        jmp cauta_in_first_word
+    69                                                      redo:
+    70 00000095 8005[30000000]01                                add byte [keep_track], 1
+    71 0000009C 8B3D[30000000]                                  mov edi, dword [keep_track]
+    72 000000A2 3A15[14000000]                                  cmp dl, [length1]
+    73 000000A8 7405                                            je done
+    74 000000AA EBAB                                            jmp cauta_in_search_word
+    75                                                      not_eq:
+    76 000000AC 47                                              inc edi
+    77 000000AD EBBF                                            jmp cauta_in_first_word
+    78                                          done:
+    79 000000AF BA01000000                          mov edx, 1
+    80 000000B4 C3                                  ret
+    81                                              
+    82                                          back:
+    83 000000B5 BA00000000                          mov edx, 0
+    84 000000BA C3                                  ret

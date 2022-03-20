@@ -1,0 +1,32 @@
+#!/bin/bash
+
+declare -A words
+
+for i in $@; do
+    words[$i]=0
+done
+
+found_all=false
+
+while ! $found_all; do
+    found_all=true
+    read -p "Input a file name: " file
+    if [ -z "$file" ]; then
+        echo "Empty input"
+    elif [ ! -f "$file" ]; then
+        echo "Not a file"
+    else
+        for word in ${!words[@]}; do
+            if grep -q -E "\<$word\>" "$file"; then
+                echo "Found $word in $file"
+                words[$word]=1
+            fi
+            if [ 0 -eq ${words[$word]} ]; then
+                found_all=false
+            fi
+        done
+    fi
+
+done
+
+echo "All done"

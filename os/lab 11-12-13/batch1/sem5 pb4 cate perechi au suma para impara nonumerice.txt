@@ -1,0 +1,65 @@
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXLINIE 1000
+
+typedef struct
+{
+        char* n1;
+        char* n2;
+}pereche;
+
+pthread_t tid[100];
+pereche pair[100];
+
+pthread_mutex_t mut = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t mtxeven = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t mtxodd = PTHREAD_MUTEX_INITIALIZER;
+
+int pare=0, impare=0, nenum=0;
+
+void* compute(void* pair)
+{
+        int n1 = atoi(((pereche*)pair)->n1);
+        int n2 = atoi(((pereche*)pair)->n2);
+
+        if (n1 == 0 || n2 == 0)
+        {
+                pthread_mutex_lock(&mut);
+                nenum++;
+                pthread_mutex_unlock(&mut);
+        }
+        else if ((n1+n2)%2==0)
+        {
+                pthread_mutex_lock(&mtxeven);
+                pare++;
+                pthread_mutex_unlock(&mtxeven);
+        }
+        else
+        {
+                pthread_mutex_lock(&mtxodd);
+                impare++;
+                pthread_mutex_unlock(&mtxodd);
+        }
+        return NULL;
+}
+
+int main(int argc, char* argv[])
+{
+        int i;
+        int n = (argc-1)/2;
+        for (i=0; i<n; i++)
+        {
+                pair[i].n1 = argv[2*i+1];
+                pair[i].n2 = argv[2*i+2];
+                pthread_create(&tid[i], NULL, compute, (void*)&pair[i]);
+        }
+        for(i=0; i<n; i++)
+                pthread_join(tid[i], NULL);
+        printf("pairs=%d even=%d odd=%d nonnumeric=%d\n", n, pare, impare, nenum);
+        pthread_mutex_destroy(&mut);
+        pthread_mutex_destroy(&mtxodd);
+        pthread_mutex_destroy(&mtxeven);
+        return 0;
+}

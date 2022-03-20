@@ -1,0 +1,28 @@
+#!/bin/bash
+
+if [ $# -eq 0 ];then
+        echo arguments where????
+        exit 1
+fi
+if [ -e libraries.txt ];then
+        rm libraries.txt
+fi
+for i in $@; do
+        if [ ! -f $i ]; then
+                echo "$i lol"
+        else
+                data=`file $i | awk -F: '{print $2}'`
+                if [ "$data" != " ASCII C program text" ];then
+                        echo "you don't like c files dont ya?? $file is not cccc"
+                else
+                        while read line; do
+                                if echo $line | egrep -q '^#include'; then
+                                        echo $line | awk '{print $2}' >> libraries.txt
+                                fi
+                        done < $i
+                fi
+        fi
+done
+if [ -e libraries.txt ];then
+        cat libraries.txt
+fi

@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int prim(int x)
+{
+        if (x<=1) return 0;
+        if (x==2) return 1;
+        if (x%2==0) return 0;
+        int i;
+        for (i=3; i*i <=x; i+=2)
+                if (x%i==0) return 0;
+        return 1;
+}
+
+int main(int argc, char** argv)
+{
+        int n, p2c[2], c2p[2];
+        pipe(p2c); pipe(c2p);
+        if (fork()==0)
+        {
+                close(p2c[1]); close(c2p[0]);
+                while(1)
+                {
+                        if(read(p2c[0], &n, sizeof(int)) <=0) break;
+                        if (n<=1) break;
+                        while (!prim(n))
+                                n--;
+                        write(c2p[1], &n, sizeof(int));
+                }
+                close(p2c[0]); close(c2p[1]);
+                exit(0);
+        }
+        printf("N="); scanf("%d", &n);
+        close(p2c[0]); close(c2p[1]);
+        write(p2c[1], &n, sizeof(int));
+        while(n!=1)
+        {
+                if(read(c2p[0], &n, sizeof(int)) <=0) break;
+                if (n<=1) break;
+                printf("%d\n", n);
+                n--;
+                write(p2c[1], &n, sizeof(int));
+        }
+        close(p2c[1]); close(c2p[0]);
+        wait(0);
+        return 0;
+}

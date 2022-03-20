@@ -1,0 +1,8 @@
+#!/bin/bash
+# check-process-age.sh ore
+# ore este numarul maxim de procese admis
+# ps -eo pid,etime da pidul si durata de viata
+for pid in `ps -eo pid,etime | awk 'length($2) == 8 && ore <= substr($2,1,2)+0 {print 		$1}' ore=$1` ; do
+	echo $pid
+	#kill -9 $pid
+done

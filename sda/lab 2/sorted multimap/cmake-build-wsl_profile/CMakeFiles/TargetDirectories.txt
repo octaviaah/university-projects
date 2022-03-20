@@ -1,0 +1,3 @@
+/mnt/d/facultate/sda/lab/lab 2/sorted multimap/cmake-build-wsl_profile/CMakeFiles/rebuild_cache.dir
+/mnt/d/facultate/sda/lab/lab 2/sorted multimap/cmake-build-wsl_profile/CMakeFiles/edit_cache.dir
+/mnt/d/facultate/sda/lab/lab 2/sorted multimap/cmake-build-wsl_profile/CMakeFiles/sorted_multimap.dir

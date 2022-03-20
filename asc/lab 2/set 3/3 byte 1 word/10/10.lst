@@ -1,0 +1,43 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13 00000000 06                          a db 6;
+    14 00000001 09                          b db 9;
+    15 00000002 05                          c db 5;
+    16                                  ;3*[20*(b-a+2)-10*c]/5
+    17                                  ; our code starts here
+    18                                  segment code use32 class=code
+    19                                      start:
+    20 00000000 A0[00000000]                    mov al, [a];
+    21 00000005 8A1D[01000000]                  mov bl, [b];
+    22 0000000B 8A0D[02000000]                  mov cl, [c];
+    23 00000011 28C3                            sub bl, al; result in bl
+    24 00000013 80C302                          add bl, 2; bl
+    25 00000016 88D8                            mov al, bl; al
+    26 00000018 B214                            mov dl, 20; dl
+    27 0000001A F6E2                            mul dl; new result is in ax
+    28 0000001C 6689C3                          mov bx, ax; bx
+    29 0000001F 88C8                            mov al, cl; al
+    30 00000021 B20A                            mov dl, 10; dl
+    31 00000023 F6E2                            mul dl; new result is in ax
+    32 00000025 6689C1                          mov cx, ax; cx
+    33 00000028 6629CB                          sub bx, cx; bx
+    34 0000002B 6689D8                          mov ax, bx; ax
+    35 0000002E B203                            mov dl, 3; dl
+    36 00000030 F6E2                            mul dl; new result in ax
+    37 00000032 B205                            mov dl, 5; dl
+    38 00000034 F6F2                            div dl; quotient in al, remainder in ah
+    39                                          
+    40                                      
+    41                                          ; exit(0)
+    42 00000036 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    43 00000038 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

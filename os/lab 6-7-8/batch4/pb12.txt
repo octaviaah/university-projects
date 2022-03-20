@@ -1,0 +1,9 @@
+#!/bin/bash
+
+for file in `find . -type f`; do
+        data=`ls -l $file | awk '{print $1}'`
+        if echo $data | egrep -q '^-[-r]w[-x][-r]w[-x][-r]w[-x]$'; then
+                echo $file
+                chmod a-w $file
+        fi
+done

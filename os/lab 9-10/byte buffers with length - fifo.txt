@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <string.h>
+//WRITER
+int main(int argc, char** argv)
+{
+        int f, n;
+        char*s = "Hello!";
+        f = open("w2r", O_WRONLY);
+        n=strlen(s)+1;
+        write(f, &n, sizeof(int));
+        write(f, s, n);
+        close(f);
+        return 0;
+}
+
+
+#include <stdio.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <unistd.h>
+//READER
+int main(int argc, char** argv)
+{
+        int f, n;
+        char* s;
+        f=open("w2r", O_RDONLY);
+        read(f, &n, sizeof(int));
+        s=(char*)malloc(n);
+        read(f, s, n);
+        printf("%s\n", s);
+        free(s);
+        close(f);
+        return 0;
+}

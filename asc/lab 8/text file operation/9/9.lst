@@ -1,0 +1,201 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, fopen, fclose, fread, printf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import fopen msvcrt.dll
+    10                                  import printf msvcrt.dll
+    11                                  import fclose msvcrt.dll
+    12                                  import fread msvcrt.dll
+    13                                  
+    14                                  ; our data is declared here (the variables needed by our program)
+    15                                  segment data use32 class=data
+    16 00000000 00000000                    we_read_chr dd 0
+    17 00000004 00000000                    max dd 0
+    18 00000008 00000000                    chr dd 0
+    19 0000000C 00000000                    index dd 0
+    20 00000010 FFFFFFFF                    file_descriptor dd -1
+    21 00000014 7200                        access_mode db "r", 0
+    22 00000016 66696C652E74787400          file_name db "file.txt", 0
+    23                                      len equ 100
+    24 0000001F <res 00000064>              buffer resb len
+    25 00000083 <res 0000000F>              frq1 resb 15
+    26 00000092 <res 00000007>              frq2 resb 7
+    27 00000099 <res 00000006>              frq3 resb 6
+    28 0000009F <res 00000004>              frq4 resb 4
+    29 000000A3 546865207370656369-         message_frq db "The special character with the highest frequency is %c and it appears %d times"
+    29 000000AC 616C20636861726163-
+    29 000000B5 746572207769746820-
+    29 000000BE 746865206869676865-
+    29 000000C7 737420667265717565-
+    29 000000D0 6E6379206973202563-
+    29 000000D9 20616E642069742061-
+    29 000000E2 707065617273202564-
+    29 000000EB 2074696D6573       
+    30                                  
+    31                                  ; our code starts here
+    32                                  segment code use32 class=code
+    33                                      start:
+    34                                          ;A text file is given. Read the content of the file, determine the special character with the highest frequency and display the character along with its frequency on the screen. The name of text file is defi
+    35 00000000 68[14000000]                    push dword access_mode
+    36 00000005 68[16000000]                    push dword file_name
+    37 0000000A FF15[00000000]                  call [fopen]
+    38 00000010 83C408                          add esp, 8
+    39                                          
+    40 00000013 83F800                          cmp eax, 0
+    41 00000016 0F8402010000                    je fin
+    42                                          
+    43 0000001C A3[10000000]                    mov [file_descriptor], eax
+    44                                          
+    45                                          read_file:
+    46 00000021 FF35[10000000]                      push dword [file_descriptor]
+    47 00000027 6A64                                push dword len
+    48 00000029 6A01                                push dword 1
+    49 0000002B 68[1F000000]                        push dword buffer
+    50 00000030 FF15[00000000]                      call [fread]
+    51 00000036 83C410                              add esp, 16
+    52                                              
+    53 00000039 83F800                              cmp eax, 0
+    54 0000003C 0F84CE000000                        je cleanup
+    55                                              
+    56 00000042 A3[00000000]                        mov [we_read_chr], eax
+    57 00000047 BE00000000                          mov esi, 0
+    58                                              
+    59                                              frq_spcchr:
+    60 0000004C 8A86[1F000000]                          mov al, [buffer+esi]
+    61 00000052 3C21                                    cmp al, '!'
+    62 00000054 0F82A4000000                            jb not_found
+    63 0000005A 3C2F                                    cmp al, '/'
+    64 0000005C 7723                                    ja cont_search
+    65 0000005E 2C21                                    sub al, 21h
+    66 00000060 A2[0C000000]                            mov byte [index], al
+    67 00000065 8B3D[0C000000]                          mov edi, [index]
+    68 0000006B 8087[83000000]01                        add byte [frq1+edi], 1
+    69 00000072 46                                      inc esi
+    70 00000073 3B35[00000000]                          cmp esi, dword [we_read_chr]
+    71 00000079 75D1                                    jne frq_spcchr
+    72 0000007B 0F848A000000                            je cont
+    73                                                  cont_search:
+    74 00000081 3C3A                                        cmp al, ':'
+    75 00000083 7279                                        jb not_found
+    76 00000085 3C40                                        cmp al, '@'
+    77 00000087 771F                                        ja cont_search2
+    78 00000089 2C3A                                        sub al, 3ah
+    79 0000008B A2[0C000000]                                mov byte [index], al
+    80 00000090 8B3D[0C000000]                              mov edi, [index]
+    81 00000096 8087[92000000]01                            add byte [frq2+edi], 1
+    82 0000009D 46                                          inc esi
+    83 0000009E 3B35[00000000]                              cmp esi, dword [we_read_chr]
+    84 000000A4 75A6                                        jne frq_spcchr
+    85 000000A6 7463                                        je cont
+    86                                                      cont_search2:
+    87 000000A8 3C5B                                            cmp al, '['
+    88 000000AA 7252                                            jb not_found
+    89 000000AC 3C60                                            cmp al, '`'
+    90 000000AE 7723                                            ja cont_search3
+    91 000000B0 2C5B                                            sub al, 5bh
+    92 000000B2 A2[0C000000]                                    mov byte [index], al
+    93 000000B7 8B3D[0C000000]                                  mov edi, [index]
+    94 000000BD 8087[99000000]01                                add byte [frq3+edi], 1
+    95 000000C4 46                                              inc esi
+    96 000000C5 3B35[00000000]                                  cmp esi, dword [we_read_chr]
+    97 000000CB 0F857BFFFFFF                                    jne frq_spcchr
+    98 000000D1 7438                                            je cont
+    99                                                          cont_search3:
+   100 000000D3 3C7B                                                cmp al, '{'
+   101 000000D5 7227                                                jb not_found
+   102 000000D7 3C7E                                                cmp al, '~'
+   103 000000D9 7723                                                ja not_found
+   104 000000DB 2C7B                                                sub al, 7bh
+   105 000000DD A2[0C000000]                                        mov byte [index], al
+   106 000000E2 8B3D[0C000000]                                      mov edi, [index]
+   107 000000E8 8087[9F000000]01                                    add byte [frq4+edi], 1
+   108 000000EF 46                                                  inc esi
+   109 000000F0 3B35[00000000]                                      cmp esi, dword [we_read_chr]
+   110 000000F6 0F8550FFFFFF                                        jne frq_spcchr
+   111 000000FC 740D                                                je cont
+   112                                                  not_found:
+   113 000000FE 46                                          inc esi
+   114 000000FF 3B35[00000000]                              cmp esi, dword [we_read_chr]
+   115 00000105 0F8541FFFFFF                                jne frq_spcchr
+   116                                                      
+   117                                              cont:
+   118 0000010B E911FFFFFF                              jmp read_file
+   119                                              
+   120                                              cleanup:
+   121 00000110 68[10000000]                            push dword file_descriptor
+   122 00000115 FF15[00000000]                          call [fclose]
+   123 0000011B 83C404                                  add esp, 4
+   124                                          
+   125                                          fin:
+   126 0000011E BE00000000                          mov esi, 0
+   127                                              find_max1:
+   128 00000123 8A86[83000000]                          mov al, [frq1+esi]
+   129 00000129 8B1D[04000000]                          mov ebx, [max]
+   130 0000012F 38D8                                    cmp al, bl
+   131 00000131 7E15                                    jle cont2
+   132 00000133 88C3                                    mov bl, al
+   133 00000135 891D[04000000]                          mov dword [max], ebx
+   134 0000013B 8935[08000000]                          mov dword [chr], esi
+   135 00000141 8305[08000000]21                        add dword [chr], 21h
+   136                                                  cont2:
+   137 00000148 46                                          inc esi
+   138 00000149 83FE0F                                      cmp esi, 15
+   139 0000014C 75D5                                        jne find_max1
+   140                                                      
+   141 0000014E BE00000000                          mov esi, 0
+   142                                              find_max2:
+   143 00000153 8A86[92000000]                          mov al, [frq2+esi]
+   144 00000159 8B1D[04000000]                          mov ebx, [max]
+   145 0000015F 38D8                                    cmp al, bl
+   146 00000161 7E15                                    jle cont3
+   147 00000163 88C3                                    mov bl, al
+   148 00000165 891D[04000000]                          mov dword [max], ebx
+   149 0000016B 8935[08000000]                          mov dword [chr], esi
+   150 00000171 8305[08000000]3A                        add dword [chr], 3ah
+   151                                                  cont3:
+   152 00000178 46                                          inc esi
+   153 00000179 83FE07                                      cmp esi, 7
+   154 0000017C 75D5                                        jne find_max2
+   155                                                      
+   156 0000017E BE00000000                          mov esi, 0
+   157                                              find_max3:
+   158 00000183 8A86[99000000]                          mov al, [frq3+esi]
+   159 00000189 8B1D[04000000]                          mov ebx, [max]
+   160 0000018F 38D8                                    cmp al, bl
+   161 00000191 7E15                                    jle cont4
+   162 00000193 88C3                                    mov bl, al
+   163 00000195 891D[04000000]                          mov dword [max], ebx
+   164 0000019B 8935[08000000]                          mov dword [chr], esi
+   165 000001A1 8305[08000000]5B                        add dword [chr], 5bh
+   166                                                  cont4:
+   167 000001A8 46                                          inc esi
+   168 000001A9 83FE06                                      cmp esi, 6
+   169 000001AC 75D5                                        jne find_max3
+   170                                                      
+   171 000001AE BE00000000                          mov esi, 0
+   172                                              find_max4:
+   173 000001B3 8A86[9F000000]                          mov al, [frq4+esi]
+   174 000001B9 8B1D[04000000]                          mov ebx, [max]
+   175 000001BF 38D8                                    cmp al, bl
+   176 000001C1 7E15                                    jle cont5
+   177 000001C3 88C3                                    mov bl, al
+   178 000001C5 891D[04000000]                          mov dword [max], ebx
+   179 000001CB 8935[08000000]                          mov dword [chr], esi
+   180 000001D1 8305[08000000]7B                        add dword [chr], 7bh
+   181                                                  cont5:
+   182 000001D8 46                                          inc esi
+   183 000001D9 83FE04                                      cmp esi, 4
+   184 000001DC 75D5                                        jne find_max4
+   185                                                      
+   186 000001DE FF35[04000000]                      push dword [max]
+   187 000001E4 FF35[08000000]                      push dword [chr]
+   188 000001EA 68[A3000000]                        push dword message_frq
+   189 000001EF FF15[00000000]                      call [printf]
+   190 000001F5 83C40C                              add esp, 12
+   191                                          ; exit(0)
+   192 000001F8 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+   193 000001FA FF15[00000000]                  call    [exit]       ; call exit to terminate the program

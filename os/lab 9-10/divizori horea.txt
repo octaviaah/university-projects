@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main(int argc, char** argv)
+{
+        int n, p2c[2], c2p[2], m;
+        pipe(p2c); pipe(c2p);
+        if (fork()==0)
+        {
+                close(p2c[1]); close(c2p[0]);
+                while(1)
+                {
+                        if(read(p2c[0], &n, sizeof(int)) <=0) break;
+                        if (read(p2c[0], &m, sizeof(int)) <=0) break;
+                        if (n<=0) break;
+                        while (!(m%n==0))
+                                n--;
+                        write(c2p[1], &n, sizeof(int));
+                        write(c2p[1], &m, sizeof(int));
+                }
+                close(p2c[0]); close(c2p[1]);
+                exit(0);
+        }
+        printf("N="); scanf("%d", &n);
+        m=n;
+        close(p2c[0]); close(c2p[1]);
+        write(p2c[1], &n, sizeof(int));
+        write(p2c[1], &m, sizeof(int));
+        while(n!=0)
+        {
+                if(read(c2p[0], &n, sizeof(int)) <=0) break;
+                if (read(c2p[0], &m, sizeof(int)) <=0) break;
+                if (n<=0) break;
+                printf("%d\n", n);
+                n--;
+                write(p2c[1], &n, sizeof(int));
+                write(p2c[1], &m, sizeof(int));
+        }
+        close(p2c[1]); close(c2p[0]);
+        wait(0);
+        return 0;
+}

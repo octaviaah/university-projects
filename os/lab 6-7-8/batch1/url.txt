@@ -1,0 +1,6 @@
+#!/bin/bash
+
+while read url
+do
+        curl "$url" >> everywebpag_combined.html
+done < list_of_urls.txt

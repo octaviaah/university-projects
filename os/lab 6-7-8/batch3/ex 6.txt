@@ -1,0 +1,21 @@
+#3. AfiČaČi primele 5 linii Či ultimele 5 linii din fiČierele de tip text din directorul curent.
+#DacÄ un fiČier are mai puČin de 10 linii, afiČaČi fiČierul complet (comenzi: head, tail, find, file, wc).
+  
+#!/bin/bash
+
+
+for F in $(find -type f); do
+	if [[ $F == *.txt ]]; then
+		NUM=$(wc -l $F | grep -o  "[0-9]*")
+		if [ $NUM -lt 10 ]; then
+			cat $F
+		else
+			for line in  $(head -n+5 $F); do
+				echo $line
+			done
+			for line in $(tail -n-5 $F); do
+				echo $line
+			done
+		fi
+	fi
+done

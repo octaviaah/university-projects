@@ -1,0 +1,24 @@
+theta is an unknown parameter, it has the form theta(miu1*sigma squared, miu1*miu2*....). we need an idea on what theta is. it can be H0(null hypothesis) or H1(alternative hypothesis). the H0 takes into account the past. H1 represents the new thing.in statistical test, you compare what you know with what is new(H0 vs H1).
+regarding vocabulary, we can use the following expressions: "accept H0" and "reject H0" in favour of H1. "accept H1" is a no-no.
+
+technical part: choose a simple H0, then H1 can be chosen from the following:
+	H0: theta = theta0 (theta0 is usually given)
+	H1: theta < theta0 (left tailed test)
+	     theta > theta0 (right tailed test)
+	     theta != theta0 (two-tailed test)
+
+so, alpha belongs to (0, 1). this alpha is the significance level. usually, the values that we require for alpha are 0.01, 0.05, 0.1. TS represents the "test statistic". TS0 is the TS where the unknown paramater is replaced by the null value(TS0 = TS(theta = theta0)). TS0 is the observed values of TS(this is a number). RR is the rejection region. this has all the values of TS for which we reject H0. P-value is the P-value of the test, the critical value of the test. P-value is the minimum threshold for rejection.
+
+hypothesis testing: if TS0 belongs to the rejection region, "reject H0". otherwise(TS0 doesn t belong to the rejection region), do not reject H0.
+
+we request to print the following quantities(very important): TS0, RR, P-value.
+
+
+
+
+how to solve the first exercise:
+the null hypothesis must be the unknown parameter equal to a value. you have to choose H1 between those 3 alternatives. it depends on how well you understood the problem.
+H0 is miu equal to 9.
+H0 is miu less than 9(the one we will be doing).
+H tells us if we reject H0 or not.
+P is the P-value of the test.

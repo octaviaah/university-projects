@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ -z $1 ]; then
+        echo where is the arg?
+        exit 1
+fi
+
+if [ ! -d $1 ]; then
+        echo not a dir lol
+        exit 1
+fi
+
+for file in `find $1 -type f -name "*.c"`; do
+        rm $file
+done
+
+ls -l $1 | awk '{if (NR > 1) print $0}' | awk '{print $9}' | sort

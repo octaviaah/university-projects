@@ -1,0 +1,57 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13 00000000 2B32326238365838            s1 db '+', '2', '2', 'b', '8', '6', 'X', '8'
+    14                                      l1 equ $-s1
+    15 00000008 613435                      s2 db 'a', '4', '5'
+    16                                      l2 equ $-s2
+    17 0000000B 00<rept>                    d times l1+l2 db 0
+    18                                  ; our code starts here
+    19                                  segment code use32 class=code
+    20                                      start:
+    21                                      ;Two character strings S1 and S2 are given. Obtain the string D by concatenating the elements of S2 in reverse order and the elements found on even positions in S1.
+    22                                      ;D: '5', '4', 'a', '2','b', '6', '8'
+    23                                      ;Q: does the index start at 0 or 1?
+    24 00000000 B903000000                      mov ecx, l2; ecx becomes l2
+    25 00000005 BE02000000                      mov esi, l2-1; we will go through the string in reverse
+    26 0000000A BF00000000                      mov edi, 0; index of d will be increasing
+    27 0000000F E310                            jecxz Final1
+    28                                          Repeta1:
+    29 00000011 8A86[08000000]                     mov al, [s2+esi]
+    30 00000017 8887[0B000000]                     mov [d+edi], al
+    31 0000001D 47                                 inc edi
+    32 0000001E 4E                                 dec esi
+    33 0000001F E2F0                            loop Repeta1
+    34                                          Final1:
+    35                                          
+    36 00000021 B808000000                      mov eax, l1
+    37 00000026 BA00000000                      mov edx, 0; l1 is in edx:eax
+    38 0000002B B902000000                      mov ecx, 2
+    39 00000030 F7F1                            div ecx; edx:eax/ecx -> if parity even, edx is 0, else edx is 1
+    40 00000032 01D0                            add eax, edx
+    41 00000034 89C1                            mov ecx, eax; we obtain the number of steps required to get all the elements from even positions
+    42                                          
+    43 00000036 BE01000000                      mov esi, 1
+    44 0000003B BF03000000                      mov edi, l2; we set edi to l2 so we continue to add in d
+    45 00000040 E311                            jecxz Final2
+    46                                          Repeta2:
+    47 00000042 8A86[00000000]                      mov al, [s1+esi]
+    48 00000048 8887[0B000000]                      mov [d+edi], al
+    49 0000004E 46                                  inc esi
+    50 0000004F 46                                  inc esi
+    51 00000050 47                                  inc edi
+    52 00000051 E2EF                            loop Repeta2
+    53                                          Final2:
+    54                                      
+    55                                          ; exit(0)
+    56 00000053 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    57 00000055 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

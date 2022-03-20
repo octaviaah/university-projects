@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+
+int v2 = 0, v3 = 0, v5 = 0;
+int counter = 0;
+pthread_mutex_t mtx[4];
+
+void* func()
+{
+        while(counter < 30)
+        {
+                int n = rand()%100;
+                pthread_mutex_lock(&mtx[3]);
+                if (counter >= 30)
+                {
+                        pthread_mutex_unlock(&mtx[3]);
+                        break;
+                }
+                counter++;
+                pthread_mutex_unlock(&mtx[3]);
+
+                printf("n = %d\n", n);
+                if (n%2==0)
+                {
+                        pthread_mutex_lock(&mtx[0]);
+                        v2++;
+                        pthread_mutex_unlock(&mtx[0]);
+                }
+                if (n%3==0)
+                {
+                        pthread_mutex_lock(&mtx[1]);
+                        v3++;
+                        pthread_mutex_unlock(&mtx[1]);
+                }
+                if (n%5==0)
+                {
+                        pthread_mutex_lock(&mtx[2]);
+                        v5++;
+                        pthread_mutex_unlock(&mtx[2]);
+                }
+        }
+        return NULL;
+}
+
+int main(int argc, char* argv[])
+{
+        pthread_t thr[4];
+        int i;
+        for (i = 0; i<4; i++)
+                pthread_mutex_init(&mtx[i], NULL);
+        for (i=0; i<4; i++)
+                pthread_create(&thr[i], NULL, func, NULL);
+        for (i = 0; i<4; i++)
+                pthread_join(thr[i], NULL);
+        for (i=0; i<4; i++)
+                pthread_mutex_destroy(&mtx[i]);
+        printf("v2 = %d, v3 = %d, v5 = %d\n", v2, v3, v5);
+        return 0;
+}

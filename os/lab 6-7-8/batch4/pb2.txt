@@ -1,0 +1,23 @@
+#!/bin/bash
+
+while read file
+do
+        if [ $file == "stop" ]; then
+                exit 1
+        fi
+        if [ ! -f $file ]; then
+                echo $file is not an existing file >&2
+        elif echo `file $file`| egrep -q '\<text\>' ; then
+                while read line
+                do
+                        break
+                done < $file
+                words=0
+                for word in $line; do
+                        words=$((words+1))
+                done
+                echo Number of words on the first line in file $file is $words.
+        else
+                echo $file exists, but is not a text file.
+        fi
+done

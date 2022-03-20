@@ -1,0 +1,32 @@
+html, body{
+    height:100%;
+    margin:0;
+}
+
+body{
+    background-image: linear-gradient(to bottom, blue 50%, transparent 50%);
+    background-size: 100% 200%;
+    background-position: bottom;
+    transition: background-position 6s ease-out;
+    pointer-events: none;
+}
+
+
+hr.bluey{
+    background-color: blue;
+    height: 10px;
+    width:100%;
+    top: 0;
+    position: absolute;
+    pointer-events: auto;
+}
+
+hr.bluey:hover{
+    transition: top 5s;
+    top:95%;
+}
+
+body:hover{
+    background-position: top;
+}
+

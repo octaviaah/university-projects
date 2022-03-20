@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [ -z "$1" ];then
+        echo "No params given"
+        exit 1
+fi
+
+if [ ! -d "$1" ];then
+        echo "Not a folder"
+        exit 1
+fi
+
+total=0
+for file in $(ls $1);do
+        if [ -f $file ]; then
+                size=`ls -l $file | awk '{print $5}'`
+                total=`expr $total + $size`
+        fi
+done
+
+echo Total size of file from folder $1 is $total

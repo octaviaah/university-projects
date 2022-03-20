@@ -1,0 +1,77 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, fopen, fclose, fprintf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import fopen msvcrt.dll
+    10                                  import fclose msvcrt.dll
+    11                                  import fprintf msvcrt.dll
+    12                                  
+    13                                  ; our data is declared here (the variables needed by our program)
+    14                                  segment data use32 class=data
+    15 00000000 31342E74787400              file_name db "14.txt", 0
+    16 00000007 363842414241424142-         text db "68BABABABBABUU KSLDJS 25466ghkjlkjhkghjd JLKSJ226+++++", 0
+    16 00000010 4241425555204B534C-
+    16 00000019 444A53203235343636-
+    16 00000022 67686B6A6C6B6A686B-
+    16 0000002B 67686A64204A4C4B53-
+    16 00000034 4A3232362B2B2B2B2B-
+    16 0000003D 00                 
+    17 0000003E FFFFFFFF                    file_descriptor dd -1
+    18 00000042 7700                        access_mode db "w", 0
+    19                                      
+    20                                  
+    21                                  ; our code starts here
+    22                                  segment code use32 class=code
+    23                                      start:
+    24                                          ;A file name and a text (defined in the data segment) are given. The text contains lowercase letters, uppercase letters, digits and special characters. Transform all the uppercase letters from the given text
+    25                                          
+    26 00000000 68[42000000]                    push dword access_mode
+    27 00000005 68[00000000]                    push dword file_name
+    28 0000000A FF15[00000000]                  call [fopen]
+    29 00000010 83C408                          add esp, 8
+    30                                          
+    31 00000013 83F800                          cmp eax, 0
+    32 00000016 7460                            je fin
+    33                                          
+    34 00000018 A3[3E000000]                    mov [file_descriptor], eax
+    35                                          
+    36 0000001D BE00000000                      mov esi, 0
+    37 00000022 BF00000000                      mov edi, 0
+    38                                          find_upr:
+    39 00000027 8A86[07000000]                      mov al, [text+esi]
+    40 0000002D 3C41                                cmp al, 'A'
+    41 0000002F 7219                                jb not_found
+    42 00000031 3C5A                                cmp al, 'Z'
+    43 00000033 7715                                ja not_found
+    44 00000035 0420                                add al, 20h
+    45 00000037 8887[07000000]                      mov [text+edi], al
+    46 0000003D 46                                  inc esi
+    47 0000003E 47                                  inc edi
+    48 0000003F 80BE[07000000]00                    cmp byte [text+esi], 0
+    49 00000046 740D                                je print_text
+    50 00000048 75DD                                jne find_upr
+    51                                              not_found:
+    52 0000004A 46                                      inc esi
+    53 0000004B 47                                      inc edi
+    54 0000004C 80BE[07000000]00                        cmp byte [text+esi], 0
+    55 00000053 75D2                                    jne find_upr
+    56                                                  
+    57                                          print_text:
+    58 00000055 68[07000000]                        push dword text
+    59 0000005A FF35[3E000000]                      push dword [file_descriptor]
+    60 00000060 FF15[00000000]                      call [fprintf]
+    61 00000066 83C408                              add esp, 8
+    62                                              
+    63 00000069 FF35[3E000000]                      push dword [file_descriptor]
+    64 0000006F FF15[00000000]                      call [fclose]
+    65 00000075 83C404                              add esp, 4
+    66                                              
+    67                                          
+    68                                          fin:
+    69                                          ; exit(0)
+    70 00000078 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    71 0000007A FF15[00000000]                  call    [exit]       ; call exit to terminate the program

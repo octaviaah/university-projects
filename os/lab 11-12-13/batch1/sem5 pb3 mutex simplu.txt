@@ -1,0 +1,30 @@
+#include <pthread.h>
+#include <stdio.h>
+
+int count = 0;
+pthread_t tid[1000];
+pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
+
+void* inc(void* nume)
+{
+        for (int i=0; i<1000; i++)
+        {
+                pthread_mutex_lock(&mtx);
+                int temp = count;
+                temp++;
+                count = temp;
+                pthread_mutex_unlock(&mtx);
+        }
+        return NULL;
+}
+
+int main(int argc, char* argv[])
+{
+        int i;
+        for (i=0; i<1000; i++)
+                pthread_create(&tid[i], NULL, inc, NULL);
+        for (i=0; i<1000; i++) pthread_join(tid[i], NULL);
+        pthread_mutex_destroy(&mtx);
+        printf("count=%d\n", count);
+        return 0;
+}

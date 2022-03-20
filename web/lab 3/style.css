@@ -1,0 +1,706 @@
+/* html and body setting */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    margin-left: 120px;
+    margin-right: 120px;
+}
+
+.container {
+    display: flex;
+    align-items: flex-start;
+    overflow-x: hidden;
+}
+
+
+/*no-deco classes for links */
+.no-deco {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.no-deco-margin {
+    color: inherit;
+    text-decoration: inherit;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+
+/*content split into 3 categories */
+.menubar {
+    border-right: solid 1px rgb(239, 243, 244);
+    height: 100%;
+    width: 281px;
+    position: fixed;
+}
+
+.main-content {
+    display: flex;
+    height: auto;
+    width: 598px;
+    flex-direction: column;
+    position: absolute;
+    left: 26.5%;
+}
+
+.side-bar {
+    height: auto;
+    width: 669px;
+    border-left: solid 1px rgb(239, 243, 244);
+    position: absolute;
+    left: 65.95%;
+}
+
+
+/* menubar classes */
+/* the proper menu bar and contents */
+.menu-content {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    width: 246px;
+    height: 100%;
+}
+
+.menu-item {
+    padding-top: 16.5px;
+    padding-bottom: 16.5px;
+    padding-left: 30px;
+    display: flex;
+    flex-direction: row;
+}
+
+.menu-icon {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 30px;
+}
+
+.menu-text {
+    font-family: Arial;
+    font-size: 18px;
+    letter-spacing: 1px;
+    margin-bottom: 0;
+    margin-top: 0;
+    margin-left: 19px;
+}
+
+/*tweet button */
+.tweet-button {
+    background-color: rgb(120, 86, 255);
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 30px;
+    margin-top: 18.5px;
+    margin-bottom: 18.5px;
+    margin-left: 20px;
+    text-align: center;
+    font-family: "Arial";
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+}
+
+/*current profile option */
+.current-profile {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    font-family: Arial;
+    font-size: 14px;
+    margin-top: 120px;
+    padding-left: 30px;
+}
+
+.current-profile-pic {
+    height: 38px;
+    border-radius: 9999px;
+}
+
+.current-profile-info {
+    display: flex;
+    flex-direction: column;
+    padding-right: 75px;
+}
+
+.current-profile-more {
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+    line-height: 36px;
+}
+
+/* main content classes */
+/* sticky top bar */
+.text-banner {
+    height: 50px;
+    width: 562px;
+    display: flex;
+    flex-direction: row;
+    padding-left: 18px;
+    padding-right: 18px;
+    align-items: center;
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: -0.5px;
+    z-index: 3;
+    background-color: white;
+}
+
+.username-banner {
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    padding-left: 35px;
+}
+
+.username-title {
+    display: flex;
+    flex-direction: row;
+    font-family: Arial;
+    font-size: 12px;
+    line-height: 6px;
+    letter-spacing: 0.8px;
+    height: 50%;
+}
+
+.username-title-verified {
+    align-self: flex-end;
+    padding-left: 2px;
+    padding-right: 4px;
+}
+
+.username-tweets {
+    font-family: Arial;
+    color: #464646;
+    font-size: 12px;
+    line-height: 23px;
+}
+
+/*picture banner */
+.banner {
+    height: 199.325px;
+    width: inherit;
+    background-image: url("images/banner.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+/*profile pic*/
+.profile-pic {
+    background-image: url("images/logo.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    border-radius: 9999px;
+    border: solid white 4px;
+    width: 134px;
+    height: 134px;
+    top: 175px;
+    margin-left: 15px;
+}
+
+/*profile details */
+.details {
+    display: flex;
+    flex-direction: column;
+    padding-left: 15px;
+    font-family: Arial;
+}
+
+/*username and handle*/
+.username-verified {
+    display: flex;
+    flex-direction: row;
+}
+
+.username {
+    font-weight: 850;
+    font-size: 17.5px;
+    margin-top: 25px;
+}
+
+.verified {
+    align-self: flex-end;
+    padding-left: 3px;
+    margin-bottom: 4px;
+}
+
+.username-handle {
+    font-size: 14px;
+    color: rgb(93, 109, 121);
+    padding-top: 1px;
+}
+
+.round-buttons {
+    display: flex;
+    flex-direction: row;
+    align-self: flex-end;
+    margin: 10px 15px;
+    gap: 8px;
+
+}
+
+/*profile action buttons*/
+.action-button {
+    border-radius: 9999px;
+    border: solid 1px lightgray;
+    width: 27px;
+    height: 27px;
+    padding: 3px;
+    text-align: center;
+    font-family: "Arial Black";
+    line-height: 20px;
+    letter-spacing: 1px;
+}
+
+.follow-button {
+    border-radius: 30px;
+    border: solid 1px lightgray;
+    height: 27px;
+    padding: 3px 14px;
+    text-align: center;
+    font-family: "Arial";
+    line-height: 28px;
+    font-weight: bolder;
+    font-size: 13.5px;
+}
+
+/*profile description*/
+.description {
+    font-size: 14px;
+    padding-top: 13px;
+    color: #272727;
+}
+
+/*about details*/
+.about {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    letter-spacing: 0.25px;
+    color: rgb(93, 109, 121);
+    text-align: center;
+    padding-top: 15px;
+}
+
+.about-detail {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    font-size: 13.75px;
+    height: 16px;
+    padding-left: 2px;
+}
+
+/*follow stats*/
+.follow-status {
+    display: flex;
+    flex-direction: row;
+    gap: 18px;
+    padding-top: 15px;
+}
+
+.follow-numbers{
+    color:black;
+    display: flex;
+    flex-direction: row;
+    font-size: 14px;
+    gap:2px;
+}
+
+.following {
+    color: rgb(103, 118, 130);
+}
+
+.followers {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    color: rgb(103, 118, 130);
+    padding-top: 10px;
+    padding-bottom: 12px;
+    font-size: 12px;
+}
+
+/*tweets bar*/
+.tweets-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-family: Arial;
+    font-size: 14px;
+    color: rgb(83, 100, 113);
+    width: inherit;
+    height: 55px;
+    border-bottom: solid 1px rgb(239, 243, 244);
+}
+
+.tweet-option {
+    padding: 20px 5px;
+    text-align: center;
+}
+
+.tweet-option-active {
+    padding: 20px 5px;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+    border-bottom: solid 4px rgb(120, 86, 255);
+}
+
+/*tweet container*/
+.tweet {
+    display: flex;
+    flex-direction: row;
+    padding-left: 15px;
+    padding-top: 9px;
+}
+
+/*content of tweet*/
+.tweet-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 14px;
+    font-family: Arial;
+    padding: 4px 10px;
+}
+
+/*tweet account and handle and more option*/
+.tweet-account {
+    display: flex;
+    flex-direction: row;
+}
+
+.tweet-handle {
+    color: rgb(93, 109, 121);
+    padding-right: 316px;
+}
+
+.tweet-more {
+    color: rgb(93, 109, 121);
+}
+
+/* tweet actions */
+.tweet-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 78px;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+.tweet-action {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    color: rgb(93, 109, 121);
+    font-size: 12px;
+}
+
+/*retweet*/
+.retweet {
+    border-radius: 17px;
+    border: solid 1px rgb(239, 243, 244);
+    weight: 509px;
+    height: 411.312px;
+    margin-top: 4px;
+    display: flex;
+    flex-direction: column;
+}
+
+.retweet-info {
+    padding-left: 14px;
+}
+
+.retweet-margin {
+    margin-top: 14px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.retweet-handle {
+    color: rgb(93, 109, 121);
+}
+
+.retweet-pic {
+    height: 19px;
+    width: 19px;
+    border-radius: 9999px;
+    margin-top: 12px;
+    margin-bottom: 5px;
+}
+
+.retweet-verified {
+    align-self: flex-start;
+}
+
+.retweet-border {
+    border-bottom-left-radius: 17px;
+    border-bottom-right-radius: 17px;
+}
+
+/*line that connects tweets*/
+.line {
+    height: 55px;
+    width: 2px;
+    background-color: rgb(207, 217, 222);
+    position: absolute;
+    top: 53.15%;
+    left: 6.15%;
+}
+
+
+/*side bar classes*/
+/*side bar container*/
+.side-bar-content {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    padding-left: 30px;
+    width: 350px;
+    height: 100%;
+}
+
+/*search bar*/
+.search-bar {
+    border-radius: 30px;
+    background-color: rgb(239, 243, 244);
+    padding-top: 12px;
+    padding-bottom: 12px;
+    margin-top: 4px;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}
+
+.search-bar-icon {
+    padding: 2px 20px;
+}
+
+.search-bar-text {
+    font-family: Arial;
+    font-size: 13.5px;
+    letter-spacing: 0.4px;
+    padding-top: 2px;
+    color: rgb(83, 100, 113);
+}
+
+/*picture gallery*/
+.gallery {
+    display: flex;
+    flex-flow: column wrap;
+    border: solid 1px rgb(239, 243, 244);
+    border-radius: 14px;
+    height: 195.75px;
+    width: 347px;
+    margin: 15px 0;
+    gap: 2px;
+}
+
+.image1 {
+    background-image: url("images/pic1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: right;
+    height: 96.875px;
+    border-top-left-radius: 14px;
+    width: 114.5px;
+}
+
+.image2 {
+    background-image: url("images/pic2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left;
+    height: 96.875px;
+    width: 114.5px;
+}
+
+.image3 {
+    background-image: url("images/pic3.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: right;
+    height: 96.875px;
+    border-top-right-radius: 14px;
+    width: 114.5px;
+}
+
+.image4 {
+    background-image: url("images/pic4.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left;
+    height: 96.875px;
+    border-bottom-left-radius: 14px;
+    width: 114.5px;
+}
+
+.image5 {
+    background-image: url("images/pic5.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left;
+    height: 96.875px;
+    width: 114.5px;
+}
+
+.image6 {
+    background-image: url("images/pic6.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left;
+    height: 96.875px;
+    border-bottom-right-radius: 14px;
+    width: 114.5px;
+}
+
+/*who to follow container*/
+.who-to-follow {
+    width: 350px;
+    height: 298px;
+    border-radius: 17px;
+    background-color: rgb(247, 249, 249);
+    display: flex;
+    flex-direction: column;
+}
+
+/*title of box*/
+.side-box-title {
+    font-family: "Arial";
+    font-size: 18px;
+    font-weight: 800;
+    padding: 11px 15px;
+    justify-content: space-between;
+}
+
+/*account cell*/
+.account-info {
+    display: flex;
+    flex-direction: row;
+    font-family: Arial;
+    padding: 11px 15px;
+
+}
+
+.account-pic {
+    border-radius: 9999px;
+    height: 46px;
+    width: 46px;
+}
+
+.account-trending-info {
+    display: flex;
+    flex-direction: column;
+    font-family: Arial;
+    font-size: 14px;
+    padding-left: 10px;
+    align-self: center;
+}
+
+/*show more option*/
+.show-more {
+    font-family: Arial;
+    font-size: 14px;
+    color: rgb(120, 86, 255);
+    padding: 15px;
+}
+
+/*follow button for suggested accounts*/
+.account-follow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 300px;
+}
+
+.follow-button-bg {
+    font-family: Arial;
+    font-size: 12px;
+    background-color: black;
+    color: white;
+    border-radius: 30px;
+    border: solid 1px lightgray;
+    height: 27px;
+    padding: 1px 17px;
+    text-align: center;
+    line-height: 27px;
+    font-weight: bolder;
+    align-self: center;
+}
+
+/*what's happening container*/
+.whats-happening {
+    height: 515px;
+    width: 348px;
+    border-radius: 17px;
+    background-color: rgb(247, 249, 249);
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+}
+
+.trending-info {
+    display: flex;
+    flex-direction: column;
+    font-family: Arial;
+    font-size: 14px;
+    padding: 11px 15px;
+    justify-content: space-between;
+}
+
+.trending-info-more {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.trending-details {
+    color: rgb(83, 100, 113);
+    margin-top: 4px;
+    margin-bottom: 4px;
+    font-size: 13px;
+}
+
+.trending-with-pic {
+    display: flex;
+    flex-direction: row;
+    font-family: Arial;
+    font-size: 14px;
+}
+
+.trending-pic {
+    height: 65px;
+    width: 65px;
+    border-radius: 17px;
+    margin-right: 12px;
+    align-self: center;
+}
+
+/*footer*/
+.footer-info {
+    color: rgb(83, 100, 113);
+    font-size: 12px;
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 0 15px;
+    font-family: Arial;
+    margin-bottom: 90px;
+    margin-top: 15px;
+}
+
+.footer-option {
+    padding-right: 11px;
+}

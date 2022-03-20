@@ -1,0 +1,3 @@
+/mnt/d/facultate/sda/lab/lab 1/sorted bag/cmake-build-wsl_profile/CMakeFiles/edit_cache.dir
+/mnt/d/facultate/sda/lab/lab 1/sorted bag/cmake-build-wsl_profile/CMakeFiles/rebuild_cache.dir
+/mnt/d/facultate/sda/lab/lab 1/sorted bag/cmake-build-wsl_profile/CMakeFiles/container.dir

@@ -1,0 +1,9 @@
+html, body{
+    height:100%;
+    margin: 0;
+}
+
+div.gradient {
+    height:100%;
+    background:linear-gradient(to left, rgba(0, 0, 0, 0), olive, rgba(0, 0, 0, 0));
+}

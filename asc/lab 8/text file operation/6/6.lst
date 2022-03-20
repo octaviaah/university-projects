@@ -1,0 +1,112 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, fopen, fclose, fread, printf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import fopen msvcrt.dll
+    10                                  import printf msvcrt.dll
+    11                                  import fclose msvcrt.dll
+    12                                  import fread msvcrt.dll
+    13                                  
+    14                                  ; our data is declared here (the variables needed by our program)
+    15                                  segment data use32 class=data
+    16 00000000 00000000                    we_read_chr dd 0
+    17 00000004 00000000                    max dd 0
+    18 00000008 00000000                    digit dd 0
+    19 0000000C 00000000                    index dd 0
+    20 00000010 FFFFFFFF                    file_descriptor dd -1
+    21 00000014 7200                        access_mode db "r", 0
+    22 00000016 66696C652E74787400          file_name db "file.txt", 0
+    23                                      len equ 100
+    24 0000001F <res 00000064>              buffer resb len
+    25 00000083 <res 0000000A>              frq resb 10
+    26 0000008D 546865206469676974-         message_frq db "The digit with the highest frequency is %c and it appears %d times"
+    26 00000096 207769746820746865-
+    26 0000009F 206869676865737420-
+    26 000000A8 6672657175656E6379-
+    26 000000B1 20697320256320616E-
+    26 000000BA 642069742061707065-
+    26 000000C3 617273202564207469-
+    26 000000CC 6D6573             
+    27                                  
+    28                                  ; our code starts here
+    29                                  segment code use32 class=code
+    30                                      start:
+    31                                          ;A text file is given. Read the content of the file, determine the digit with the highest frequency and display the digit along with its frequency on the screen. The name of text file is defined in the data 
+    32 00000000 68[14000000]                    push dword access_mode
+    33 00000005 68[16000000]                    push dword file_name
+    34 0000000A FF15[00000000]                  call [fopen]
+    35 00000010 83C408                          add esp, 8
+    36                                          
+    37 00000013 83F800                          cmp eax, 0
+    38 00000016 7472                            je fin
+    39                                          
+    40 00000018 A3[10000000]                    mov [file_descriptor], eax
+    41                                          
+    42                                          read_file:
+    43 0000001D FF35[10000000]                      push dword [file_descriptor]
+    44 00000023 6A64                                push dword len
+    45 00000025 6A01                                push dword 1
+    46 00000027 68[1F000000]                        push dword buffer
+    47 0000002C FF15[00000000]                      call [fread]
+    48 00000032 83C410                              add esp, 16
+    49                                              
+    50 00000035 83F800                              cmp eax, 0
+    51 00000038 7442                                je cleanup
+    52                                              
+    53 0000003A A3[00000000]                        mov [we_read_chr], eax
+    54 0000003F BE00000000                          mov esi, 0
+    55                                              
+    56                                              frq_digit:
+    57 00000044 8A86[1F000000]                          mov al, [buffer+esi]
+    58 0000004A 3C30                                    cmp al, '0'
+    59 0000004C 7223                                    jb not_found
+    60 0000004E 3C39                                    cmp al, '9'
+    61 00000050 771F                                    ja not_found
+    62 00000052 2C30                                    sub al, 30h
+    63 00000054 A2[0C000000]                            mov byte [index], al
+    64 00000059 8B3D[0C000000]                          mov edi, [index]
+    65 0000005F 8087[83000000]01                        add byte [frq+edi], 1
+    66 00000066 46                                      inc esi
+    67 00000067 3B35[00000000]                          cmp esi, dword [we_read_chr]
+    68 0000006D 75D5                                    jne frq_digit
+    69 0000006F 7409                                    je cont
+    70                                                  not_found:
+    71 00000071 46                                          inc esi
+    72 00000072 3B35[00000000]                              cmp esi, dword [we_read_chr]
+    73 00000078 75CA                                        jne frq_digit
+    74                                                      
+    75                                              cont:
+    76 0000007A EBA1                                    jmp read_file
+    77                                              
+    78                                              cleanup:
+    79 0000007C 68[10000000]                            push dword file_descriptor
+    80 00000081 FF15[00000000]                          call [fclose]
+    81 00000087 83C404                                  add esp, 4
+    82                                          
+    83                                          fin:
+    84 0000008A BE00000000                          mov esi, 0
+    85                                              find_max:
+    86 0000008F 8A86[83000000]                          mov al, [frq+esi]
+    87 00000095 8B1D[04000000]                          mov ebx, [max]
+    88 0000009B 38D8                                    cmp al, bl
+    89 0000009D 7E15                                    jle cont2
+    90 0000009F 88C3                                    mov bl, al
+    91 000000A1 891D[04000000]                          mov dword [max], ebx
+    92 000000A7 8935[08000000]                          mov dword [digit], esi
+    93 000000AD 8305[08000000]30                        add dword [digit], 30h
+    94                                                  cont2:
+    95 000000B4 46                                          inc esi
+    96 000000B5 83FE0A                                      cmp esi, 10
+    97 000000B8 75D5                                        jne find_max
+    98 000000BA FF35[04000000]                      push dword [max]
+    99 000000C0 FF35[08000000]                      push dword [digit]
+   100 000000C6 68[8D000000]                        push dword message_frq
+   101 000000CB FF15[00000000]                      call [printf]
+   102 000000D1 83C40C                              add esp, 12
+   103                                          ; exit(0)
+   104 000000D4 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+   105 000000D6 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

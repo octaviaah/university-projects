@@ -1,0 +1,102 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, fopen, printf, fclose, fread               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import fclose msvcrt.dll
+    10                                  import printf msvcrt.dll
+    11                                  import fopen msvcrt.dll
+    12                                  import fread msvcrt.dll
+    13                                  
+    14                                  ; our data is declared here (the variables needed by our program)
+    15                                  segment data use32 class=data
+    16 00000000 74686566696C652E74-         file_name db "thefile.txt", 0
+    16 00000009 787400             
+    17 0000000C FFFFFFFF                    file_descriptor dd -1
+    18 00000010 7200                        access_mode db "r", 0
+    19 00000012 00000000                    nmb_y dd 0
+    20 00000016 00000000                    nmb_z dd 0
+    21                                      len equ 100
+    22 0000001A <res 00000064>              buffer resb len
+    23 0000007E 6E6F206F6620793A20-         message_y db "no of y: %d", 0
+    23 00000087 256400             
+    24 0000008A 6E6F206F66207A3A20-         message_z db "no of z: %d", 0
+    24 00000093 256400             
+    25 00000096 00000000                    we_read_chr dd 0
+    26 0000009A 0D0A                        newline db 13, 10
+    27                                  ; our code starts here
+    28                                  segment code use32 class=code
+    29                                      start:
+    30                                          ;A text file is given. Read the content of the file, count the number of letters 'y' and 'z' and display the values on the screen. The file name is defined in the data segment.
+    31 00000000 68[10000000]                    push dword access_mode
+    32 00000005 68[00000000]                    push dword file_name
+    33 0000000A FF15[00000000]                  call [fopen]
+    34 00000010 83C408                          add esp, 8
+    35                                          
+    36 00000013 83F800                          cmp eax, 0
+    37 00000016 7478                            je fin
+    38                                          
+    39 00000018 A3[0C000000]                    mov [file_descriptor], eax
+    40                                          
+    41                                          read_full_file:
+    42 0000001D FF35[0C000000]                      push dword [file_descriptor]
+    43 00000023 6A64                                push dword len
+    44 00000025 6A01                                push dword 1
+    45 00000027 68[1A000000]                        push dword buffer
+    46 0000002C FF15[00000000]                      call [fread]
+    47 00000032 83C410                              add esp, 16
+    48                                              
+    49 00000035 83F800                              cmp eax, 0
+    50 00000038 7447                                je cleanup
+    51                                              
+    52 0000003A A3[96000000]                        mov [we_read_chr], eax
+    53 0000003F BE00000000                          mov esi, 0
+    54                                              find_y_z:
+    55 00000044 8A86[1A000000]                          mov al, [buffer+esi]
+    56 0000004A 3C79                                    cmp al, 'y'
+    57 0000004C 740F                                    je add_y
+    58 0000004E 3C7A                                    cmp al, 'z'
+    59 00000050 741D                                    je add_z
+    60 00000052 46                                      inc esi
+    61 00000053 3B35[96000000]                          cmp esi, [we_read_chr]
+    62 00000059 7426                                    je cleanup
+    63 0000005B 75E7                                    jne find_y_z
+    64                                                  add_y:
+    65 0000005D 8305[12000000]01                            add dword [nmb_y], 1
+    66 00000064 46                                          inc esi
+    67 00000065 3B35[96000000]                              cmp esi, [we_read_chr]
+    68 0000006B 7414                                        je cleanup
+    69 0000006D 75D5                                        jne find_y_z
+    70                                                  add_z:
+    71 0000006F 8305[16000000]01                            add dword [nmb_z], 1
+    72 00000076 46                                          inc esi
+    73 00000077 3B35[96000000]                              cmp esi, [we_read_chr]
+    74 0000007D 75C5                                        jne find_y_z
+    75                                                      
+    76 0000007F EB9C                                 jmp read_full_file
+    77                                               
+    78                                               cleanup:
+    79 00000081 FF35[0C000000]                          push dword [file_descriptor]
+    80 00000087 FF15[00000000]                          call [fclose]
+    81 0000008D 83C404                                  add esp, 4
+    82                                          
+    83                                          fin:
+    84 00000090 FF35[16000000]                      push dword [nmb_z]
+    85 00000096 68[8A000000]                        push dword message_z
+    86 0000009B FF15[00000000]                      call [printf]
+    87 000000A1 83C408                              add esp, 8
+    88                                              
+    89 000000A4 68[9A000000]                        push dword newline
+    90 000000A9 FF15[00000000]                      call [printf]
+    91 000000AF 83C404                              add esp, 4
+    92                                              
+    93 000000B2 FF35[12000000]                      push dword [nmb_y]
+    94 000000B8 68[7E000000]                        push dword message_y
+    95 000000BD FF15[00000000]                      call [printf]
+    96 000000C3 83C408                              add esp, 8
+    97                                          ; exit(0)
+    98 000000C6 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    99 000000C8 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

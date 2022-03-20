@@ -1,0 +1,22 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main(int argc, char** argv)
+{
+        int pid, i, s=0;
+        pid=fork();
+        if (pid==0)
+        {
+                for (i=1; i<argc; i++)
+                {
+                        s+=atoi(argv[i]);
+                }
+                printf("%d\n", s);
+                exit(0);
+        }
+        for (i=1; i<argc; i++)
+                wait(0);
+        return 0;
+}

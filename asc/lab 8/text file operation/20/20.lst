@@ -1,0 +1,122 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, fopen, fclose, fprintf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import fopen msvcrt.dll
+    10                                  import fclose msvcrt.dll
+    11                                  import fprintf msvcrt.dll
+    12                                  
+    13                                  ; our data is declared here (the variables needed by our program)
+    14                                  segment data use32 class=data
+    15 00000000 <res 00000005>              nmb_in_ascii resb 5
+    16 00000005 6D795F66696C652E74-         file_name db "my_file.txt", 0
+    16 0000000E 787400             
+    17 00000011 7700                        access_mode db "w", 0
+    18 00000013 6D61206D61206D6120-         text db "ma ma ma oa d", 0
+    18 0000001C 6F61206400         
+    19 00000021 FFFFFFFF                    file_descriptor dd -1
+    20 00000025 00000000                    index dd 0
+    21 00000029 00000000                    index2 dd 0
+    22 0000002D <res 00000064>              new_text resb 100
+    23                                  
+    24                                  ; our code starts here
+    25                                  segment code use32 class=code
+    26                                      start:
+    27                                          ;A file name and a text (defined in the data segment) are given. The text contains lowercase letters and spaces. Replace all the letters on even positions with their position. Create a file with the given na
+    28 00000000 68[11000000]                    push dword access_mode
+    29 00000005 68[05000000]                    push dword file_name
+    30 0000000A FF15[00000000]                  call [fopen]
+    31 00000010 83C408                          add esp, 8
+    32                                          
+    33 00000013 83F800                          cmp eax, 0
+    34 00000016 0F8401010000                    je fin
+    35                                          
+    36 0000001C A3[21000000]                    mov [file_descriptor], eax
+    37 00000021 BE00000000                      mov esi, 0
+    38 00000026 BF00000000                      mov edi, 0
+    39                                          
+    40                                          read_text:
+    41 0000002B 8A86[13000000]                      mov al, [text+esi]
+    42 00000031 3C61                                cmp al, 'a'
+    43 00000033 0F82AC000000                        jb not_found
+    44 00000039 3C7A                                cmp al, 'z'
+    45 0000003B 0F87A4000000                        ja not_found
+    46 00000041 88C3                                mov bl, al
+    47 00000043 BA00000000                          mov edx, 0
+    48 00000048 89F0                                mov eax, esi
+    49 0000004A B902000000                          mov ecx, 2
+    50 0000004F F7F1                                div ecx
+    51 00000051 83FA00                              cmp edx, 0
+    52 00000054 741B                                je change
+    53 00000056 31C0                                xor eax, eax
+    54 00000058 88D8                                mov al, bl
+    55 0000005A 8887[2D000000]                      mov [new_text+edi], al
+    56 00000060 46                                  inc esi
+    57 00000061 47                                  inc edi
+    58 00000062 80BE[13000000]00                    cmp byte [text+esi], 0
+    59 00000069 0F848B000000                        je write_text
+    60 0000006F 75BA                                jne read_text
+    61                                              change:
+    62 00000071 31C0                                    xor eax, eax
+    63 00000073 89F0                                    mov eax, esi
+    64 00000075 BB0A000000                              mov ebx, 10
+    65                                                  
+    66 0000007A 893D[25000000]                          mov [index], edi
+    67 00000080 BF03000000                              mov edi, 3
+    68                                                  convert_chr_to_nmb:
+    69 00000085 BA00000000                                  mov edx, 0
+    70 0000008A F7F3                                        div ebx
+    71 0000008C 83C230                                      add edx, 30h
+    72                                                      
+    73 0000008F 8897[00000000]                              mov [nmb_in_ascii+edi], dl
+    74 00000095 4F                                          dec edi
+    75                                                      
+    76 00000096 83F800                                      cmp eax, 0
+    77 00000099 75EA                                        jnz convert_chr_to_nmb
+    78 0000009B 8935[29000000]                          mov [index2], esi
+    79 000000A1 BE00000000                              mov esi, 0
+    80                                                  advance:
+    81 000000A6 80BE[00000000]00                            cmp byte[nmb_in_ascii+esi], 0
+    82 000000AD 7503                                        jne putnmb
+    83 000000AF 46                                          inc esi
+    84 000000B0 EBF4                                        jmp advance
+    85                                                  putnmb:    
+    86 000000B2 8B3D[25000000]                          mov edi, [index]
+    87                                                  add_index:
+    88 000000B8 8A86[00000000]                              mov al, [nmb_in_ascii+esi]
+    89 000000BE 8887[2D000000]                              mov [new_text+edi], al
+    90 000000C4 47                                          inc edi
+    91 000000C5 46                                          inc esi
+    92 000000C6 80BE[00000000]00                            cmp byte [nmb_in_ascii+esi], 0
+    93 000000CD 75E9                                        jne add_index
+    94 000000CF 8B35[29000000]                          mov esi, [index2]
+    95 000000D5 46                                      inc esi
+    96 000000D6 80BE[13000000]00                        cmp byte [text+esi], 0
+    97 000000DD 741B                                    je write_text
+    98 000000DF 0F8546FFFFFF                            jne read_text
+    99                                                  
+   100                                                  not_found:
+   101 000000E5 8887[2D000000]                              mov [new_text+edi], al
+   102 000000EB 46                                          inc esi
+   103 000000EC 47                                          inc edi
+   104 000000ED 80BE[13000000]00                            cmp byte [text+esi], 0
+   105 000000F4 0F8531FFFFFF                                jne read_text
+   106                                                  
+   107                                          write_text:
+   108 000000FA 68[2D000000]                        push dword new_text
+   109 000000FF FF35[21000000]                      push dword [file_descriptor]
+   110 00000105 FF15[00000000]                      call [fprintf]
+   111 0000010B 83C408                              add esp, 8
+   112                                              
+   113 0000010E FF35[21000000]                      push dword [file_descriptor]
+   114 00000114 FF15[00000000]                      call [fclose]
+   115 0000011A 83C404                              add esp, 4
+   116                                          
+   117                                          fin:
+   118                                          ; exit(0)
+   119 0000011D 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+   120 0000011F FF15[00000000]                  call    [exit]       ; call exit to terminate the program

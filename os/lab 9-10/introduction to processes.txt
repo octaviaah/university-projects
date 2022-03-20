@@ -1,0 +1,61 @@
+//inc.c
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <string.h>
+int main(int argc, char** argv) {
+        int f, k, i;
+        f = open(argv[1], O_RDWR);
+        if(argc > 2 && strcmp(argv[2], "reset") == 0) {
+                k = 0;
+                write(f, &k, sizeof(int));
+                close(f);
+                return 0;
+        }
+        for(i=0; i<255*255; i++) {
+                lseek(f, 0, SEEK_SET);
+                read(f, &k, sizeof(int));
+                k++;
+                lseek(f, 0, SEEK_SET);
+                write(f, &k, sizeof(int));
+        }
+        close(f);
+        return 0;
+}
+
+
+
+//inc.sh
+#!/bin/bash
+
+echo 0 > a.txt
+./run.sh a.txt &
+./run.sh a.txt &
+./run.sh a.txt &
+
+
+
+
+//run.sh
+#!/bin/bash
+
+F=$1
+N=0
+while [ $N -lt 200 ]; do
+        K=`cat $F`
+        K=`expr $K + 1`
+        echo $K > $F
+        N=`expr $N + 1`
+done
+
+
+
+//runc.sh
+#!/bin/bash
+./inc b.dat reset
+./inc b.dat &
+./inc b.dat &
+./inc b.dat &

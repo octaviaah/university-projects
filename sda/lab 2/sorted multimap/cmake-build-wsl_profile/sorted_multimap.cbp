@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="sorted_multimap"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/mnt/d/facultate/sda/lab/lab 2/sorted multimap/cmake-build-wsl_profile"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/d/facultate/sda/lab/lab\ 2/sorted\ multimap/cmake-build-wsl_profile/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/d/facultate/sda/lab/lab\ 2/sorted\ multimap/cmake-build-wsl_profile/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/d/facultate/sda/lab/lab\ 2/sorted\ multimap/cmake-build-wsl_profile/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/d/facultate/sda/lab/lab\ 2/sorted\ multimap/cmake-build-wsl_profile/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/mnt/d/facultate/sda/lab/lab 2/sorted multimap/cmake-build-wsl_profile"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/d/facultate/sda/lab/lab\ 2/sorted\ multimap/cmake-build-wsl_profile/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/d/facultate/sda/lab/lab\ 2/sorted\ multimap/cmake-build-wsl_profile/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/d/facultate/sda/lab/lab\ 2/sorted\ multimap/cmake-build-wsl_profile/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/d/facultate/sda/lab/lab\ 2/sorted\ multimap/cmake-build-wsl_profile/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/mnt/d/facultate/sda/lab/lab 2/sorted multimap/cmake-build-wsl_profile"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/d/facultate/sda/lab/lab\ 2/sorted\ multimap/cmake-build-wsl_profile/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/d/facultate/sda/lab/lab\ 2/sorted\ multimap/cmake-build-wsl_profile/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/d/facultate/sda/lab/lab\ 2/sorted\ multimap/cmake-build-wsl_profile/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/d/facultate/sda/lab/lab\ 2/sorted\ multimap/cmake-build-wsl_profile/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="sorted_multimap">
+				<Option output="/mnt/d/facultate/sda/lab/lab 2/sorted multimap/cmake-build-wsl_profile/sorted_multimap" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/d/facultate/sda/lab/lab 2/sorted multimap/cmake-build-wsl_profile"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/mnt/d/facultate/sda/lab/lab 2/sorted multimap/."/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/d/facultate/sda/lab/lab\ 2/sorted\ multimap/cmake-build-wsl_profile/Makefile&quot;  VERBOSE=1 sorted_multimap"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/d/facultate/sda/lab/lab\ 2/sorted\ multimap/cmake-build-wsl_profile/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/d/facultate/sda/lab/lab\ 2/sorted\ multimap/cmake-build-wsl_profile/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/d/facultate/sda/lab/lab\ 2/sorted\ multimap/cmake-build-wsl_profile/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="sorted_multimap/fast">
+				<Option output="/mnt/d/facultate/sda/lab/lab 2/sorted multimap/cmake-build-wsl_profile/sorted_multimap" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/d/facultate/sda/lab/lab 2/sorted multimap/cmake-build-wsl_profile"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/mnt/d/facultate/sda/lab/lab 2/sorted multimap/."/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/d/facultate/sda/lab/lab\ 2/sorted\ multimap/cmake-build-wsl_profile/Makefile&quot;  VERBOSE=1 sorted_multimap/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/d/facultate/sda/lab/lab\ 2/sorted\ multimap/cmake-build-wsl_profile/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/d/facultate/sda/lab/lab\ 2/sorted\ multimap/cmake-build-wsl_profile/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/d/facultate/sda/lab/lab\ 2/sorted\ multimap/cmake-build-wsl_profile/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/mnt/d/facultate/sda/lab/lab 2/sorted multimap/App.cpp">
+			<Option target="sorted_multimap"/>
+		</Unit>
+		<Unit filename="/mnt/d/facultate/sda/lab/lab 2/sorted multimap/ExtendedTest.cpp">
+			<Option target="sorted_multimap"/>
+		</Unit>
+		<Unit filename="/mnt/d/facultate/sda/lab/lab 2/sorted multimap/ExtendedTest.h">
+			<Option target="sorted_multimap"/>
+		</Unit>
+		<Unit filename="/mnt/d/facultate/sda/lab/lab 2/sorted multimap/SMMIterator.cpp">
+			<Option target="sorted_multimap"/>
+		</Unit>
+		<Unit filename="/mnt/d/facultate/sda/lab/lab 2/sorted multimap/SMMIterator.h">
+			<Option target="sorted_multimap"/>
+		</Unit>
+		<Unit filename="/mnt/d/facultate/sda/lab/lab 2/sorted multimap/ShortTest.cpp">
+			<Option target="sorted_multimap"/>
+		</Unit>
+		<Unit filename="/mnt/d/facultate/sda/lab/lab 2/sorted multimap/ShortTest.h">
+			<Option target="sorted_multimap"/>
+		</Unit>
+		<Unit filename="/mnt/d/facultate/sda/lab/lab 2/sorted multimap/SortedMultiMap.cpp">
+			<Option target="sorted_multimap"/>
+		</Unit>
+		<Unit filename="/mnt/d/facultate/sda/lab/lab 2/sorted multimap/SortedMultiMap.h">
+			<Option target="sorted_multimap"/>
+		</Unit>
+		<Unit filename="/mnt/d/facultate/sda/lab/lab 2/sorted multimap/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

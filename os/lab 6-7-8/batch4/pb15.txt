@@ -1,0 +1,16 @@
+#1/bin/bash
+
+cat passwd.fake | awk -F: '{print $1}' > users.txt
+cat last.fake | awk '{print $1, $3}' > users_and_ips.txt
+while read line; do
+        while read U IP; do
+                S=$line.txt
+                if [ $line == "$U" ];then
+                        echo $IP >> $S
+                        cat $S | sort | uniq > aux.txt
+                        rm $S
+                        mv aux.txt $S
+
+                fi
+        done < users_and_ips.txt
+done < users.txt

@@ -1,0 +1,102 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, fopen, fread, printf, fclose               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import fopen msvcrt.dll
+    10                                  import fread msvcrt.dll
+    11                                  import printf msvcrt.dll
+    12                                  import fclose msvcrt.dll
+    13                                  
+    14                                  ; our data is declared here (the variables needed by our program)
+    15                                  segment data use32 class=data
+    16 00000000 00000000                    nmb_vowels dd 0
+    17 00000004 00000000                    we_read_chr dd 0
+    18 00000008 7200                        access_mode db "r", 0
+    19 0000000A FFFFFFFF                    file_descriptor dd -1
+    20 0000000E 6E6F206F6620766F77-         message_vowel db "no of vowels: %d", 0
+    20 00000017 656C733A20256400   
+    21                                      len equ 100
+    22 0000001F 7465787466696C652E-         file_name db "textfile.txt", 0
+    22 00000028 74787400           
+    23 0000002C <res 00000064>              buffer resb len
+    24                                  
+    25                                  ; our code starts here
+    26                                  segment code use32 class=code
+    27                                      start:
+    28                                          ;A text file is given. Read the content of the file, count the number of vowels and display the result on the screen. The name of text file is defined in the data segment.
+    29 00000000 68[08000000]                    push dword access_mode
+    30 00000005 68[1F000000]                    push dword file_name
+    31 0000000A FF15[00000000]                  call [fopen]
+    32 00000010 83C408                          add esp, 8
+    33                                          
+    34 00000013 83F800                          cmp eax, 0
+    35 00000016 0F8486000000                    jz fin
+    36                                          
+    37 0000001C A3[0A000000]                    mov [file_descriptor], eax
+    38                                          
+    39                                          read_whole_file:
+    40 00000021 FF35[0A000000]                      push dword [file_descriptor]
+    41 00000027 6A64                                push dword len
+    42 00000029 6A01                                push dword 1
+    43 0000002B 68[2C000000]                        push dword buffer
+    44 00000030 FF15[00000000]                      call [fread]
+    45 00000036 83C410                              add esp, 16
+    46                                              
+    47 00000039 83F800                              cmp eax, 0
+    48 0000003C 7455                                je cleanup
+    49                                          
+    50 0000003E A3[04000000]                        mov [we_read_chr], eax
+    51 00000043 BE00000000                          mov esi, 0
+    52                                              find_vowels:
+    53 00000048 8A86[2C000000]                          mov al, [buffer+esi]
+    54 0000004E 3C41                                    cmp al, 'A'
+    55 00000050 742F                                    je add_vowel
+    56 00000052 3C45                                    cmp al, 'E'
+    57 00000054 742B                                    je add_vowel
+    58 00000056 3C49                                    cmp al, 'I'
+    59 00000058 7427                                    je add_vowel
+    60 0000005A 3C4F                                    cmp al, 'O'
+    61 0000005C 7423                                    je add_vowel
+    62 0000005E 3C55                                    cmp al, 'U'
+    63 00000060 741F                                    je add_vowel
+    64 00000062 3C61                                    cmp al, 'a'
+    65 00000064 741B                                    je add_vowel
+    66 00000066 3C69                                    cmp al, 'i'
+    67 00000068 7417                                    je add_vowel
+    68 0000006A 3C65                                    cmp al, 'e'
+    69 0000006C 7413                                    je add_vowel
+    70 0000006E 3C6F                                    cmp al, 'o'
+    71 00000070 740F                                    je add_vowel
+    72 00000072 3C75                                    cmp al, 'u'
+    73 00000074 740B                                    je add_vowel
+    74 00000076 46                                      inc esi
+    75 00000077 3B35[04000000]                          cmp esi, dword[we_read_chr]
+    76 0000007D 75C9                                    jne find_vowels
+    77 0000007F 7410                                    je cont
+    78                                                  add_vowel:
+    79 00000081 8305[00000000]01                            add dword [nmb_vowels], 1
+    80 00000088 46                                          inc esi
+    81 00000089 3B35[04000000]                              cmp esi, dword[we_read_chr]
+    82 0000008F 75B7                                        jne find_vowels
+    83                                              
+    84                                              cont:
+    85 00000091 EB8E                                jmp read_whole_file
+    86                                          
+    87                                          cleanup:
+    88 00000093 FF35[0A000000]                      push dword [file_descriptor]
+    89 00000099 FF15[00000000]                      call [fclose]
+    90 0000009F 83C404                              add esp, 4
+    91                                              
+    92                                          
+    93                                          fin:
+    94 000000A2 FF35[00000000]                      push dword [nmb_vowels]
+    95 000000A8 68[0E000000]                        push dword message_vowel
+    96 000000AD FF15[00000000]                      call [printf]
+    97 000000B3 83C408                              add esp, 8
+    98                                          ; exit(0)
+    99 000000B6 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+   100 000000B8 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

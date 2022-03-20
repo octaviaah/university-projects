@@ -1,0 +1,67 @@
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
+
+int main(int argc, char**argv)
+{
+        mkfifo("fifa2b", 0666);
+        mkfifo("fifb2a", 0666);
+        int fa2b, fb2a, fa;
+        fa=fork();
+        if (fa<0)
+        {
+                printf("error");
+                exit(1);
+        }
+        if (fa==0)
+        {
+                int x=50;
+                fa2b=open("fifa2b", O_WRONLY);
+                write(fa2b, &x, sizeof(int));
+                fb2a=open("fifb2a", O_RDONLY);
+
+                while (x>9)
+                {
+                        int d;
+                        read(fb2a, &d, sizeof(int));
+                        printf("A: %d\n", d);
+                        d/=2;
+                        write(fa2b, &d, sizeof(int));
+                }
+                close(fb2a);
+                close(fa2b);
+                exit(0);
+        }
+        else
+        {
+                int fb=fork();
+                if(fb<0)
+                {
+                        printf("error");
+                        exit(1);
+                }
+                if(fb==0)
+                {
+                        fa2b=open("fifa2b", O_RDONLY);
+                        fb2a=open("fifb2a", O_WRONLY);
+                        int x=20;
+                        while(x>9)
+                        {
+                                read(fa2b, &x, sizeof(int));
+                                printf("B: %d\n", x);
+                                x-=3;
+                                fb2a=open("fifb2a", O_WRONLY);
+                                write(fb2a, &x, sizeof(int));
+                        }
+                        close(fb2a);
+                        close(fa2b);
+                        exit(0);
+                }
+        }
+        wait(0); wait(0);
+        return 0;
+}

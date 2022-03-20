@@ -1,0 +1,1 @@
+echo `ls -l pb6.sh` | awk '{print $9}' | egrep '^(.){,8}$'

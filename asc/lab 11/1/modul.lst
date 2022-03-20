@@ -1,0 +1,41 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global rotate     
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern start, printf
+     8                                  import printf msvcrt.dll
+     9                                  
+    10                                  ; our data is declared here (the variables needed by our program)
+    11                                  segment data use32 class=data public
+    12 00000000 257800                      xformat db "%x", 0
+    13 00000003 00000000                    a dd 0
+    14 00000007 00000000                    ccx dd 0
+    15 0000000B 0D0A                        newline db 13,10
+    16                                  ; our code starts here
+    17                                  segment code use32 class=code public
+    18                                  rotate:
+    19 00000000 8B442404                    mov eax, [esp+4]
+    20 00000004 A3[03000000]                mov dword[a], eax
+    21 00000009 C705[07000000]0700-         mov dword [ccx], 7
+    21 00000011 0000               
+    22 00000013 B907000000                  mov ecx, 7
+    23                                      the_loop:
+    24 00000018 68[0B000000]                        push dword newline
+    25 0000001D FF15[00000000]                      call [printf]
+    26 00000023 83C404                              add esp, 4
+    27                                              
+    28 00000026 A1[03000000]                        mov eax, [a]
+    29 0000002B C1C004                              rol eax, 4
+    30 0000002E A3[03000000]                        mov dword [a], eax
+    31                                              
+    32 00000033 50                                  push eax
+    33 00000034 68[00000000]                        push dword xformat
+    34 00000039 FF15[00000000]                      call [printf]
+    35 0000003F 83C408                              add esp, 4*2
+    36                                  
+    37 00000042 832D[07000000]01                    sub dword [ccx],1
+    38 00000049 8B0D[07000000]                      mov ecx, [ccx]
+    39 0000004F 75C7                                jnz the_loop
+    40 00000051 C3                          ret

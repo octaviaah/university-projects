@@ -1,0 +1,15 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+int main()
+{
+        FILE *p = popen("who | sort", "r");
+        char line[50];
+        while (fgets(line, 50, p))
+        {
+                printf("%s", line);
+        }
+        pclose(p);
+        return 0;
+}

@@ -1,0 +1,204 @@
+Threads
+1a. What would be the output of this code?
+
+#include <stdio.h>
+#include <pthread.h>
+#include <stdlib.h>
+
+void * thread1()
+{
+     while(1){
+              printf("Hello!!\n");
+     }
+}
+
+void * thread2()
+{
+     while(1){
+             printf("How are you?\n");
+     }
+}
+
+int main()
+{
+     int status;
+     pthread_t tid1,tid2;
+
+     pthread_create(&tid1,NULL,thread1,NULL);
+     pthread_create(&tid2,NULL,thread2,NULL);
+     pthread_join(tid1,NULL);
+     pthread_join(tid2,NULL);
+     return 0;
+}
+
+
+See other examples with threads here: http://www.cs.ubbcluj.ro/~rares/course/os/res/lab_examples/thr/
+
+ 
+
+1.b. For the following code:
+
+#define T 10
+#define N 10000
+
+int counter = 0;
+
+pthread_mutex_t mtx;
+
+void* increment(void* p) {
+     int i, t;
+     for(i=0; i<N; i++) {
+             pthread_mutex_lock(&mtx);
+             counter++; // or t=counter; t++; counter=t; 
+             pthread_mutex_unlock(&mtx);
+     }
+     return NULL;
+}
+
+int main() {
+     int I;
+     pthread_t thr[T];
+
+     pthread_mutex_init(&mtx, NULL);
+
+     for(i=0; i<T; i++) {
+             pthread_create(&thr[i], NULL, increment, NULL);
+     }
+
+     for(i=0; i<T; i++) {
+             pthread_join(thr[i], NULL);
+     }
+
+     pthread_mutex_destroy(&mtx);
+
+     printf("%i\n", counter);
+
+    return 0;
+}
+
+- what happens if you comment the 2 lines with mutex lock and mutex unlock from increment? what is the value for counter? execute several times...
+- change N=10 and pass the thread id as a parameter and print in each thread the id and the counter (a printf between mutex lock and mutex unlock). What do you see printed?
+- move the join function call into the same for loop as create. What do you see now?
+
+
+----------------------------------
+Passing parameters in threads:
+a)[in main:]
+pthread_create(&thread_tid[i], NULL, increment, i); //this is a trick...generates warning...
+
+//ideally (void *) &i
+
+[in thread:]
+void * increment(void* arg)
+{
+       int id = (int) arg; //the trick version...
+
+      // ideally int* id = (int*)arg;
+
+       printf("%i\n", id); //...*id
+
+ 
+
+======================================================================
+b)typedef struct
+{
+     int a, b;
+
+}  PARAM;
+
+[in thread:]
+
+void* increment(void *param)
+{
+     PARAM *pparam = (PARAM*)param;
+     int n1 = pparam->a, n2 = pparam->b;
+     ....
+
+     free(pparam);
+     ....
+
+ 
+
+[in main:]
+    PARAM *pParam = (PARAM*)malloc(sizeof(PARAM));
+    pParam->a = rand() % 5;
+    pParam->b = rand() % 5;
+    pthread_create(&(tID[i]), 0, &increment, (void*)pParam);
+
+    ....
+
+====================================================================
+
+ Using gdb to debug multi-threading programs:
+
+1. Introduction to gdb: https://www.youtube.com/watch?v=bWH-nL7v5F4
+
+2. Useful commands in gdb for debugging threads:  https://youtu.be/aypNWcRlwYw
+
+ 
+
+gdb a.out
+
+layout next
+
+run 1 2 3 4 5 params
+
+break functionname
+
+next
+
+step
+
+continue
+
+display varname
+
+print varname
+
+watch VAR
+
+info threads
+
+thread 1
+
+thread apply all backtrace
+
+Ctrl+L
+
+ quit
+
+--------------------------------------
+
+ 1.c  
+
+ 
+
+ 
+
+Problems for training 
+
+
+2. Write a program that creates 4 threads and had 3 global variables v5, v2, v3.
+Each thread generates a random number and:
+- if the number is multiple of 2 increments v2
+- if the number is multiple of 3, increments v3
+- if the number is multiple of 5 increments v5
+
+The number can be a multiple of more numbers (ex. for 10 we will increment both V2 and V5)
+
+Threads print the generated numbers and stop when 30 numbers have been generated.
+
+The main program prints the 3 global variables.
+!!! Use mutex for synchronisation.
+
+
+3. Write a program that creates 20 threads, giving each thread a string as parameter. Each thread will count and add to the global variables v and n as follows: the number of vowels contained by the string added to v, and the number of digits contained in the string added to n. Synchronise threads using mutex and check for memory leaks.
+
+!!! Use valgrind to check for memory leaks.
+
+4. A C program receives command line args pairs of numbers, and creates for each pair a thread that checks is the two numbers are relatively prime (gcd=1), incrementing a global variable. The program prints at the end how many relatively prime pairs have been found and the respective pairs.
+
+(you can use atoi() )
+
+5. Write a program that computes the sum of the elements of a matix using threads. Try to come up with a most efficient solution.
+

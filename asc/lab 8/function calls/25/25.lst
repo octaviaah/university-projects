@@ -1,0 +1,75 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, printf, scanf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  import printf msvcrt.dll
+    11                                  import scanf msvcrt.dll
+    12                                  
+    13                                  ; our data is declared here (the variables needed by our program)
+    14                                  segment data use32 class=data
+    15 00000000 00000000                    a dd 0
+    16 00000004 00000000                    b dd 0
+    17 00000008 613D00                      message_a db "a=", 0
+    18 0000000B 623D00                      message_b db "b=", 0
+    19 0000000E 256400                      dformat db "%d", 0
+    20 00000011 2564203D20256400            equal_message db "%d = %d", 0
+    21 00000019 2564203C20256400            less_message db "%d < %d", 0
+    22 00000021 2564203E20256400            greater_message db "%d > %d", 0
+    23                                  
+    24                                  ; our code starts here
+    25                                  segment code use32 class=code
+    26                                      start:
+    27                                      ;Read two numbers a and b (in base 10) from the keyboard and determine the order relation between them (either a < b, or a = b, or a > b). Display the result in the following format: "<a> < <b>, <a> = <b> or <a>
+    28 00000000 68[08000000]                    push dword message_a;push address of message_a on the stack
+    29 00000005 FF15[00000000]                  call [printf]
+    30 0000000B 83C404                          add esp, 4*1; clear the stack
+    31                                          
+    32 0000000E 68[00000000]                    push dword a;push address of a on the stack
+    33 00000013 68[0E000000]                    push dword dformat
+    34 00000018 FF15[00000000]                  call [scanf]
+    35 0000001E 83C408                          add esp, 4*2
+    36                                          
+    37 00000021 68[0B000000]                    push dword message_b
+    38 00000026 FF15[00000000]                  call [printf]
+    39 0000002C 83C404                          add esp, 4*1
+    40                                          
+    41 0000002F 68[04000000]                    push dword b
+    42 00000034 68[0E000000]                    push dword dformat
+    43 00000039 FF15[00000000]                  call [scanf]
+    44 0000003F 83C408                          add esp, 4*2
+    45                                          
+    46 00000042 A1[00000000]                    mov eax, [a]
+    47 00000047 8B1D[04000000]                  mov ebx, [b]
+    48 0000004D 39D8                            cmp eax, ebx
+    49                                          
+    50 0000004F 7512                            jne not_eq
+    51 00000051 50                                  push dword eax
+    52 00000052 53                                  push dword ebx
+    53 00000053 68[11000000]                        push dword equal_message
+    54 00000058 FF15[00000000]                      call [printf]
+    55 0000005E 83C40C                              add esp, 4*3 
+    56 00000061 EB26                                jmp ending
+    57                                          not_eq:
+    58 00000063 7D12                                jnl not_less
+    59 00000065 53                                      push dword ebx
+    60 00000066 50                                      push dword eax
+    61 00000067 68[19000000]                            push dword less_message
+    62 0000006C FF15[00000000]                          call [printf]
+    63 00000072 83C40C                                  add esp, 4*3 
+    64 00000075 EB12                                    jmp ending 
+    65                                              not_less:
+    66 00000077 53                                      push dword ebx
+    67 00000078 50                                      push dword eax
+    68 00000079 68[21000000]                            push dword greater_message
+    69 0000007E FF15[00000000]                          call [printf]
+    70 00000084 83C40C                                  add esp, 4*3 
+    71 00000087 EB00                                    jmp ending 
+    72                                          ending:
+    73                                          ; exit(0)
+    74 00000089 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    75 0000008B FF15[00000000]                  call    [exit]       ; call exit to terminate the program

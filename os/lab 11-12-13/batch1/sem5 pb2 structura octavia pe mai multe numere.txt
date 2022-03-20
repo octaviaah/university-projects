@@ -1,0 +1,50 @@
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#define MAXLINIE 1000
+
+pthread_t tid[100];
+int a[100];
+
+typedef struct
+{
+        int sum;
+}response;
+
+void* partial(void* id)
+{
+        int nr = *(int*)id;
+        response* r = malloc(sizeof(response));
+        printf("Thread started: %ld ...> %d\n", pthread_self(), nr);
+        r->sum = a[2*nr] + a[2*nr+1];
+        printf("Thread finished: %ld ... > %d\n", pthread_self(), nr);
+        pthread_exit(r);
+}
+
+int main(int argc, char* argv[])
+{
+        int i, tnr[100];
+        for (i=0; i<100; i++)
+        {
+                a[i] = i;
+                tnr[i] = i;
+        }
+        response *res[100];
+        for (i=0; i<50; i++)
+                pthread_create(&tid[i], NULL, partial, (void*)&tnr[i]);
+        for (i=0; i<50; i++)
+                pthread_join(tid[i], &res[i]);
+
+        printf("All threads are finished\n");
+
+        int s = 0;
+        for (i=0; i<50; i++)
+                s += res[i]->sum;
+
+        printf("The sum is %d\n", s);
+        for (i=0; i<50; i++)
+                free(res[i]);
+        return 0;
+}

@@ -1,0 +1,51 @@
+#include <pthread.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
+
+int sum=0;
+pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t mtx2 = PTHREAD_MUTEX_INITIALIZER;
+pthread_barrier_t barr;
+void* func(void* a)
+{
+        int arg = *(int*)a;
+        int A = rand()% 10 + 1;
+        pthread_mutex_lock(&mtx);
+        sum+=A;
+        pthread_mutex_unlock(&mtx);
+        printf("thread %d is here\n", arg);
+        pthread_barrier_wait(&barr);
+        int B = rand()%10 + 1;
+        pthread_mutex_lock(&mtx2);
+        if (B <= sum)
+        {
+                //pthread_mutex_lock(&mtx2);
+                sum-=B;
+                printf("Thread %d managed to subtract B and we have A=%d and B=%d\n", arg, A, B);
+                //pthread_mutex_unlock(&mtx2);
+        }
+        else printf("Thread %d didn't manage to subtract B, we have A=%d and B=%d\n", arg, A, B);
+        pthread_mutex_unlock(&mtx2);
+        return NULL;
+}
+
+int main(int argc, char* argv[])
+{
+        int N, i;
+        srand(time(NULL));
+        N = atoi(argv[1]);
+        pthread_barrier_init(&barr, NULL, N);
+        pthread_t* t = (pthread_t*)malloc(sizeof(pthread_t)*N);
+        int* tnr = (int*)malloc(sizeof(int)*N);
+        for (i=0; i<N; i++) tnr[i] = i;
+        for (i=0; i<N; i++) pthread_create(&t[i], NULL, func, (void*)&tnr[i]);
+        for(i=0; i<N; i++)pthread_join(t[i], NULL);
+        pthread_mutex_destroy(&mtx);
+        pthread_mutex_destroy(&mtx2);
+        pthread_barrier_destroy(&barr);
+        free(t);
+        free(tnr);
+        printf("the sum is %d\n", sum);
+        return 0;
+}

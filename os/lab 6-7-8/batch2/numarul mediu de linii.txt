@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ $# -eq 0 ];then
+        echo no params
+        exit 1
+fi
+if [ ! -d $1 ]; then
+        echo not a dir
+        exit 1
+fi
+count=0
+sum=0
+for file in `find $1 -type f`; do
+        info=`file $file`
+        if echo $info | egrep -q '\<text\>'; then
+                count=$((count+1))
+                lines=`wc -l $file | awk '{print $1}'`
+                sum=$((sum+lines))
+        fi
+done
+
+echo average number of lines is $((sum/count))

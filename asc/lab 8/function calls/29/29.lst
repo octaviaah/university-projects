@@ -1,0 +1,90 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, printf, scanf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import printf msvcrt.dll
+    10                                  import scanf msvcrt.dll
+    11                                  
+    12                                  ; our data is declared here (the variables needed by our program)
+    13                                  segment data use32 class=data
+    14 00000000 <res 00000004>              a resw 2
+    15 00000004 <res 00000004>              m resw 2
+    16 00000008 <res 00000004>              n resw 2
+    17 0000000C 613D00                      message_a db "a=", 0
+    18 0000000F 6D3D00                      message_m db "m=", 0
+    19 00000012 6E3D00                      message_n db "n=", 0
+    20 00000015 256400                      dformat db "%d", 0
+    21 00000018 6C65206E6577206E75-         message_fin db "le new numbah iz: %x", 0
+    21 00000021 6D62616820697A3A20-
+    21 0000002A 257800             
+    22                                  
+    23                                  ; our code starts here
+    24                                  segment code use32 class=code
+    25                                      start:
+    26                                          ;Read three numbers a, m and n (a: word, 0 <= m, n <= 15, m > n) from the keyboard. Isolate the bits m-n of a and display the integer represented by those bits in base 16
+    27 00000000 68[0C000000]                    push dword  message_a
+    28 00000005 FF15[00000000]                  call [printf]
+    29 0000000B 83C404                          add esp, 4
+    30                                          
+    31 0000000E 68[00000000]                    push dword a
+    32 00000013 68[15000000]                    push dword dformat
+    33 00000018 FF15[00000000]                  call [scanf]
+    34 0000001E 83C408                          add esp, 8
+    35                                          
+    36 00000021 68[0F000000]                    push dword  message_m
+    37 00000026 FF15[00000000]                  call [printf]
+    38 0000002C 83C404                          add esp, 4
+    39                                          
+    40 0000002F 68[04000000]                    push dword m
+    41 00000034 68[15000000]                    push dword dformat
+    42 00000039 FF15[00000000]                  call [scanf]
+    43 0000003F 83C408                          add esp, 8
+    44                                          
+    45 00000042 68[12000000]                    push dword  message_n
+    46 00000047 FF15[00000000]                  call [printf]
+    47 0000004D 83C404                          add esp, 4
+    48                                          
+    49 00000050 68[08000000]                    push dword n
+    50 00000055 68[15000000]                    push dword dformat
+    51 0000005A FF15[00000000]                  call [scanf]
+    52 00000060 83C408                          add esp, 8
+    53                                          
+    54 00000063 31C0                            xor eax, eax
+    55 00000065 66B80000                        mov ax, 0
+    56 00000069 B900000000                      mov ecx, 0
+    57                                          
+    58                                          the_loop:
+    59 0000006E 3B0D[08000000]                      cmp ecx, dword [n]
+    60 00000074 7C0F                                jl cont
+    61 00000076 3B0D[04000000]                      cmp ecx, dword [m]
+    62 0000007C 7F07                                jg cont
+    63 0000007E 6683C801                            or ax, 1
+    64 00000082 66D1C0                              rol ax, 1
+    65                                              cont:
+    66 00000085 41                                      inc ecx
+    67 00000086 83F910                                  cmp ecx, 16
+    68 00000089 75E3                                    jnz the_loop
+    69 0000008B 8A0D[04000000]                  mov cl, byte [m]
+    70 00000091 2A0D[08000000]                  sub cl, byte [n]
+    71 00000097 80C101                          add cl, 1
+    72 0000009A 66D3C0                          rol ax, cl
+    73                                          
+    74 0000009D 31DB                            xor ebx, ebx
+    75 0000009F 6689C3                          mov bx, ax
+    76 000000A2 31C0                            xor eax, eax
+    77 000000A4 A1[00000000]                    mov eax, [a]
+    78                                          
+    79 000000A9 21D8                            and eax, ebx
+    80 000000AB 50                              push eax
+    81 000000AC 68[18000000]                    push message_fin
+    82 000000B1 FF15[00000000]                  call [printf]
+    83 000000B7 83C408                          add esp, 8
+    84                                          
+    85                                          
+    86                                          ; exit(0)
+    87 000000BA 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    88 000000BC FF15[00000000]                  call    [exit]       ; call exit to terminate the program

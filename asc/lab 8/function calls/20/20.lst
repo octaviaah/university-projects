@@ -1,0 +1,80 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, printf, scanf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import printf msvcrt.dll
+    10                                  import scanf msvcrt.dll
+    11                                  
+    12                                  ; our data is declared here (the variables needed by our program)
+    13                                  segment data use32 class=data
+    14 00000000 00000000                    a dd 0
+    15 00000004 00000000                    b dd 0
+    16 00000008 613D00                      message_a db "a=", 0
+    17 0000000B 623D00                      message_b db "b=", 0
+    18 0000000E 73756D3D257800              message_sum db "sum=%x", 0
+    19 00000015 646966666572656E63-         message_diff db "difference=%x", 0
+    19 0000001E 653D257800         
+    20 00000023 257800                      xformat db "%x", 0
+    21 00000026 00000000                    diff dd 0
+    22 0000002A 0D0A                        newline db 13, 10
+    23                                      
+    24                                  ; our code starts here
+    25                                  segment code use32 class=code
+    26                                      start:
+    27                                          ;Read two doublewords a and b in base 16 from the keyboard. Display the sum of the low parts of the two numbers and the difference between the high parts of the two numbers in base 16 Example:
+    28                                          ;a = 00101A35h
+    29                                          ;b = 00023219h
+    30                                          ;sum = 4C4Eh
+    31                                          ;difference = Eh
+    32                                          
+    33 00000000 68[08000000]                    push dword message_a
+    34 00000005 FF15[00000000]                  call [printf]
+    35 0000000B 83C404                          add esp, 4
+    36                                          
+    37 0000000E 68[00000000]                    push dword a
+    38 00000013 68[23000000]                    push dword xformat
+    39 00000018 FF15[00000000]                  call [scanf]
+    40 0000001E 83C408                          add esp, 8
+    41                                          
+    42 00000021 68[0B000000]                    push dword message_b
+    43 00000026 FF15[00000000]                  call [printf]
+    44 0000002C 83C404                          add esp, 4
+    45                                          
+    46 0000002F 68[04000000]                    push dword b
+    47 00000034 68[23000000]                    push dword xformat
+    48 00000039 FF15[00000000]                  call [scanf]
+    49 0000003F 83C408                          add esp, 8
+    50                                          
+    51 00000042 31C0                            xor eax, eax
+    52 00000044 31D2                            xor edx, edx
+    53                                          
+    54 00000046 66A1[00000000]                  mov ax, word [a]
+    55 0000004C 668B1D[04000000]                mov bx, word [b]
+    56 00000053 668B0D[06000000]                mov cx, word [b+2]
+    57 0000005A 668B15[02000000]                mov dx, word [a+2]
+    58                                          
+    59 00000061 6601D8                          add ax, bx
+    60 00000064 6629CA                          sub dx, cx
+    61 00000067 668915[26000000]                mov word [diff], dx
+    62                                          
+    63 0000006E 50                              push eax
+    64 0000006F 68[0E000000]                    push dword message_sum
+    65 00000074 FF15[00000000]                  call [printf]
+    66 0000007A 83C408                          add esp, 8
+    67                                          
+    68 0000007D 68[2A000000]                    push newline
+    69 00000082 FF15[00000000]                  call [printf]
+    70 00000088 83C404                          add esp, 4
+    71                                          
+    72 0000008B FF35[26000000]                  push dword [diff]
+    73 00000091 68[15000000]                    push dword message_diff
+    74 00000096 FF15[00000000]                  call [printf]
+    75 0000009C 83C408                          add esp, 8
+    76                                          
+    77                                          ; exit(0)
+    78 0000009F 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    79 000000A1 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

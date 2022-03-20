@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ -z $1 ];then
+        echo you forgot the params...
+        exit 1
+fi
+if [ ! -d $1 ];then
+        echo "you dont learn anything, dont you?"
+        exit 1
+else
+        find $1 -type f | awk -F/ '{print $NF}' | sort | uniq -c
+fi

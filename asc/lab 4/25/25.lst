@@ -1,0 +1,42 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13 00000000 D088246F                    m dd 0110_1111_0010_0100_1000_1000_1101_0000b
+    14 00000004 9DA035C8                    n dd 1100_1000_0011_0101_1010_0000_1001_1101b
+    15 00000008 00000000                    p dd 0
+    16                                  
+    17                                  ; our code starts here
+    18                                  segment code use32 class=code
+    19                                      start:
+    20                                      ;Given the doublewords M and N, compute the doubleword P as follows.
+    21                                          ;the bits 0-6 of P are the same as the bits 10-16 of M
+    22                                          ;the bits 7-20 of P are the same as the bits 7-20 of (M AND N).
+    23                                          ;the bits 21-31 of P are the same as the bits 1-11 of N.
+    24 00000000 A1[00000000]                    mov eax, [m]; move m to eax so we can isolate the bits 10-16
+    25 00000005 2500FC0100                      and eax, 0000_0000_0000_0001_1111_1100_0000_0000b; we isolate bits 10-16
+    26 0000000A B10A                            mov cl, 10; we will shift 10 positions to the right
+    27 0000000C D3E8                            shr eax, cl; bits 10-16 are on positions 0-6
+    28 0000000E A3[08000000]                    mov [p], eax
+    29                                          
+    30 00000013 A1[00000000]                    mov eax, [m]; move m in eax for 'and' operation
+    31 00000018 2305[04000000]                  and eax, [n]; m and n
+    32 0000001E 2580FF1F00                      and eax, 0000_0000_0001_1111_1111_1111_1000_0000b; we isolate bits 7-20
+    33 00000023 0905[08000000]                  or [p], eax; we move bits 7-20 in p
+    34                                          
+    35 00000029 A1[04000000]                    mov eax, [n]; move n to eax so we can isolate bits 1-11
+    36 0000002E 25FE0F0000                      and eax, 0000_0000_0000_0000_0000_1111_1111_1110b; we isolate bits 1-11
+    37 00000033 B114                            mov cl, 20; we will shift 20 position to the left
+    38 00000035 D3E0                            shl eax, cl; bits 1-11 are on positions 21-31
+    39 00000037 0905[08000000]                  or [p], eax; we move bits 1-11 in p
+    40                                          ; exit(0)
+    41 0000003D 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    42 0000003F FF15[00000000]                  call    [exit]       ; call exit to terminate the program

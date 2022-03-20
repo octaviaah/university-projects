@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <signal.h>
+#include <sys/wait.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <fcntl.h>
+
+void f(int sgn)
+{
+        wait(0);
+}
+
+int main(int argc, char** argv)
+{
+        int req, pid, res;
+        signal(SIGCHLD, f);
+        while(1)
+        {
+                req=get_request();
+                pid=fork();
+                if (pid==0)
+                {
+                        res=process_request(req);
+                        send_response(res);
+                        exit(0);
+                }
+        }
+        return 0;
+}

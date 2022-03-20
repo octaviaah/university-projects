@@ -1,0 +1,19 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+int main()
+{
+        FILE *w2p; //who to parent
+        FILE *p2s; //parent to sort
+        w2p = popen("who", "r");
+        p2s = popen("sort", "w");
+        char line[50];
+        while (fgets(line, 50, w2p))
+        {
+                fprintf(p2s, "%s", line);
+        }
+        pclose(w2p);
+        pclose(p2s);
+        return 0;
+}

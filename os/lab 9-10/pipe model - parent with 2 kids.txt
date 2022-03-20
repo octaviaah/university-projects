@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+
+int main(int argc, char** argv)
+{
+
+        int a2b[2];
+        int b2a[2];
+        int pa, pb2;
+        //hierarchy     p
+        //          |       |
+        //          A       B
+        pipe(a2b);
+        pipe(b2a);
+
+        pa=fork();
+        if (pa == 0)
+        {}
+        else
+        {
+                pb=fork();
+                if (pb == 0)
+                {}
+        }
+        wait(0);
+        wait(0);
+        printf("Finished\n");
+        return 0;
+}

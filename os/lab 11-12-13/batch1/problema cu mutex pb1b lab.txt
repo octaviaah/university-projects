@@ -1,0 +1,42 @@
+#include <pthread.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+#define T 10
+#define N 7
+
+int counter = 0;
+
+pthread_mutex_t mtx;
+
+void *increment(void* p)
+{
+        int i;
+        for(i=0; i<N; i++)
+        {
+                pthread_mutex_lock(&mtx);
+                counter++;
+                pthread_mutex_unlock(&mtx);
+        }
+        return NULL;
+}
+
+int main()
+{
+        int i;
+        pthread_t thr[T];
+
+        pthread_mutex_init(&mtx, NULL);
+
+        for(i=0; i<T; i++)
+        {
+                void* p = &i;
+                pthread_create(&thr[i], NULL, increment, p);
+        }
+        for(i=0; i<T; i++) pthread_join(thr[i], NULL);
+
+        pthread_mutex_destroy(&mtx);
+        printf("%i\n", counter);
+        return 0;
+}

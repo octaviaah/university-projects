@@ -1,0 +1,19 @@
+#!/bin/bash
+
+read D
+if [ ! -d $D ];then
+        echo not a dir
+        exit 1
+fi
+
+read N
+
+for file in `find $D -type f`; do
+        data=`ls -l $file | awk '{print $1}'`
+        if echo $data | egrep -q '^-r[-w]x[-rwx]*'; then
+                echo $file has the following $N lines
+                cat $file | head -$N
+                echo
+                echo
+        fi
+done

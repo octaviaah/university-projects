@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../tcp aut/.idea/tcp aut.iml" filepath="$PROJECT_DIR$/../tcp aut/.idea/tcp aut.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/tcp multithreaded server in python.iml" filepath="$PROJECT_DIR$/.idea/tcp multithreaded server in python.iml" />
+    </modules>
+  </component>
+</project>

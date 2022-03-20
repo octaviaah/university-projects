@@ -1,0 +1,54 @@
+#include<stdio.h>
+#include<pthread.h>
+#include<stdlib.h>
+#include<unistd.h>
+
+pthread_cond_t var = PTHREAD_COND_INITIALIZER;
+pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t mtx2 = PTHREAD_MUTEX_INITIALIZER;
+
+void* ft1(void* arg){
+        printf("thread 1 is computing\n");
+        sleep(rand()%4 +1);
+        printf("thread 1 is done\n");
+        pthread_mutex_lock(&mtx);
+        pthread_mutex_unlock(&mtx2);
+        pthread_cond_wait(&var, &mtx);
+        pthread_mutex_unlock(&mtx);
+        printf("threads are done\n");
+        return NULL;
+}
+
+void* ft2(void* arg){
+        printf("thread 2 is computing\n");
+        sleep(rand()%4+1);
+        printf("thread 2 is done\n");
+        pthread_mutex_lock(&mtx2);
+        pthread_cond_signal(&var);
+        printf("thread 2 signals\n");
+        return NULL;
+}
+
+int main()
+{
+        pthread_t t1, t2;
+        srand(getpid());
+        pthread_mutex_lock(&mtx2);
+        if(pthread_create(&t1, NULL, ft1, NULL) > 0)
+        {
+                perror("thread 1 was not created\n");
+                exit(1);
+        }
+        if(pthread_create(&t2, NULL, ft2, NULL) > 0)
+        {
+                perror("thread 2 was not created\n");
+                exit(1);
+        }
+
+        pthread_join(t1, NULL);
+        pthread_join(t2, NULL);
+        pthread_cond_destroy(&var);
+        pthread_mutex_destroy(&mtx);
+        pthread_mutex_destroy(&mtx2);
+        return (0);
+}

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+while read f
+do
+        if [ $f = "stop" ]
+        then
+                break
+        elif [ ! -f $f ]
+        then
+                echo "This is not a file"
+        else
+                while read line
+                do
+                        break
+                done < $f
+
+                size=`ls -l $f | awk '{print $5}'`
+                echo Size is $size
+                words=0
+                for w in $line
+                do
+                        words=$((words+1))
+                done
+                echo Number of words is $words
+        fi
+done

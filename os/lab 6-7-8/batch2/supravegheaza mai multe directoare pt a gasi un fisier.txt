@@ -1,0 +1,15 @@
+#!/bin/sh
+# Sa se scrie un script shell care monitorizeaza mai mute directoare.
+# Monitorizarea se refera la aparitia unui fisier in aceste directoare.
+# Numele directoarelor se dau la linia de comanda, iar
+# numele fisierului urmarit se da de la tastatura.
+# De asemenea, se da de la tastatura timpul, in secunde, intre doua cautari.
+echo -n "Introduceti numele fisierului: "; read nume t
+echo -n "Introduceti timpul (sec) intre cautari: "; read timp t
+while true; do
+        find $* -type f -print | while read af; do
+        nf=`echo $af | awk -F/ '$NF>1{print $NF;}'`
+        if [ "$nf" = "$nume" ]; then echo $nume "in" $af; fi
+        done
+        sleep $timp
+done

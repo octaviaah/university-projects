@@ -1,0 +1,28 @@
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAXLINIE 1000
+
+pthread_t tid[10];
+
+void* partial(void* id)
+{
+        int nr = *(int*) id;  //TRICK -> int nr = (int) id;
+        printf("Thread %ld ...> %d\n", pthread_self(), nr);
+        return NULL;
+}
+
+int main(int argc, char* argv[])
+{
+        int tnr[10], i=0;
+        for (i=0; i<10; i++) tnr[i] = i;
+        for (i=0; i<10; i++)
+                pthread_create(&tid[i], NULL, partial, (void*)&tnr[i]); //TRICK -> in loc de void la la la, vine doar i
+        for(i=0; i<10; i++)
+                pthread_join(tid[i], NULL);
+        printf("finished\n");
+        return 0;
+}

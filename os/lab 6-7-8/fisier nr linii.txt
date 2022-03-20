@@ -1,0 +1,25 @@
+#!/bin/bash
+
+read N1
+if [ -z N1 ]; then
+        echo number cannot be empty
+        exit 1
+fi
+if [ -e sol.txt ]; then
+        rm sol.txt
+fi
+
+while read file;do
+        if [ $file == "stop" ];then
+                cat sol.txt
+                break
+        elif [ -f $file ]; then
+                count=0
+                while read line; do
+                        count=$((count+1))
+                done < $file
+                if [ $count -eq $N1 ]; then
+                        echo $file >> sol.txt
+                fi
+        fi
+done

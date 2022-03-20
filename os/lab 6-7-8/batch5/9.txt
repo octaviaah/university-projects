@@ -1,0 +1,34 @@
+#!/bin/bash
+
+read dir
+if [ ! -d $dir ];then
+        echo $dir is a not a dir >&2
+        exit 1
+fi
+if [ -e dupes.txt ]; then
+        rm dupes.txt
+fi
+if [ -e sums.txt ];then
+        rm sums.txt
+fi
+
+for file in `find $dir -type f`; do
+        sum=`md5sum $file`
+        echo $sum >> dupes.txt
+done
+
+cat dupes.txt | awk '{print $1}' | sort | uniq -c | sort -n -r | \
+while read C S; do
+        if [ $C -gt 1 ];then
+                echo $S >> sums.txt
+        fi
+done
+
+while read sum; do
+        while read S F; do
+                if [ "$S" == "$sum" ];then
+                        echo $F
+                fi
+        done < dupes.txt
+done < sums.txt
+#rm dupes.txt

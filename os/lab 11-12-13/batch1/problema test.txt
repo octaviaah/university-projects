@@ -1,0 +1,55 @@
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int count=0;
+int a[1000];
+pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
+
+int prim(int x)
+{
+        if (x<=1) return 0;
+        if (x==2) return 1;
+        if (x%2==0) return 0;
+        int i;
+        for (i=3; i*i<=x; i++)
+                if (x%i==0) return 0;
+        return 1;
+}
+
+void* verify(void* arg)
+{
+        int nr = *(int*)arg;
+        if (prim(nr))
+        {
+                pthread_mutex_lock(&mtx);
+                count++;
+                a[count-1] = nr;
+                pthread_mutex_unlock(&mtx);
+        }
+        return NULL;
+}
+
+int main()
+{
+        int i,tnr[1000], length=0, x;
+        pthread_t tid[1000];
+        printf("read numbers\n");
+        scanf("%d", &x);
+        while (x!=-1)
+        {
+                tnr[length] = x; length++;
+                scanf("%d", &x);
+        }
+        for (i=0; i<length; i++)
+                pthread_create(&tid[i], NULL, verify, (void*)&tnr[i]);
+        for (i=0; i<length; i++)
+                pthread_join(tid[i], NULL);
+        pthread_mutex_destroy(&mtx);
+        printf("the number of prime numbers is %d\n", count);
+        printf("the prime numbers are:\n");
+        for (i=0; i<count; i++)
+                printf("%d ", a[i]);
+        printf("\n");
+        return 0;
+}
