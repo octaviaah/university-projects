@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="jquery.js"></script>
+</head>
+<body>
+<table id="tableSort">
+    <thead>
+    <tr>
+        <th class="ascending" onclick="sortTable(0)">First Name</th>
+        <th class="ascending" onclick="sortTable(1)">Last Name</th>
+        <th class="ascending" onclick="sortTable(2)">Age</th>
+        <th class="ascending" onclick="sortTable(3)">Country</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Octavia</td>
+        <td>Hriscu</td>
+        <td>20</td>
+        <td>Romania</td>
+    </tr>
+    <tr>
+        <td>John</td>
+        <td>Smith</td>
+        <td>30</td>
+        <td>United Kingdom</td>
+    </tr>
+    <tr>
+        <td>George</td>
+        <td>Washington</td>
+        <td>204</td>
+        <td>United States</td>
+    </tr>
+    <tr>
+        <td>Cristiano</td>
+        <td>Ronaldo</td>
+        <td>36</td>
+        <td>Portugal</td>
+    </tr>
+    <tr>
+        <td>First Name</td>
+        <td>Last Name</td>
+        <td>35</td>
+        <td>Australia</td>
+    </tr>
+    <tr>
+        <td>Larry</td>
+        <td>King</td>
+        <td>87</td>
+        <td>United States</td>
+    </tr>
+    <tr>
+        <td>Britney</td>
+        <td>Spears</td>
+        <td>40</td>
+        <td>United States</td>
+    </tr>
+    <tr>
+        <td>Ion</td>
+        <td>Popescu</td>
+        <td>52</td>
+        <td>Romania</td>
+    </tr>
+    <tr>
+        <td>Thomas</td>
+        <td>Muller</td>
+        <td>32</td>
+        <td>Germany</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td onclick="swapColumns(1)">Ana</td>
+        <td onclick="swapColumns(2)">Garcia</td>
+        <td onclick="swapColumns(3)">29</td>
+        <td onclick="swapColumns(4)">Spain</td>
+    </tr>
+    </tfoot>
+</table>
+</body>
+</html>
