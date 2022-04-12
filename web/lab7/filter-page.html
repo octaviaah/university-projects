@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Filter Logs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/lab7/style.css">
+</head>
+
+<body>
+<h1 class="main-title">Filter Logs</h1>
+<div class="container-filter">
+    <table class='table' id="filterTable">
+        <thead>
+        <tr>
+            <th> Type</th>
+            <th> Severity</th>
+            <th> Date</th>
+            <th> Message</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <form class="center-form">
+        <label>
+            <span>Type</span>
+            <br>
+            <input class="box-input" type="text" id="type" name="type" placeholder="Type">
+        </label>
+        <br><br>
+        <label>
+            <span>Severity</span>
+            <br>
+            <input class="box-input" type="text" id="severity" name="severity" placeholder="Severity">
+        </label>
+        <br>
+        <button id="filterButton" class="button" type="button">Filter</button>
+        <br>
+        <button class="button" type="submit">
+            <a href="lab7/home.php">Home</a>
+        </button>
+    </form>
+</div>
+
+
+<script>
+    document.getElementById("filterButton").onclick = function () {
+        let filterTable = document.getElementById("filterTable");
+        let filterTableTbody = filterTable.getElementsByTagName("tbody")[0];
+
+        var new_tbody = document.createElement('tbody');
+        filterTableTbody.parentNode.replaceChild(new_tbody, filterTableTbody)
+
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                console.warn(this.responseText)
+                let logs = JSON.parse(this.responseText);
+
+                for (let log of logs) {
+                    let row = document.createElement("tr");
+                    new_tbody.appendChild(row);
+
+                    for (let logColumn of log) {
+                        let cell = document.createElement("td");
+                        cell.innerText = logColumn;
+                        row.appendChild(cell);
+                    }
+                }
+            }
+        };
+
+        logType = document.getElementById("type").value;
+        logSeverity = document.getElementById("severity").value;
+
+        xmlhttp.open("GET", "/lab7/actions/filter-log.php?type=" + logType + "&severity=" + logSeverity, true);
+        xmlhttp.send();
+    }
+</script>
+
+</body>
+</html>

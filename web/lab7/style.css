@@ -1,0 +1,83 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Work Sans', sans-serif;
+}
+
+.main-title{
+    font-family: 'Work Sans', sans-serif;
+    text-align:center;
+}
+
+.center-form{
+    text-align: center;
+}
+
+.boxes{
+    display:flex;
+    flex-direction: column;
+    margin: 0 625px;
+}
+
+.boxes-home{
+    display:flex;
+    flex-direction: column;
+}
+
+.box-input{
+    height:30px;
+    border-radius: 12px;
+    width:250px;
+ }
+
+.button{
+    margin-top:20px;
+    padding: 15px;
+    background-color: gold;
+    border-radius: 16px;
+    height:70px;
+    width:160px;
+}
+
+.container{
+    display:flex;
+    flex-direction: row;
+    gap:200px;
+    margin: 20px 80px;
+}
+
+.container-filter{
+    display:flex;
+    flex-direction: column;
+    gap:200px;
+    margin: 20px 200px;
+}
+
+.container-browse{
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+    margin: 0 300px;
+}
+
+.table-browse{
+    margin: 0 200px;
+    width:1117px;
+}
+
+.table{
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr{
+    text-align: center;
+}
+
+th {
+    background-color: gold;
+}
